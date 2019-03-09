@@ -3,6 +3,7 @@ const runtime = new RuntimeArguments({props: require('minimist')(process.argv.sl
 
 import { Modules } from "./fetch/modules";
 import {WorkingCopyManager} from "./workingcopymanager";
+import {Load} from "./fetch/load";
 
 runtime.time(`Took`);
 runtime.about();
@@ -11,7 +12,7 @@ runtime.about();
 * Assert Call Arguments
 * */
 
-if (runtime.fetch) {
+if (runtime.fetch || runtime.load) {
     runtime.assert(!!runtime.appId, `appId is missing`, true);
     runtime.assert(!!runtime.appName, `appName is missing`, true);
     if (runtime.hasErrors) {
@@ -42,6 +43,14 @@ else if (runtime.fetch) {
     if (runtime.fetch === FetchType.Modules) {
         Modules.fetchModules(runtime);
     }
+}
+
+/*
+* Load
+* */
+
+else if (runtime.load) {
+    Load.loadRevision(runtime);
 }
 
 runtime.timeEnd(`Took`);

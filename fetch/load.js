@@ -9,22 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const workingcopymanager_1 = require("../workingcopymanager");
-const tools_1 = require("../sdk/tools");
-class Modules {
-    static fetchModules(runtime) {
+class Load {
+    static loadRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workingCopy = yield workingcopymanager_1.WorkingCopyManager.getRevision(runtime);
-            const modules = yield workingCopy.allModules();
+            const revision = yield workingcopymanager_1.WorkingCopyManager.getRevision(runtime);
             const result = {
-                modules: []
+                workingCopyId: revision.root.id,
+                revision: runtime.revision,
+                branchName: runtime.branchName,
+                mendixVersion: revision.metaModelVersion
             };
-            modules.forEach((module) => {
-                // @ts-ignore
-                result.modules.push(tools_1.grabSDKObject(module, runtime));
-            });
             if (!runtime.json) {
-                runtime.log(`Modules: `);
-                runtime.table(result.modules);
+                runtime.table(result);
             }
             else {
                 console.log(JSON.stringify(result));
@@ -32,5 +28,5 @@ class Modules {
         });
     }
 }
-exports.Modules = Modules;
-//# sourceMappingURL=modules.js.map
+exports.Load = Load;
+//# sourceMappingURL=load.js.map

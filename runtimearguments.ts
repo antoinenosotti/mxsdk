@@ -23,6 +23,7 @@ export interface IRuntimeArguments {
     revision: number | undefined;
     list: boolean | undefined;
     json: boolean | undefined;
+    load: boolean | undefined;
 }
 
 export class RuntimeArguments implements IRuntimeArguments {
@@ -138,4 +139,5 @@ export class RuntimeArguments implements IRuntimeArguments {
     username: string | undefined;
     list: boolean | undefined;
     json: boolean | undefined;
+    load: boolean | undefined;
 }
