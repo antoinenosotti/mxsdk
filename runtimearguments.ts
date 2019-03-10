@@ -1,6 +1,6 @@
-import {MendixSdkClient} from "mendixplatformsdk";
+import { MendixSdkClient } from "mendixplatformsdk";
 
-const emoji = require('node-emoji');
+const emoji = require("node-emoji");
 const stopwatch = emoji.get(`stopwatch`);
 
 export enum FetchType {
@@ -54,7 +54,7 @@ export class RuntimeArguments implements IRuntimeArguments {
                 getters: false,
                 showHidden: false,
                 breakLength: 3
-            })
+            });
         }
     }
     log(...args: any[]) {
@@ -101,8 +101,8 @@ export class RuntimeArguments implements IRuntimeArguments {
         // this.table(WorkingCopyManager.config)
     }
 
-    constructor(parameters: { props: any }) {
-        let props = parameters.props;
+    constructor(parameters: { props: any | IRuntimeArguments }) {
+        const props = parameters.props;
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
@@ -120,7 +120,7 @@ export class RuntimeArguments implements IRuntimeArguments {
 
     assert(statement: boolean, message: string, logError?: boolean): void {
         if (logError && !statement) {
-            this.error(message)
+            this.error(message);
         }
     }
 
@@ -134,8 +134,8 @@ export class RuntimeArguments implements IRuntimeArguments {
     apiKey: string | undefined;
     appId: string | undefined;
     appName: string | undefined;
-    branchName: string = "";
-    revision: number = -1;
+    branchName = "";
+    revision = -1;
     username: string | undefined;
     list: boolean | undefined;
     json: boolean | undefined;

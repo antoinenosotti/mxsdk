@@ -8,11 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const workingcopymanager_1 = require("../workingcopymanager");
+const manager_1 = require("../workingcopy/manager");
 class Load {
     static loadRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const revision = yield workingcopymanager_1.WorkingCopyManager.getRevision(runtime);
+            const revision = yield manager_1.Manager.getRevision(runtime);
             const result = {
                 workingCopyId: revision.root.id,
                 revision: runtime.revision,
@@ -20,8 +20,9 @@ class Load {
                 mendixVersion: revision.metaModelVersion
             };
             if (!runtime.json) {
+                runtime.blue(`\nRevision loaded: `);
                 runtime.table(result);
-                runtime.timeEnd(`Took`);
+                runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
             }
             else {
                 console.log(JSON.stringify(result));

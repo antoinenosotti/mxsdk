@@ -1,27 +1,59 @@
-import {RuntimeArguments} from "./runtimearguments";
-import {Branch, MendixSdkClient, OnlineWorkingCopy, Project, Revision} from "mendixplatformsdk";
+import { RuntimeArguments } from "../../../runtimearguments";
+import { Branch, Project, Revision } from "mendixplatformsdk";
 
 const fs = require("fs");
-const exitHook = require('exit-hook');
+const exitHook = require("exit-hook");
 
 /*
-* Where we'll keep the branch information
+* Some basic structures interfaces for our configuration
 * */
-export interface IRevision {
-    revision: number | undefined;
-    branchName: string | undefined;
+interface IRevision {
+    workingCopyId: string;
+    revision: number;
+    branchName: string;
+    mendixVersion: string;
 }
 
-export class WorkingCopyManager {
-    static homeFolder = `${require('os').homedir()}/.mxsdk`;
-    static registryFilePath = `${WorkingCopyManager.homeFolder}/working-copies.registry`;
-    public static config = {
-        applications: {},
-        homeFolder: "",
-        registryFilePath: ""
+interface IApplication {
+    revisions: IRevision[];
+    appName: string;
+}
+
+interface IConfig {
+    applications: {[s: string]: IApplication};
+}
+
+/*
+* We need to MonkeyPatch console.log for things outside our control, like the Mendix SDK js files.
+* */
+const consoleBanana = console.log;
+export function monkeyPatchConsole(monkeyGood = false) {
+    if (monkeyGood) {
+        console.log = consoleBanana;
+    } else {
+        console.log = () => {
+            // Monkey Bad
+        };
+    }
+}
+
+/*
+* This Helper class will give us our basic working copy helper methods to TeamServer/Mendix.
+* */
+export class Manager {
+    static homeFolder = `${require("os").homedir()}/.mxsdk`;
+    static registryFilePath = `${Manager.homeFolder}/working-copies.registry`;
+    public static config: IConfig = {
+        applications: {}
     };
+    /*
+    * State management for our config registry. What we've loaded etc
+    * */
     public static async readConfig() {
-        const self = WorkingCopyManager;
+        /*
+        * Take care of creating all the folders and writing the file if it's empty
+        * */
+        const self = Manager;
         if (!fs.existsSync(self.homeFolder)) {
             fs.mkdirSync(self.homeFolder);
         }
@@ -30,17 +62,21 @@ export class WorkingCopyManager {
         } else {
             this.config = JSON.parse(fs.readFileSync(self.registryFilePath).toString());
         }
-        this.config.homeFolder = self.homeFolder;
-        this.config.registryFilePath = self.registryFilePath;
     }
     public static saveConfig() {
-        const self = WorkingCopyManager;
+        const self = Manager;
         const configData = JSON.stringify(self.config);
         fs.writeFileSync(self.registryFilePath, configData);
     }
+    /*
+    * Revision Helper methods, list, has and get. ToDo: Delete
+    * */
     static hasRevision(runtime: RuntimeArguments) {
-        // @ts-ignore
-        return !!self.config.applications[runtime.appId].revisions[runtime.revision];
+        if (runtime.appId !== void 0) {
+            return !!self.config.applications[runtime.appId].revisions[runtime.revision];
+        } else {
+            return void 0;
+        }
     }
     static async getRevision(runtime: RuntimeArguments) {
         // @ts-ignore
@@ -49,21 +85,24 @@ export class WorkingCopyManager {
             self.config.applications[runtime.appId] = {
                 revisions: {},
                 appName: runtime.appName
-            }
+            };
         }
 
         if (this.hasRevision(runtime)) {
             // @ts-ignore
             const workingCopyId = self.config.applications[runtime.appId].revisions[runtime.revision].workingCopyId;
             runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
-            return await runtime.getClient().model().openWorkingCopy(workingCopyId);
+            monkeyPatchConsole(!runtime.json);
+            const iModel = await runtime.getClient().model().openWorkingCopy(workingCopyId);
+            monkeyPatchConsole(true);
+            return iModel;
         } else {
             const project = new Project(runtime.getClient(), `${runtime.appId}`, `${runtime.appName}`);
             const branch = new Branch(project, `${runtime.branchName}`);
             const revision = new Revision(runtime.revision, branch);
+            monkeyPatchConsole(!runtime.json);
             const workingCopy = await runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
-            runtime.red(`Project: ${workingCopy.sourceRevision().branch().project().name()}`);
-            runtime.red(`Branch: ${workingCopy.sourceRevision().branch().name()}`);
+            monkeyPatchConsole(true);
             // @ts-ignore
             self.config.applications[runtime.appId].revisions[runtime.revision] = {
                 workingCopyId: workingCopy.id(),
@@ -71,7 +110,6 @@ export class WorkingCopyManager {
             return workingCopy.model();
         }
     }
-
     public static async listWorkingCopies(runtime: RuntimeArguments) {
         const client = runtime.getClient();
         runtime.verbose = true;
@@ -83,7 +121,6 @@ export class WorkingCopyManager {
                 const app = self.config.applications[workingCopy.metaData.projectId];
                 if (app) {
                     // @ts-ignore
-                    // @ts-ignore
                     result.push({
                         appName: app.appName,
                         projectId: workingCopy.metaData.projectId,
@@ -93,29 +130,36 @@ export class WorkingCopyManager {
                         branch: workingCopy.metaData.teamServerBaseBranch
                     });
                 } else {
-                    runtime.red(`Deleting working copy ${workingCopy.id} because I don't know it`);
-                    await runtime.getClient().model().deleteWorkingCopy(workingCopy.id);
+                    runtime.error(`I don't know revision ${workingCopy.id}`);
                 }
             });
             if (!runtime.json) {
                 runtime.blue(`Available revisions:`);
                 runtime.table(result);
-                runtime.timeEnd(`Took`);
+                runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
             } else {
                 console.log(JSON.stringify({
                     revisions: result
                 }));
             }
-        } catch (Error) {
-            runtime.error(Error);
+        } catch (error) {
+            runtime.error(``);
+            runtime.error(error);
+            throw error;
         }
     }
 }
 
-const self = WorkingCopyManager;
-
-WorkingCopyManager.readConfig().then(() => {
+/*
+* Short-hand for the Class, since most methods will be and use static methods
+* Static methods were created to take advantage of async/await
+* */
+const self = Manager;
+/*
+* Let's read the config and make sure we write it when we exit.
+* */
+Manager.readConfig().then(() => {
     exitHook(async () => {
-        await WorkingCopyManager.saveConfig();
+        await Manager.saveConfig();
     });
 });

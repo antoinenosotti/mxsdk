@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../sdk/tools");
-const workingcopymanager_1 = require("../workingcopymanager");
+const tools_1 = require("../../sdk/tools");
+const manager_1 = require("../workingcopy/manager");
 class Modules {
     static fetchModules(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workingCopy = yield workingcopymanager_1.WorkingCopyManager.getRevision(runtime);
+            const workingCopy = yield manager_1.Manager.getRevision(runtime);
             const modules = yield workingCopy.allModules();
             const result = {
                 branchName: runtime.branchName,
@@ -31,7 +31,7 @@ class Modules {
                 });
                 runtime.log(`Modules: `);
                 runtime.table(result);
-                runtime.timeEnd(`Took`);
+                runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
             }
             else {
                 modules.forEach((module) => {

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mendixplatformsdk_1 = require("mendixplatformsdk");
-const emoji = require('node-emoji');
+const emoji = require("node-emoji");
 const stopwatch = emoji.get(`stopwatch`);
 var FetchType;
 (function (FetchType) {
@@ -13,7 +13,7 @@ class RuntimeArguments {
     constructor(parameters) {
         this.branchName = "";
         this.revision = -1;
-        let props = parameters.props;
+        const props = parameters.props;
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];

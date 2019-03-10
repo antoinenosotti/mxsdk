@@ -10,11 +10,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const mendixplatformsdk_1 = require("mendixplatformsdk");
 const fs = require("fs");
-const exitHook = require('exit-hook');
-class WorkingCopyManager {
+const exitHook = require("exit-hook");
+/*
+* We need to MonkeyPatch console.log for things outside our control, like the Mendix SDK js files.
+* */
+const consoleBanana = console.log;
+function monkeyPatchConsole(monkeyGood = false) {
+    if (monkeyGood) {
+        console.log = consoleBanana;
+    }
+    else {
+        console.log = () => {
+            // Monkey Bad
+        };
+    }
+}
+exports.monkeyPatchConsole = monkeyPatchConsole;
+/*
+* This Helper class will give us our basic working copy helper methods to TeamServer/Mendix.
+* */
+class Manager {
+    /*
+    * State management for our config registry. What we've loaded etc
+    * */
     static readConfig() {
         return __awaiter(this, void 0, void 0, function* () {
-            const self = WorkingCopyManager;
+            /*
+            * Take care of creating all the folders and writing the file if it's empty
+            * */
+            const self = Manager;
             if (!fs.existsSync(self.homeFolder)) {
                 fs.mkdirSync(self.homeFolder);
             }
@@ -24,18 +48,23 @@ class WorkingCopyManager {
             else {
                 this.config = JSON.parse(fs.readFileSync(self.registryFilePath).toString());
             }
-            this.config.homeFolder = self.homeFolder;
-            this.config.registryFilePath = self.registryFilePath;
         });
     }
     static saveConfig() {
-        const self = WorkingCopyManager;
+        const self = Manager;
         const configData = JSON.stringify(self.config);
         fs.writeFileSync(self.registryFilePath, configData);
     }
+    /*
+    * Revision Helper methods, list, has and get. ToDo: Delete
+    * */
     static hasRevision(runtime) {
-        // @ts-ignore
-        return !!self.config.applications[runtime.appId].revisions[runtime.revision];
+        if (runtime.appId !== void 0) {
+            return !!self.config.applications[runtime.appId].revisions[runtime.revision];
+        }
+        else {
+            return void 0;
+        }
     }
     static getRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -51,15 +80,18 @@ class WorkingCopyManager {
                 // @ts-ignore
                 const workingCopyId = self.config.applications[runtime.appId].revisions[runtime.revision].workingCopyId;
                 runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
-                return yield runtime.getClient().model().openWorkingCopy(workingCopyId);
+                monkeyPatchConsole(!runtime.json);
+                const iModel = yield runtime.getClient().model().openWorkingCopy(workingCopyId);
+                monkeyPatchConsole(true);
+                return iModel;
             }
             else {
                 const project = new mendixplatformsdk_1.Project(runtime.getClient(), `${runtime.appId}`, `${runtime.appName}`);
                 const branch = new mendixplatformsdk_1.Branch(project, `${runtime.branchName}`);
                 const revision = new mendixplatformsdk_1.Revision(runtime.revision, branch);
+                monkeyPatchConsole(!runtime.json);
                 const workingCopy = yield runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
-                runtime.red(`Project: ${workingCopy.sourceRevision().branch().project().name()}`);
-                runtime.red(`Branch: ${workingCopy.sourceRevision().branch().name()}`);
+                monkeyPatchConsole(true);
                 // @ts-ignore
                 self.config.applications[runtime.appId].revisions[runtime.revision] = {
                     workingCopyId: workingCopy.id(),
@@ -80,7 +112,6 @@ class WorkingCopyManager {
                     const app = self.config.applications[workingCopy.metaData.projectId];
                     if (app) {
                         // @ts-ignore
-                        // @ts-ignore
                         result.push({
                             appName: app.appName,
                             projectId: workingCopy.metaData.projectId,
@@ -91,14 +122,13 @@ class WorkingCopyManager {
                         });
                     }
                     else {
-                        runtime.red(`Deleting working copy ${workingCopy.id} because I don't know it`);
-                        yield runtime.getClient().model().deleteWorkingCopy(workingCopy.id);
+                        runtime.error(`I don't know revision ${workingCopy.id}`);
                     }
                 }));
                 if (!runtime.json) {
                     runtime.blue(`Available revisions:`);
                     runtime.table(result);
-                    runtime.timeEnd(`Took`);
+                    runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
                 }
                 else {
                     console.log(JSON.stringify({
@@ -106,24 +136,31 @@ class WorkingCopyManager {
                     }));
                 }
             }
-            catch (Error) {
-                runtime.error(Error);
+            catch (error) {
+                runtime.error(``);
+                runtime.error(error);
+                throw error;
             }
         });
     }
 }
-WorkingCopyManager.homeFolder = `${require('os').homedir()}/.mxsdk`;
-WorkingCopyManager.registryFilePath = `${WorkingCopyManager.homeFolder}/working-copies.registry`;
-WorkingCopyManager.config = {
-    applications: {},
-    homeFolder: "",
-    registryFilePath: ""
+Manager.homeFolder = `${require("os").homedir()}/.mxsdk`;
+Manager.registryFilePath = `${Manager.homeFolder}/working-copies.registry`;
+Manager.config = {
+    applications: {}
 };
-exports.WorkingCopyManager = WorkingCopyManager;
-const self = WorkingCopyManager;
-WorkingCopyManager.readConfig().then(() => {
+exports.Manager = Manager;
+/*
+* Short-hand for the Class, since most methods will be and use static methods
+* Static methods were created to take advantage of async/await
+* */
+const self = Manager;
+/*
+* Let's read the config and make sure we write it when we exit.
+* */
+Manager.readConfig().then(() => {
     exitHook(() => __awaiter(this, void 0, void 0, function* () {
-        yield WorkingCopyManager.saveConfig();
+        yield Manager.saveConfig();
     }));
 });
-//# sourceMappingURL=workingcopymanager.js.map
+//# sourceMappingURL=manager.js.map

@@ -1,10 +1,10 @@
-import { RuntimeArguments } from "../runtimearguments";
-import { grabSDKObject } from "../sdk/tools";
-import { WorkingCopyManager } from "../workingcopymanager";
+import { RuntimeArguments } from "../../../runtimearguments";
+import { grabSDKObject } from "../../sdk/tools";
+import { Manager } from "../workingcopy/manager";
 
 export class Modules {
     public static async fetchModules(runtime: RuntimeArguments) {
-        const workingCopy = await WorkingCopyManager.getRevision(runtime);
+        const workingCopy = await Manager.getRevision(runtime);
         const modules = await workingCopy.allModules();
         const result = {
             branchName: runtime.branchName,
@@ -22,7 +22,7 @@ export class Modules {
             });
             runtime.log(`Modules: `);
             runtime.table(result);
-            runtime.timeEnd(`Took`);
+            runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
         } else {
             modules.forEach((module) => {
                 // @ts-ignore

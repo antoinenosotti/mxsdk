@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts" line="93" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="2395460e-e06e-42e8-971d-d511aadbf4ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/fetch/load.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/system.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/load.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/load.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/load.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/load.ts" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/load.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/modules.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/modules.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/modules.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fetch/modules.ts" beforeDir="false" afterPath="$PROJECT_DIR$/fetch/modules.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/load.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/load.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/load.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/modules.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fetch/modules.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mxsdk.js" beforeDir="false" afterPath="$PROJECT_DIR$/mxsdk.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mxsdk.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/mxsdk.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mxsdk.ts" beforeDir="false" afterPath="$PROJECT_DIR$/mxsdk.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workingcopymanager.js" beforeDir="false" afterPath="$PROJECT_DIR$/workingcopymanager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workingcopymanager.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/workingcopymanager.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workingcopymanager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/workingcopymanager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtimearguments.js" beforeDir="false" afterPath="$PROJECT_DIR$/runtimearguments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtimearguments.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/runtimearguments.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtimearguments.ts" beforeDir="false" afterPath="$PROJECT_DIR$/runtimearguments.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdk/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdk/tools.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdk/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workingcopymanager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/workingcopymanager.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/workingcopymanager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -36,32 +46,77 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/fetch/modules.ts">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+            <state relative-caret-position="75">
+              <caret line="5" column="50" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tsconfig.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/test-results/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="53" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="147" column="24" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mxsdk.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="690">
+              <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/system.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
               <folding>
-                <element signature="e#0#53#0" expanded="true" />
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tslint.json">
+        <entry file="file://$PROJECT_DIR$/runtimearguments.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1800">
-              <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="9" column="221" selection-start-line="9" selection-start-column="221" selection-end-line="9" selection-end-column="221" />
+            <state relative-caret-position="159">
+              <caret line="122" column="17" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -84,6 +139,13 @@
       <find>Main</find>
       <find>mxsdk</find>
       <find>$PROJECT_DIR$</find>
+      <find>.red</find>
+      <find>blue(</find>
+      <find>\x1b[0m</find>
+      <find>Open</find>
+      <find>undefined</find>
+      <find>compiler</find>
+      <find>error</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -99,16 +161,23 @@
         <option value="$PROJECT_DIR$/programarguments.ts" />
         <option value="$PROJECT_DIR$/script.ts" />
         <option value="$PROJECT_DIR$/runtimearguments.js" />
-        <option value="$PROJECT_DIR$/tsconfig.json" />
         <option value="$PROJECT_DIR$/sdk/tools.ts" />
-        <option value="$PROJECT_DIR$/runtimearguments.ts" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/workingcopymanager.ts" />
         <option value="$PROJECT_DIR$/fetch/load.ts" />
-        <option value="$PROJECT_DIR$/mxsdk.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/fetch/modules.ts" />
         <option value="$PROJECT_DIR$/tslint.json" />
+        <option value="$PROJECT_DIR$/src/fetch/load.ts" />
+        <option value="$PROJECT_DIR$/src/fetch/modules.ts" />
+        <option value="$PROJECT_DIR$/workingcopymanager.ts" />
+        <option value="$PROJECT_DIR$/src/commands/workingcopy/workingcopymanager.ts" />
+        <option value="$PROJECT_DIR$/src/commands/fetch/modules.ts" />
+        <option value="$PROJECT_DIR$/src/commands/fetch/load.ts" />
+        <option value="$PROJECT_DIR$/runtimearguments.ts" />
+        <option value="$PROJECT_DIR$/mxsdk.ts" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/tsconfig.json" />
+        <option value="$PROJECT_DIR$/src/test/system.ts" />
+        <option value="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" />
       </list>
     </option>
   </component>
@@ -123,7 +192,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
@@ -134,6 +203,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+              <item name="test-results" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -149,17 +251,6 @@
             <path>
               <item name="mxsdk" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -185,6 +276,11 @@
     <key name="es6.move.members.recent.items">
       <recent name="$PROJECT_DIR$/sdk/tools.ts" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/commands/workingcopy" />
+      <recent name="$PROJECT_DIR$/src/commands" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -198,11 +294,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.Fetch Modules Json">
+  <component name="RunManager" selected="Node.js.Test">
     <configuration name="List" type="NodeJSConfigurationType" application-parameters="--list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="Modules" type="NodeJSConfigurationType" application-parameters="--fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
+      <method v="2" />
+    </configuration>
+    <configuration name="Test" type="NodeJSConfigurationType" path-to-js-file="./src/test/system.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
     <configuration name="mxsdk" type="NodeJSConfigurationType" application-parameters="--fetch modules --module MyFirstModule --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
@@ -228,16 +327,6 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Fetch Modules Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="Fetch Modules Verbose" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="Load Revision 11 Json" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -258,23 +347,34 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="test" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Node.js.Test" />
       <item itemvalue="Node.js.List" />
       <item itemvalue="Node.js.Modules" />
       <item itemvalue="Node.js.mxsdk" />
       <item itemvalue="npm.Fetch Modules Json" />
-      <item itemvalue="npm.Fetch Modules Verbose" />
       <item itemvalue="npm.Load Revision 11 Verbose" />
       <item itemvalue="npm.Fetch CLS Modules Verbose" />
       <item itemvalue="npm.Load Revision 11 Json" />
+      <item itemvalue="npm.test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.Fetch Modules Json" />
-        <item itemvalue="npm.Load Revision 11 Json" />
-        <item itemvalue="npm.Fetch CLS Modules Verbose" />
-        <item itemvalue="npm.Fetch Modules Verbose" />
+        <item itemvalue="npm.test" />
         <item itemvalue="npm.Load Revision 11 Verbose" />
+        <item itemvalue="npm.Load Revision 11 Json" />
+        <item itemvalue="npm.Fetch Modules Json" />
+        <item itemvalue="npm.Fetch CLS Modules Verbose" />
       </list>
     </recent_temporary>
   </component>
@@ -292,23 +392,25 @@
       <workItem from="1552147518334" duration="29919000" />
       <workItem from="1552189952702" duration="127000" />
       <workItem from="1552190095967" duration="2525000" />
-      <workItem from="1552193014086" duration="2224000" />
+      <workItem from="1552193014086" duration="7351000" />
+      <workItem from="1552239899563" duration="1229000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37718000" />
+    <option name="totallyTimeSpent" value="44074000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.65597147" visible="true" weight="0.25679544" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6539924" visible="true" weight="0.25679544" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.34402853" side_tool="true" visible="true" weight="0.25679544" />
+      <window_info id="npm" order="2" sideWeight="0.34600762" side_tool="true" visible="true" weight="0.25679544" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.28535032" />
+      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3299363" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.28535032" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -328,16 +430,10 @@
     <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/workingcopymanager.js" />
-        <option value="$PROJECT_DIR$/runtimearguments.js.map" />
         <option value="$PROJECT_DIR$/mxsdk.js.map" />
-        <option value="$PROJECT_DIR$/workingcopymanager.js.map" />
-        <option value="$PROJECT_DIR$/fetch/modules.js" />
-        <option value="$PROJECT_DIR$/fetch/modules.js.map" />
-        <option value="$PROJECT_DIR$/sdk/tools.js" />
-        <option value="$PROJECT_DIR$/sdk/tools.js.map" />
-        <option value="$PROJECT_DIR$/fetch/load.js.map" />
-        <option value="$PROJECT_DIR$/fetch/load.js" />
+        <option value="$PROJECT_DIR$/runtimearguments.js.map" />
+        <option value="$PROJECT_DIR$/src/test/system.js.map" />
+        <option value="$PROJECT_DIR$/src/test/system.js" />
       </list>
     </option>
   </component>
@@ -345,8 +441,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/workingcopymanager.ts</url>
-          <line>79</line>
+          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
+          <line>117</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -355,9 +451,8 @@
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/mxsdk.ts</url>
-          <line>42</line>
-          <option name="timeStamp" value="35" />
+          <url>file://$PROJECT_DIR$/src/test/system.ts</url>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -421,20 +516,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/workingcopymanager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/model-sdk-client.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="99" column="4" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/mendixplatformsdk/dist/mendix-platform-sdk.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
@@ -449,7 +530,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sdk/tools.ts">
+    <entry file="file://$PROJECT_DIR$/src/sdk/tools.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
@@ -477,43 +558,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mxsdk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" selection-start-line="48" selection-end-line="49" />
-          <folding>
-            <element signature="e#156#198#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fetch/load.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/workingcopymanager.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="102" column="40" selection-start-line="102" selection-start-column="40" selection-end-line="102" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtimearguments.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="30" selection-start-line="23" selection-start-column="30" selection-end-line="23" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/compiler.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
@@ -530,41 +574,100 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tsconfig.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fetch/modules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tslint.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1800">
-          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/model-sdk-client.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/fetch/modules.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mxsdk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="48" column="30" selection-start-line="48" selection-start-column="30" selection-end-line="48" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/fetch/modules.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="9" column="221" selection-start-line="9" selection-start-column="221" selection-end-line="9" selection-end-column="221" />
+        <state relative-caret-position="75">
+          <caret line="5" column="50" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fetch/modules.ts">
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+        <state relative-caret-position="315">
+          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/test-results/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="53" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/system.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="37" column="32" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="32" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/runtimearguments.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="122" column="17" selection-start-line="122" selection-start-column="17" selection-end-line="122" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="147" column="24" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
         </state>
       </provider>
     </entry>
