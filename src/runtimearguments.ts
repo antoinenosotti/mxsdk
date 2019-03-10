@@ -24,6 +24,9 @@ export interface IRuntimeArguments {
     list: boolean | undefined;
     json: boolean | undefined;
     load: boolean | undefined;
+    serve: boolean | undefined;
+    host: string | undefined;
+    port: number | undefined;
 }
 
 export class RuntimeArguments implements IRuntimeArguments {
@@ -85,9 +88,11 @@ export class RuntimeArguments implements IRuntimeArguments {
     error(message: string | Error) {
         this.hasErrors = true;
         console.error(`Error: ${message}`);
+        this.errorLog.push(message + "");
     }
     about() {
-        this.log(`\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
+        this.log(`
+\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
 \x1b[31m | ___ \\  _  \\/  __ \\          \x1b[34m|  \\/  |    /  ___|  _  \\ | / /     
 \x1b[31m | |_/ / | | || /  \\/  \x1b[0m______  \x1b[34m| .  . |_  _\\ \`--.| | | | |/ /    \x1b[0mMendix SDK Helper
 \x1b[31m | ___ \\ | | || |     \x1b[0m|______| \x1b[34m| |\\/| \\ \\/ /\`--. \\ | | |    \\    \x1b[0mwritten by Herman Geldenhuys
@@ -101,8 +106,7 @@ export class RuntimeArguments implements IRuntimeArguments {
         // this.table(WorkingCopyManager.config)
     }
 
-    constructor(parameters: { props: any | IRuntimeArguments }) {
-        const props = parameters.props;
+    constructor(props: any | IRuntimeArguments) {
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
@@ -117,14 +121,22 @@ export class RuntimeArguments implements IRuntimeArguments {
         this.client = new MendixSdkClient(username, apiKey);
         return this.client;
     }
-
     assert(statement: boolean, message: string, logError?: boolean): void {
         if (logError && !statement) {
             this.error(message);
         }
     }
+    setServerDefaults() {
+        /*
+        * Set server defaults
+        * */
+        this.json = true;
+        this.verbose = false;
+        this.serve = false;
+    }
 
     hasErrors: boolean | undefined;
+    errorLog: string[] = [];
 
     entity: string | undefined;
     fetch: FetchType | undefined;
@@ -140,4 +152,8 @@ export class RuntimeArguments implements IRuntimeArguments {
     list: boolean | undefined;
     json: boolean | undefined;
     load: boolean | undefined;
+    host: string | undefined;
+    port: number | undefined;
+    serve: boolean | undefined;
+
 }

@@ -1,5 +1,5 @@
-import { Main } from "../../mxsdk";
-import { IRuntimeArguments, RuntimeArguments } from "../../runtimearguments";
+import { Main } from "../mxsdk";
+import { IRuntimeArguments, RuntimeArguments } from "../runtimearguments";
 import { expect } from "chai";
 import "mocha";
 
@@ -16,20 +16,24 @@ describe(`Commands`, () => {
                 revision: 11,
                 load: false,
                 verbose: true,
-                username: "herman.geldenhuys@bdc.cap",
+                username: "herman.geldenhuys@bdc.ca",
                 list: true,
                 fetch: undefined,
                 module: undefined,
                 entity: undefined,
                 prettyPrint: undefined,
-                json: undefined
+                json: undefined,
+                host: void 0,
+                port: void 0,
+                serve: false
             };
 
             const run = async () => {
                 const runtime = new RuntimeArguments({props: args});
                 runtime.time(`\x1b[32mTook\x1b[0m`);
                 runtime.about();
-                await Main.run(runtime);
+                const main = new Main();
+                await main.run(runtime);
             };
 
             await run();

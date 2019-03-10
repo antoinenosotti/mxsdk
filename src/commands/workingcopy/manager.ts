@@ -1,4 +1,4 @@
-import { RuntimeArguments } from "../../../runtimearguments";
+import { RuntimeArguments } from "../../runtimearguments";
 import { Branch, Project, Revision } from "mendixplatformsdk";
 
 const fs = require("fs");
@@ -110,7 +110,7 @@ export class Manager {
             return workingCopy.model();
         }
     }
-    public static async listWorkingCopies(runtime: RuntimeArguments) {
+    public static async listRevisions(runtime: RuntimeArguments) {
         const client = runtime.getClient();
         runtime.verbose = true;
         try {
@@ -137,15 +137,22 @@ export class Manager {
                 runtime.blue(`Available revisions:`);
                 runtime.table(result);
                 runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+                return result;
             } else {
-                console.log(JSON.stringify({
+                const response = {
                     revisions: result
-                }));
+                };
+                console.log(JSON.stringify(response));
+                return response;
             }
         } catch (error) {
-            runtime.error(``);
-            runtime.error(error);
-            throw error;
+            const response = {
+                error: {
+                    message: error.message
+                }
+            };
+            console.error(JSON.stringify(response));
+            return response;
         }
     }
 }

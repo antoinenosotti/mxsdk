@@ -10,10 +10,10 @@ var FetchType;
     FetchType["Attributes"] = "attributes";
 })(FetchType = exports.FetchType || (exports.FetchType = {}));
 class RuntimeArguments {
-    constructor(parameters) {
+    constructor(props) {
+        this.errorLog = [];
         this.branchName = "";
         this.revision = -1;
-        const props = parameters.props;
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
@@ -77,9 +77,11 @@ class RuntimeArguments {
     error(message) {
         this.hasErrors = true;
         console.error(`Error: ${message}`);
+        this.errorLog.push(message + "");
     }
     about() {
-        this.log(`\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
+        this.log(`
+\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
 \x1b[31m | ___ \\  _  \\/  __ \\          \x1b[34m|  \\/  |    /  ___|  _  \\ | / /     
 \x1b[31m | |_/ / | | || /  \\/  \x1b[0m______  \x1b[34m| .  . |_  _\\ \`--.| | | | |/ /    \x1b[0mMendix SDK Helper
 \x1b[31m | ___ \\ | | || |     \x1b[0m|______| \x1b[34m| |\\/| \\ \\/ /\`--. \\ | | |    \\    \x1b[0mwritten by Herman Geldenhuys
@@ -102,6 +104,14 @@ class RuntimeArguments {
         if (logError && !statement) {
             this.error(message);
         }
+    }
+    setServerDefaults() {
+        /*
+        * Set server defaults
+        * */
+        this.json = true;
+        this.verbose = false;
+        this.serve = false;
     }
 }
 exports.RuntimeArguments = RuntimeArguments;

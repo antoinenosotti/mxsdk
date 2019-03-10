@@ -100,7 +100,7 @@ class Manager {
             }
         });
     }
-    static listWorkingCopies(runtime) {
+    static listRevisions(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             const client = runtime.getClient();
             runtime.verbose = true;
@@ -129,17 +129,24 @@ class Manager {
                     runtime.blue(`Available revisions:`);
                     runtime.table(result);
                     runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+                    return result;
                 }
                 else {
-                    console.log(JSON.stringify({
+                    const response = {
                         revisions: result
-                    }));
+                    };
+                    console.log(JSON.stringify(response));
+                    return response;
                 }
             }
             catch (error) {
-                runtime.error(``);
-                runtime.error(error);
-                throw error;
+                const response = {
+                    error: {
+                        message: error.message
+                    }
+                };
+                console.error(JSON.stringify(response));
+                return response;
             }
         });
     }

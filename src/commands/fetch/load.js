@@ -15,7 +15,7 @@ class Load {
             const revision = yield manager_1.Manager.getRevision(runtime);
             const result = {
                 workingCopyId: revision.root.id,
-                revision: runtime.revision,
+                revision: revision.workingCopy.metaData.teamServerBaseRevision,
                 branchName: runtime.branchName,
                 mendixVersion: revision.metaModelVersion
             };
@@ -23,9 +23,11 @@ class Load {
                 runtime.blue(`\nRevision loaded: `);
                 runtime.table(result);
                 runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+                return result;
             }
             else {
                 console.log(JSON.stringify(result));
+                return result;
             }
         });
     }

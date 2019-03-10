@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mxsdk_1 = require("../../mxsdk");
-const runtimearguments_1 = require("../../runtimearguments");
+const mxsdk_1 = require("../mxsdk");
+const runtimearguments_1 = require("../runtimearguments");
 const chai_1 = require("chai");
 require("mocha");
 describe(`Commands`, () => {
@@ -23,19 +23,23 @@ describe(`Commands`, () => {
                 revision: 11,
                 load: false,
                 verbose: true,
-                username: "herman.geldenhuys@bdc.cap",
+                username: "herman.geldenhuys@bdc.ca",
                 list: true,
                 fetch: undefined,
                 module: undefined,
                 entity: undefined,
                 prettyPrint: undefined,
-                json: undefined
+                json: undefined,
+                host: void 0,
+                port: void 0,
+                serve: false
             };
             const run = () => __awaiter(this, void 0, void 0, function* () {
                 const runtime = new runtimearguments_1.RuntimeArguments({ props: args });
                 runtime.time(`\x1b[32mTook\x1b[0m`);
                 runtime.about();
-                yield mxsdk_1.Main.run(runtime);
+                const main = new mxsdk_1.Main();
+                yield main.run(runtime);
             });
             yield run();
             chai_1.expect("I'm alive").to.equal("I'm alive");

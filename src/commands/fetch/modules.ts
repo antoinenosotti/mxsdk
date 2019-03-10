@@ -1,4 +1,4 @@
-import { RuntimeArguments } from "../../../runtimearguments";
+import { RuntimeArguments } from "../../runtimearguments";
 import { grabSDKObject } from "../../sdk/tools";
 import { Manager } from "../workingcopy/manager";
 
@@ -23,6 +23,7 @@ export class Modules {
             runtime.log(`Modules: `);
             runtime.table(result);
             runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+            return result;
         } else {
             modules.forEach((module) => {
                 // @ts-ignore
@@ -31,6 +32,7 @@ export class Modules {
                 result.revision.modules.push(mxObject);
             });
             console.log(JSON.stringify(result));
+            return result;
         }
     }
 }
