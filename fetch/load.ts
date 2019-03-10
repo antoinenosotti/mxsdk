@@ -12,6 +12,7 @@ export class Load {
         };
         if (!runtime.json) {
             runtime.table(result);
+            runtime.timeEnd(`Took`);
         } else {
             console.log(JSON.stringify(result));
         }

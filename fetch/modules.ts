@@ -1,22 +1,35 @@
-import {RuntimeArguments} from "../runtimearguments";
-import {WorkingCopyManager} from "../workingcopymanager";
-import {grabSDKObject} from "../sdk/tools";
+import { RuntimeArguments } from "../runtimearguments";
+import { grabSDKObject } from "../sdk/tools";
+import { WorkingCopyManager } from "../workingcopymanager";
 
 export class Modules {
     public static async fetchModules(runtime: RuntimeArguments) {
         const workingCopy = await WorkingCopyManager.getRevision(runtime);
         const modules = await workingCopy.allModules();
         const result = {
-            modules: []
+            branchName: runtime.branchName,
+            latestRevisionNumber: runtime.revision,
+            revision: {
+                modules: [],
+                number: runtime.revision
+            }
         };
-        modules.forEach((module) => {
-            // @ts-ignore
-            result.modules.push(grabSDKObject(module, runtime));
-        });
         if (!runtime.json) {
+            modules.forEach((module) => {
+                // @ts-ignore
+                // const mxObject = grabSDKObject(module, runtime);
+                result.revision.modules.push(`${module.name}`);
+            });
             runtime.log(`Modules: `);
-            runtime.table(result.modules);
+            runtime.table(result);
+            runtime.timeEnd(`Took`);
         } else {
+            modules.forEach((module) => {
+                // @ts-ignore
+                const mxObject = grabSDKObject(module, runtime);
+                // @ts-ignore
+                result.revision.modules.push(mxObject);
+            });
             console.log(JSON.stringify(result));
         }
     }

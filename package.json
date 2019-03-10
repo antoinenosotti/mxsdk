@@ -1,22 +1,24 @@
 {
   "name": "mxsdk",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run \"Load Revision 11 Verbose\"; npm run \"Load Revision 11 Json\"",
     "Load Revision 11 Verbose": "node mxsdk.js --load --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
     "Load Revision 11 Json": "node mxsdk.js --load --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
     "Fetch Modules Verbose": "node mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
     "Fetch Modules Json": "node mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
     "List Revisions Verbose": "node mxsdk.js --list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose",
-    "List Revisions Json": "node mxsdk.js --list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json"
+    "List Revisions Json": "node mxsdk.js --list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json",
+    "Fetch CLS Modules Verbose": "node mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\"",
+    "Fetch CLS Modules Json": "node mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/minimist": "^1.2.0",
+    "tslint": "^5.13.1",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
@@ -29,5 +31,17 @@
     "node-emoji": "^1.10.0",
     "safe-json-stringify": "^1.2.0",
     "when": "^3.7.8"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hgeldenhuys/mxsdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hgeldenhuys/mxsdk/issues"
+  },
+  "homepage": "https://github.com/hgeldenhuys/mxsdk#readme",
+  "description": ""
 }

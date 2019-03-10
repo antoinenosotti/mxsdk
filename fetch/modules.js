@@ -8,25 +8,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const workingcopymanager_1 = require("../workingcopymanager");
 const tools_1 = require("../sdk/tools");
+const workingcopymanager_1 = require("../workingcopymanager");
 class Modules {
     static fetchModules(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             const workingCopy = yield workingcopymanager_1.WorkingCopyManager.getRevision(runtime);
             const modules = yield workingCopy.allModules();
             const result = {
-                modules: []
+                branchName: runtime.branchName,
+                latestRevisionNumber: runtime.revision,
+                revision: {
+                    modules: [],
+                    number: runtime.revision
+                }
             };
-            modules.forEach((module) => {
-                // @ts-ignore
-                result.modules.push(tools_1.grabSDKObject(module, runtime));
-            });
             if (!runtime.json) {
+                modules.forEach((module) => {
+                    // @ts-ignore
+                    // const mxObject = grabSDKObject(module, runtime);
+                    result.revision.modules.push(`${module.name}`);
+                });
                 runtime.log(`Modules: `);
-                runtime.table(result.modules);
+                runtime.table(result);
+                runtime.timeEnd(`Took`);
             }
             else {
+                modules.forEach((module) => {
+                    // @ts-ignore
+                    const mxObject = tools_1.grabSDKObject(module, runtime);
+                    // @ts-ignore
+                    result.revision.modules.push(mxObject);
+                });
                 console.log(JSON.stringify(result));
             }
         });

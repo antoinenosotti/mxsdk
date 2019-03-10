@@ -9,7 +9,7 @@ runtime.time(`Took`);
 runtime.about();
 
 /*
-* Assert Call Arguments
+* Assert Call Parameters
 * */
 
 if (runtime.fetch || runtime.load) {
@@ -29,14 +29,14 @@ if (runtime.list || runtime.fetch) {
 }
 
 /*
-* List
+* List Revisions
 * */
 if (runtime.list) {
     WorkingCopyManager.listWorkingCopies(runtime);
 }
 
 /*
-* Fetch
+* Fetch all manner of things
 * */
 
 else if (runtime.fetch) {
@@ -46,11 +46,9 @@ else if (runtime.fetch) {
 }
 
 /*
-* Load
+* Load a Revision
 * */
 
 else if (runtime.load) {
     Load.loadRevision(runtime);
 }
-
-runtime.timeEnd(`Took`);

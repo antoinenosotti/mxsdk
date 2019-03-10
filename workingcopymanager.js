@@ -98,6 +98,7 @@ class WorkingCopyManager {
                 if (!runtime.json) {
                     runtime.blue(`Available revisions:`);
                     runtime.table(result);
+                    runtime.timeEnd(`Took`);
                 }
                 else {
                     console.log(JSON.stringify({

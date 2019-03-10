@@ -8,7 +8,7 @@ const load_1 = require("./fetch/load");
 runtime.time(`Took`);
 runtime.about();
 /*
-* Assert Call Arguments
+* Assert Call Parameters
 * */
 if (runtime.fetch || runtime.load) {
     runtime.assert(!!runtime.appId, `appId is missing`, true);
@@ -25,13 +25,13 @@ if (runtime.list || runtime.fetch) {
     }
 }
 /*
-* List
+* List Revisions
 * */
 if (runtime.list) {
     workingcopymanager_1.WorkingCopyManager.listWorkingCopies(runtime);
 }
 /*
-* Fetch
+* Fetch all manner of things
 * */
 else if (runtime.fetch) {
     if (runtime.fetch === runtimearguments_1.FetchType.Modules) {
@@ -39,10 +39,9 @@ else if (runtime.fetch) {
     }
 }
 /*
-* Load
+* Load a Revision
 * */
 else if (runtime.load) {
     load_1.Load.loadRevision(runtime);
 }
-runtime.timeEnd(`Took`);
 //# sourceMappingURL=mxsdk.js.map
