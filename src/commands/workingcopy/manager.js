@@ -12,6 +12,13 @@ const mendixplatformsdk_1 = require("mendixplatformsdk");
 const fs = require("fs");
 const exitHook = require("exit-hook");
 /*
+* Shared Error Codes
+* */
+var ErrorCodes;
+(function (ErrorCodes) {
+    ErrorCodes["NotFoundError"] = "NotFoundError";
+})(ErrorCodes = exports.ErrorCodes || (exports.ErrorCodes = {}));
+/*
 * We need to MonkeyPatch console.log for things outside our control, like the Mendix SDK js files.
 * */
 const consoleBanana = console.log;
@@ -60,7 +67,8 @@ class Manager {
     * */
     static hasRevision(runtime) {
         if (runtime.appId !== void 0) {
-            return !!self.config.applications[runtime.appId].revisions[runtime.revision];
+            const revision = runtime.revision || -1;
+            return !!self.config.applications[runtime.appId].revisions[revision];
         }
         else {
             return void 0;
@@ -81,14 +89,20 @@ class Manager {
                 const workingCopyId = self.config.applications[runtime.appId].revisions[runtime.revision].workingCopyId;
                 runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
                 monkeyPatchConsole(!runtime.json);
-                const iModel = yield runtime.getClient().model().openWorkingCopy(workingCopyId);
+                const iModel = yield runtime.getClient().model().openWorkingCopy(workingCopyId)
+                    .then((model) => {
+                    return model;
+                })
+                    .catch((error) => {
+                    runtime.runtimeError.statusCode = error.statusCode;
+                    runtime.runtimeError.name = error.error.name;
+                    runtime.runtimeError.message = error.error.message;
+                });
                 monkeyPatchConsole(true);
                 return iModel;
             }
             else {
-                const project = new mendixplatformsdk_1.Project(runtime.getClient(), `${runtime.appId}`, `${runtime.appName}`);
-                const branch = new mendixplatformsdk_1.Branch(project, `${runtime.branchName}`);
-                const revision = new mendixplatformsdk_1.Revision(runtime.revision, branch);
+                const project = new mendixplatformsdk_1.Project(runtime.getClient(), `${runtime.appId}`, `${runtime.appName}`), branch = new mendixplatformsdk_1.Branch(project, `${runtime.branchName}`), revisionNumber = runtime.revision || -1, revision = new mendixplatformsdk_1.Revision(revisionNumber, branch);
                 monkeyPatchConsole(!runtime.json);
                 const workingCopy = yield runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
                 monkeyPatchConsole(true);
@@ -118,11 +132,12 @@ class Manager {
                             mendixVersion: workingCopy.metaData.metaModelVersion,
                             // @ts-ignore
                             revision: workingCopy.metaData.teamServerBaseRevision.valueOf(),
-                            branch: workingCopy.metaData.teamServerBaseBranch
+                            branch: workingCopy.metaData.teamServerBaseBranch,
+                            workingCopyId: workingCopy.id
                         });
                     }
                     else {
-                        runtime.error(`I don't know revision ${workingCopy.id}`);
+                        runtime.warn(`I don't know revision ${workingCopy.id}`);
                     }
                 }));
                 if (!runtime.json) {
@@ -148,6 +163,65 @@ class Manager {
                 console.error(JSON.stringify(response));
                 return response;
             }
+        });
+    }
+    static deleteWorkingCopy(runtime) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (runtime.workingCopyId !== void 0) {
+                monkeyPatchConsole(!runtime.json);
+                yield runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
+                    .catch((error) => {
+                    runtime.runtimeError.statusCode = error.statusCode;
+                    runtime.runtimeError.name = error.error.name;
+                    runtime.runtimeError.message = error.error.message;
+                });
+                monkeyPatchConsole(true);
+            }
+            else {
+                runtime.error(`No working copy found for id ${runtime.workingCopyId}`);
+            }
+            return runtime.safeReturnOrError({
+                deleted: true,
+                workingCopyId: runtime.workingCopyId
+            });
+        });
+    }
+    static deleteRevision(runtime) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const appId = runtime.appId || "unspecified";
+            if (!self.config.applications[appId]) {
+                runtime.error(`Application of id ${runtime.appId} not known`);
+                return runtime.runtimeError;
+            }
+            const revision = runtime.revision || -1;
+            if (!self.config.applications[appId].revisions[revision]) {
+                runtime.error(`Revision ${runtime.revision} of application with id  ${runtime.appId} not known`);
+                runtime.runtimeError.statusCode = 404;
+                runtime.runtimeError.code = "REVISION-404";
+                return runtime.runtimeError;
+            }
+            runtime.workingCopyId = self.config.applications[appId].revisions[revision].workingCopyId;
+            if (runtime.workingCopyId !== void 0) {
+                monkeyPatchConsole(!runtime.json);
+                yield runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
+                    .catch((error) => {
+                    if (error.name === ErrorCodes.NotFoundError) {
+                        runtime.runtimeError.statusCode = error.statusCode;
+                        runtime.runtimeError.name = error.error.name;
+                        runtime.runtimeError.message = error.error.message;
+                    }
+                });
+                monkeyPatchConsole(true);
+            }
+            else {
+                runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
+            }
+            delete self.config.applications[appId].revisions[revision];
+            return runtime.safeReturnOrError({
+                deleted: true,
+                workingCopyId: runtime.workingCopyId,
+                revision: runtime.revision
+            });
         });
     }
 }

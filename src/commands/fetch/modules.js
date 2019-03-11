@@ -14,35 +14,42 @@ class Modules {
     static fetchModules(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             const workingCopy = yield manager_1.Manager.getRevision(runtime);
-            const modules = yield workingCopy.allModules();
-            const result = {
-                branchName: runtime.branchName,
-                latestRevisionNumber: runtime.revision,
-                revision: {
-                    modules: [],
-                    number: runtime.revision
+            if (workingCopy !== void 0) {
+                const modules = yield workingCopy.allModules();
+                const result = {
+                    branchName: runtime.branchName,
+                    latestRevisionNumber: runtime.revision,
+                    revision: {
+                        modules: [],
+                        number: runtime.revision
+                    }
+                };
+                if (!runtime.json) {
+                    modules.forEach((module) => {
+                        // @ts-ignore
+                        result.revision.modules.push(`${module.name}`);
+                    });
+                    runtime.blue(`Summary: `);
+                    runtime.table(result);
+                    runtime.blue(`Modules: `);
+                    runtime.table(result.revision.modules);
+                    runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+                    return result;
                 }
-            };
-            if (!runtime.json) {
-                modules.forEach((module) => {
-                    // @ts-ignore
-                    // const mxObject = grabSDKObject(module, runtime);
-                    result.revision.modules.push(`${module.name}`);
-                });
-                runtime.log(`Modules: `);
-                runtime.table(result);
-                runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
+                else {
+                    modules.forEach((module) => {
+                        // @ts-ignore
+                        const mxObject = tools_1.grabSDKObject(module, runtime);
+                        // @ts-ignore
+                        result.revision.modules.push(mxObject);
+                    });
+                    console.log(JSON.stringify(result));
+                }
                 return result;
             }
             else {
-                modules.forEach((module) => {
-                    // @ts-ignore
-                    const mxObject = tools_1.grabSDKObject(module, runtime);
-                    // @ts-ignore
-                    result.revision.modules.push(mxObject);
-                });
-                console.log(JSON.stringify(result));
-                return result;
+                runtime.error(`Could not load revision ${runtime.revision} for app ${runtime.appName}`);
+                return runtime.runtimeError;
             }
         });
     }

@@ -8,12 +8,20 @@ export enum FetchType {
     Entities = "entities",
     Attributes = "attributes"
 }
+export enum DeleteType {
+    WorkingCopy = "workingCopy",
+    Revision = "revision"
+}
+
+export enum ConsoleColorType {
+    Red = "\x1b[31m",
+    White = "\x1b[0m"
+}
 
 export interface IRuntimeArguments {
     fetch: FetchType | undefined;
     module: string | undefined;
     entity: string | undefined;
-    prettyPrint: boolean | undefined;
     verbose: boolean | undefined;
     username: string | undefined;
     apiKey: string | undefined;
@@ -27,6 +35,25 @@ export interface IRuntimeArguments {
     serve: boolean | undefined;
     host: string | undefined;
     port: number | undefined;
+    delete: DeleteType | undefined;
+    workingCopyId: string | undefined;
+    shutdownOnValidation: boolean | undefined;
+}
+
+export interface IRuntimeError {
+    name: string | undefined;
+    message: string | undefined;
+    code: string | number | undefined;
+    statusCode: string | number | undefined;
+    details: string[] | undefined;
+}
+
+export class RuntimeError implements IRuntimeError {
+    code: string | number | undefined;
+    details: string[] | undefined = [];
+    message: string | undefined;
+    name: string | undefined;
+    statusCode: string | number | undefined;
 }
 
 export class RuntimeArguments implements IRuntimeArguments {
@@ -40,10 +67,12 @@ export class RuntimeArguments implements IRuntimeArguments {
             console.timeEnd(`${stopwatch} ${timer}`);
         }
     }
-    table(obj: any) {
+    table(obj: any, color: ConsoleColorType = ConsoleColorType.White) {
+        console.log(color);
         if (this.verbose) {
             console.table(obj);
         }
+        console.log(ConsoleColorType.White);
     }
     timeStamp(label?: string) {
         if (this.verbose && !this.json) {
@@ -85,10 +114,24 @@ export class RuntimeArguments implements IRuntimeArguments {
         args.push("\x1b[0m");
         this.log(args.join(""));
     }
-    error(message: string | Error) {
-        this.hasErrors = true;
-        console.error(`Error: ${message}`);
-        this.errorLog.push(message + "");
+    error(message: any) {
+        if (!this.json) {
+            console.error(`Error: ${message}`);
+        }
+        if (this.runtimeError.details) {
+            if (message.error || message.message) {
+                this.runtimeError.message = message.message || message.error;
+                this.runtimeError.name = message.name;
+                this.runtimeError.code = message.code;
+            } else {
+                this.runtimeError.details.push(message + "");
+            }
+        }
+    }
+    warn(message: any) {
+        if (!this.json) {
+            console.warn(`Error: ${message}`);
+        }
     }
     about() {
         this.log(`
@@ -126,28 +169,36 @@ export class RuntimeArguments implements IRuntimeArguments {
             this.error(message);
         }
     }
-    setServerDefaults() {
+
+    setServerDefaults(p?: { list?: boolean }) {
         /*
         * Set server defaults
         * */
         this.json = true;
         this.verbose = false;
         this.serve = false;
+        this.shutdownOnValidation = false;
+        if (p !== void 0) {
+            this.list = p.list;
+        }
     }
 
-    hasErrors: boolean | undefined;
-    errorLog: string[] = [];
+    runtimeError: RuntimeError = new RuntimeError();
+    startTime = Date.now();
+    hasErrors() {
+        // @ts-ignore
+        return !!this.runtimeError.message || !!this.runtimeError.details.length;
+    }
 
     entity: string | undefined;
     fetch: FetchType | undefined;
     module: string | undefined;
-    prettyPrint: boolean | undefined;
     verbose: boolean | undefined;
     apiKey: string | undefined;
     appId: string | undefined;
     appName: string | undefined;
     branchName = "";
-    revision = -1;
+    revision: number | undefined;
     username: string | undefined;
     list: boolean | undefined;
     json: boolean | undefined;
@@ -155,5 +206,40 @@ export class RuntimeArguments implements IRuntimeArguments {
     host: string | undefined;
     port: number | undefined;
     serve: boolean | undefined;
+    delete: DeleteType | undefined;
+    workingCopyId: string | undefined;
+    shutdownOnValidation: boolean | undefined;
 
+    safeReturnOrError(result: any) {
+        if (!result) {
+            throw new Error(`Safe return object cannot be empty`);
+        }
+        if (this.hasErrors()) {
+            if (!this.json) {
+                this.red(`An error occurred:`);
+                this.table(this.runtimeError, ConsoleColorType.Red);
+            } else {
+                console.log(JSON.stringify({
+                    error: this.runtimeError,
+                    timeStamp: this.startTime,
+                    took: Date.now() - this.startTime
+                }));
+            }
+            return {
+                error: this.runtimeError,
+                timeStamp: this.startTime,
+                took: Date.now() - this.startTime
+            };
+        } else {
+            if (this.json) {
+                console.log(JSON.stringify(result));
+            } else {
+                this.table(result);
+                this.timeEnd(`\x1b[32mTook\x1b[0m`);
+            }
+            result.timeStamp = this.startTime;
+            result.took = Date.now() - this.startTime;
+            return result;
+        }
+    }
 }

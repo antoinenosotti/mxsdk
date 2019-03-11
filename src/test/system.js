@@ -27,19 +27,21 @@ describe(`Commands`, () => {
                 list: true,
                 fetch: undefined,
                 module: undefined,
-                entity: undefined,
-                prettyPrint: undefined,
                 json: undefined,
                 host: void 0,
                 port: void 0,
-                serve: false
+                serve: false,
+                entity: void 0,
+                workingCopyId: void 0,
+                delete: runtimearguments_1.DeleteType.WorkingCopy,
+                shutdownOnValidation: void 0
             };
             const run = () => __awaiter(this, void 0, void 0, function* () {
                 const runtime = new runtimearguments_1.RuntimeArguments({ props: args });
                 runtime.time(`\x1b[32mTook\x1b[0m`);
                 runtime.about();
-                const main = new mxsdk_1.Main();
-                yield main.run(runtime);
+                const main = new mxsdk_1.MxSDK();
+                yield main.execute(runtime);
             });
             yield run();
             chai_1.expect("I'm alive").to.equal("I'm alive");

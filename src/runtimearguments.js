@@ -9,11 +9,27 @@ var FetchType;
     FetchType["Entities"] = "entities";
     FetchType["Attributes"] = "attributes";
 })(FetchType = exports.FetchType || (exports.FetchType = {}));
+var DeleteType;
+(function (DeleteType) {
+    DeleteType["WorkingCopy"] = "workingCopy";
+    DeleteType["Revision"] = "revision";
+})(DeleteType = exports.DeleteType || (exports.DeleteType = {}));
+var ConsoleColorType;
+(function (ConsoleColorType) {
+    ConsoleColorType["Red"] = "\u001B[31m";
+    ConsoleColorType["White"] = "\u001B[0m";
+})(ConsoleColorType = exports.ConsoleColorType || (exports.ConsoleColorType = {}));
+class RuntimeError {
+    constructor() {
+        this.details = [];
+    }
+}
+exports.RuntimeError = RuntimeError;
 class RuntimeArguments {
     constructor(props) {
-        this.errorLog = [];
+        this.runtimeError = new RuntimeError();
+        this.startTime = Date.now();
         this.branchName = "";
-        this.revision = -1;
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
@@ -29,10 +45,12 @@ class RuntimeArguments {
             console.timeEnd(`${stopwatch} ${timer}`);
         }
     }
-    table(obj) {
+    table(obj, color = ConsoleColorType.White) {
+        console.log(color);
         if (this.verbose) {
             console.table(obj);
         }
+        console.log(ConsoleColorType.White);
     }
     timeStamp(label) {
         if (this.verbose && !this.json) {
@@ -75,9 +93,24 @@ class RuntimeArguments {
         this.log(args.join(""));
     }
     error(message) {
-        this.hasErrors = true;
-        console.error(`Error: ${message}`);
-        this.errorLog.push(message + "");
+        if (!this.json) {
+            console.error(`Error: ${message}`);
+        }
+        if (this.runtimeError.details) {
+            if (message.error || message.message) {
+                this.runtimeError.message = message.message || message.error;
+                this.runtimeError.name = message.name;
+                this.runtimeError.code = message.code;
+            }
+            else {
+                this.runtimeError.details.push(message + "");
+            }
+        }
+    }
+    warn(message) {
+        if (!this.json) {
+            console.warn(`Error: ${message}`);
+        }
     }
     about() {
         this.log(`
@@ -105,13 +138,56 @@ class RuntimeArguments {
             this.error(message);
         }
     }
-    setServerDefaults() {
+    setServerDefaults(p) {
         /*
         * Set server defaults
         * */
         this.json = true;
         this.verbose = false;
         this.serve = false;
+        this.shutdownOnValidation = false;
+        if (p !== void 0) {
+            this.list = p.list;
+        }
+    }
+    hasErrors() {
+        // @ts-ignore
+        return !!this.runtimeError.message || !!this.runtimeError.details.length;
+    }
+    safeReturnOrError(result) {
+        if (!result) {
+            throw new Error(`Safe return object cannot be empty`);
+        }
+        if (this.hasErrors()) {
+            if (!this.json) {
+                this.red(`An error occurred:`);
+                this.table(this.runtimeError, ConsoleColorType.Red);
+            }
+            else {
+                console.log(JSON.stringify({
+                    error: this.runtimeError,
+                    timeStamp: this.startTime,
+                    took: Date.now() - this.startTime
+                }));
+            }
+            return {
+                error: this.runtimeError,
+                timeStamp: this.startTime,
+                took: Date.now() - this.startTime
+            };
+        }
+        else {
+            if (this.json) {
+                console.log(JSON.stringify(result));
+            }
+            else {
+                this.table(result);
+                this.timeEnd(`\x1b[32mTook\x1b[0m`);
+            }
+            result.timeStamp = this.startTime;
+            result.took = Date.now() - this.startTime;
+            return result;
+        }
     }
 }
 exports.RuntimeArguments = RuntimeArguments;
