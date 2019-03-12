@@ -5,17 +5,17 @@
   "description": "A Mendix SDK Helper App that allows you to query the Mendix Model of you Mendix Apps",
   "scripts": {
     "test": "mocha -r ts-node/register ./src/test/*.ts --reporter mochawesome --reporter-options reportDir=public/test-results,reportFilename=index",
-    "Load Revision 11 Verbose": "node src/mxsdk.js --load --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
-    "Load Revision 11 Json": "node src/mxsdk.js --load --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
-    "Fetch Modules Verbose": "node src/mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
-    "Fetch Modules Json": "node src/mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
-    "List Revisions Verbose": "node src/mxsdk.js --list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose",
-    "List Revisions Json": "node src/mxsdk.js --list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json",
-    "Start": "node src/mxsdk.js serv --serve --host localhost --port 8004 --verbose",
-    "Fetch CLS Modules Verbose": "node src/mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\"",
-    "Fetch CLS Modules Json": "node src/mxsdk.js --fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\"",
-    "Delete WorkingCoopy Human": "node src/mxsdk.js --delete workingCopy --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 2ff3c17c-3e38-468e-9cfc-0e556f8b3911",
-    "Delete WorkingCoopy Json": "node src/mxsdk.js --delete workingCopy --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 9de20f7b-3816-4583-aeb0-4ba3ecc0fe0e"
+    "Load Revision 11 Verbose": "node src/mxsdk.js load  --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
+    "Load Revision 11 Json": "node src/mxsdk.js load --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
+    "Fetch Modules Verbose": "node src/mxsdk.js fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca   --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
+    "Fetch Modules Json": "node src/mxsdk.js fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo",
+    "List Revisions Verbose": "node src/mxsdk.js list",
+    "List Revisions Json": "node src/mxsdk.js list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json",
+    "Start": "node src/mxsdk.js serve --host localhost --port 8004 ",
+    "Fetch CLS Modules Verbose": "node src/mxsdk.js fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca   --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\"",
+    "Fetch CLS Modules Json": "node src/mxsdk.js fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --json  --appId 38ef5403-a28e-470f-8761-aef7f15d876d --revision 18426 --appName CLS --branchName \"Feature - Dev LFSF\"",
+    "Delete WorkingCoopy Human": "node src/mxsdk.js delete workingCopy  --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 2ff3c17c-3e38-468e-9cfc-0e556f8b3911",
+    "Delete WorkingCoopy Json": "node src/mxsdk.js delete workingCopy --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 9de20f7b-3816-4583-aeb0-4ba3ecc0fe0e"
   },
   "keywords": [
     "mendix",
@@ -37,6 +37,7 @@
     "@types/express": "^4.16.1",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.11.0",
+    "@types/request": "^2.48.1",
     "@types/when": "^2.4.33",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
@@ -49,8 +50,10 @@
     "mochawesome": "^3.1.1",
     "node-emoji": "^1.10.0",
     "ora": "^3.2.0",
+    "request": "^2.88.0",
     "safe-json-stringify": "^1.2.0",
     "swagger-ui-express": "^4.0.2",
+    "uuid": "^3.3.2",
     "when": "^3.7.8"
   },
   "directories": {

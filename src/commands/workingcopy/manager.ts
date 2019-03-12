@@ -131,7 +131,6 @@ export class Manager {
     }
     public static async listRevisions(runtime: RuntimeArguments) {
         const client = runtime.getClient();
-        runtime.verbose = true;
         try {
             const result: any[] = [];
             const workingCopies = await client.model().getMyWorkingCopies();

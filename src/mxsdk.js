@@ -12,10 +12,22 @@ const runtimearguments_1 = require("./runtimearguments");
 const modules_1 = require("./commands/fetch/modules");
 const manager_1 = require("./commands/workingcopy/manager");
 const load_1 = require("./commands/fetch/load");
+const callbackurl_1 = require("./callbackurl");
 exports.argv = require("minimist")(process.argv.slice(2));
 const emoji = require("node-emoji");
 const express = require("express");
 // const cliProgress = require("cli-progress");
+const postApi = [
+    "/api",
+    "/api/list",
+    "/api/load",
+    "/api/fetch",
+    "/api/fetch/modules",
+    "/api/delete"
+], deleteApi = [
+    "/api/revision",
+    "/api/working_copy"
+];
 class MxSDK {
     execute(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -47,15 +59,33 @@ class MxSDK {
                 app.use(bodyParser.json());
                 app.use("/", express.static("public"));
                 /*
-                * Startup the API
+                * Startup the POST API
                 * */
-                app.post("/api", (request, response) => __awaiter(this, void 0, void 0, function* () {
-                    yield this.handleRequest(request, response, {});
+                app.post(postApi, (request, response) => __awaiter(this, void 0, void 0, function* () {
+                    const path = request.url.split("/").slice(2);
+                    if (path.length === 0) {
+                        response.json({
+                            post: postApi
+                        });
+                    }
+                    else {
+                        yield this.handleRequest(request, response, path);
+                    }
                 }));
-                app.post("/api/list", (request, response) => __awaiter(this, void 0, void 0, function* () {
-                    yield this.handleRequest(request, response, {
-                        list: true
-                    });
+                /*
+                * Startup the DELETE API
+                * */
+                app.delete(deleteApi, (request, response) => __awaiter(this, void 0, void 0, function* () {
+                    const path = request.url.split("/").slice(2);
+                    path.unshift(`delete`);
+                    if (path.length === 0) {
+                        response.json({
+                            post: postApi
+                        });
+                    }
+                    else {
+                        yield this.handleRequest(request, response, path);
+                    }
                 }));
                 app.listen(runtime.port, runtime.host, (err) => {
                     if (err) {
@@ -71,18 +101,22 @@ class MxSDK {
                 };
             }
             /*
-            * Fetch all manner of things
+            * List all Revisions
             * */
             else if (runtime.list) {
                 return yield manager_1.Manager.listRevisions(runtime);
             }
             /*
-            * Fetch all manner of things
+            * Fetch Help
             * */
-            else if (runtime.fetch) {
-                if (runtime.fetch === runtimearguments_1.FetchType.Modules) {
-                    return yield modules_1.Modules.fetchModules(runtime);
-                }
+            else if (runtime.fetch === runtimearguments_1.FetchType.Help) {
+                return MxSDK.renderHelp(runtimearguments_1.FetchType, `fetch expects one following options:`, runtime);
+            }
+            /*
+            * Fetch Modules
+            * */
+            else if (runtime.fetch === runtimearguments_1.FetchType.Modules) {
+                return yield modules_1.Modules.fetchModules(runtime);
             }
             /*
             * Load a Revision
@@ -105,6 +139,12 @@ class MxSDK {
                 runtime.log(`Deleting revision ${runtime.revision}`);
                 return yield manager_1.Manager.deleteRevision(runtime);
             }
+            /*
+            * Delete Help
+            * */
+            else if (runtime.delete === runtimearguments_1.DeleteType.Help) {
+                return MxSDK.renderHelp(runtimearguments_1.DeleteType, `delete expects one following options:`, runtime);
+            }
             else {
                 const result = {
                     error: {
@@ -121,17 +161,38 @@ class MxSDK {
             }
         });
     }
-    handleRequest(request, response, defaults) {
+    handleRequest(request, response, path) {
         return __awaiter(this, void 0, void 0, function* () {
+            request.body._ = path;
             const runtime = new runtimearguments_1.RuntimeArguments(request.body);
-            runtime.setServerDefaults(defaults);
+            runtime.setServerDefaults();
             let result = {};
+            const callbackUrl = new callbackurl_1.CallbackUrl();
             try {
                 const main = new MxSDK();
-                result = yield main.execute(runtime);
+                if (!runtime.callback) {
+                    result = yield main.execute(runtime);
+                }
+                else {
+                    main.execute(runtime)
+                        .then((result) => {
+                        result.timeStamp = runtime.startTime;
+                        result.took = Date.now() - result.timeStamp;
+                        callbackUrl.callback(runtime.callback, result);
+                    })
+                        .catch((error) => {
+                        callbackUrl.callback(runtime.callback, error, true);
+                    });
+                    result = callbackUrl;
+                }
             }
             catch (e) {
-                runtime.error(e.message);
+                if (!runtime.callback) {
+                    runtime.error(e.message);
+                }
+                else {
+                    callbackUrl.callback(runtime.callback, e, true);
+                }
             }
             if (runtime.hasErrors()) {
                 response.status(runtime.runtimeError.statusCode || 500);
@@ -143,12 +204,16 @@ class MxSDK {
         /*
         * Assert Call Parameters
         * */
-        if (runtime.fetch || runtime.load || (runtime.delete === runtimearguments_1.DeleteType.Revision)) {
+        if ((runtime.fetch && runtime.fetch !== runtimearguments_1.FetchType.Help)
+            || runtime.load
+            || ((runtime.delete === runtimearguments_1.DeleteType.Revision))) {
             runtime.assert(!!runtime.appId, `appId is missing`, true);
             runtime.assert(!!runtime.appName, `appName is missing`, true);
             runtime.assert(!!runtime.revision, `revision is missing`, true);
         }
-        if (runtime.list || runtime.fetch || runtime.delete) {
+        if (runtime.list
+            || (runtime.fetch && runtime.fetch !== runtimearguments_1.FetchType.Help)
+            || (runtime.delete && (runtime.delete !== runtimearguments_1.DeleteType.Help))) {
             runtime.assert(!!runtime.username, `username is missing`, true);
             runtime.assert(!!runtime.apiKey, `apiKey is missing`, true);
         }
@@ -164,13 +229,40 @@ class MxSDK {
         }
         return !runtime.hasErrors();
     }
+    static renderHelp(options, message, runtime) {
+        if (runtime.json) {
+            console.log({
+                instructions: message,
+                options
+            });
+        }
+        else {
+            runtime.log(message);
+            runtime.table(options);
+        }
+        return {
+            instructions: message,
+            options
+        };
+    }
 }
 exports.MxSDK = MxSDK;
-if (Object.keys(exports.argv).length > 1) {
+if (exports.argv._.length > 0) {
     const runtime = new runtimearguments_1.RuntimeArguments(exports.argv);
     runtime.time(`\x1b[32mTook\x1b[0m`);
     runtime.about();
     const main = new MxSDK();
     main.execute(runtime);
+}
+else {
+    console.error(`No command passed ${JSON.stringify(exports.argv)}`);
+    console.log(`Usage:
+    node mxsdk.js commands --options
+    Commands:
+    =========
+    list                                Lists revision that have been downloaded from Mendix TeamServer. Options: username, apikey
+    load revision:number                Loads a revision from TeamServer. Options: appId, appName, revision, username, apikey                            
+    fetch modules|entities|microflows   Fetches mx objects. Options: appId, appName, revision, username, apikey
+    delete revision|working_copy        Deletes revisions & wc. Options: appId, appName, revision, username, apikey`);
 }
 //# sourceMappingURL=mxsdk.js.map

@@ -1,15 +1,18 @@
 import { MendixSdkClient } from "mendixplatformsdk";
+import { ICallbackUriOptions } from "./callbackurl";
 
 const emoji = require("node-emoji");
 const stopwatch = emoji.get(`stopwatch`);
 
 export enum FetchType {
+    Help = "help",
     Modules = "modules",
     Entities = "entities",
     Attributes = "attributes"
 }
 export enum DeleteType {
-    WorkingCopy = "workingCopy",
+    Help = "help",
+    WorkingCopy = "working_copy",
     Revision = "revision"
 }
 
@@ -22,7 +25,6 @@ export interface IRuntimeArguments {
     fetch: FetchType | undefined;
     module: string | undefined;
     entity: string | undefined;
-    verbose: boolean | undefined;
     username: string | undefined;
     apiKey: string | undefined;
     appId: string | undefined;
@@ -38,6 +40,7 @@ export interface IRuntimeArguments {
     delete: DeleteType | undefined;
     workingCopyId: string | undefined;
     shutdownOnValidation: boolean | undefined;
+    callback: ICallbackUriOptions | undefined;
 }
 
 export interface IRuntimeError {
@@ -58,29 +61,29 @@ export class RuntimeError implements IRuntimeError {
 
 export class RuntimeArguments implements IRuntimeArguments {
     time(timer: any) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.time(`${stopwatch} ${timer}`);
         }
     }
     timeEnd(timer: any) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.timeEnd(`${stopwatch} ${timer}`);
         }
     }
     table(obj: any, color: ConsoleColorType = ConsoleColorType.White) {
         console.log(color);
-        if (this.verbose) {
+        if (!this.json) {
             console.table(obj);
         }
         console.log(ConsoleColorType.White);
     }
     timeStamp(label?: string) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.timeStamp(label);
         }
     }
     dir(obj: any) {
-        if (this.verbose) {
+        if (!this.json) {
             console.dir(obj, {
                 colors: true,
                 getters: false,
@@ -90,7 +93,7 @@ export class RuntimeArguments implements IRuntimeArguments {
         }
     }
     log(...args: any[]) {
-        if (this.verbose) {
+        if (!this.json) {
             console.log(args.join(``));
         }
     }
@@ -116,7 +119,7 @@ export class RuntimeArguments implements IRuntimeArguments {
     }
     error(message: any) {
         if (!this.json) {
-            console.error(`Error: ${message}`);
+            this.red(`Error: ${message}`);
         }
         if (this.runtimeError.details) {
             if (message.error || message.message) {
@@ -134,32 +137,37 @@ export class RuntimeArguments implements IRuntimeArguments {
         }
     }
     about() {
-        this.log(`
-\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
+        this.log(`\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
 \x1b[31m | ___ \\  _  \\/  __ \\          \x1b[34m|  \\/  |    /  ___|  _  \\ | / /     
 \x1b[31m | |_/ / | | || /  \\/  \x1b[0m______  \x1b[34m| .  . |_  _\\ \`--.| | | | |/ /    \x1b[0mMendix SDK Helper
 \x1b[31m | ___ \\ | | || |     \x1b[0m|______| \x1b[34m| |\\/| \\ \\/ /\`--. \\ | | |    \\    \x1b[0mwritten by Herman Geldenhuys
 \x1b[31m | |_/ / |/ / | \\__/\\          \x1b[34m| |  | |>  </\\__/ / |/ /| |\\  \\   \x1b[0mCopyright BDC 2019
-\x1b[31m \\____/|___/   \\____/          \x1b[34m\\_|  |_/_/\\_\\____/|___/ \\_| \\_/\x1b[0m   ${(new Date()).toISOString()}
-         
-`);
-        this.log(`Runtime Arguments:`);
+\x1b[31m \\____/|___/   \\____/          \x1b[34m\\_|  |_/_/\\_\\____/|___/ \\_| \\_/\x1b[0m   ${(new Date()).toISOString()}`);
         this.table(this);
-        // this.log(`\n\nWorking Copy Registry:`);
-        // this.table(WorkingCopyManager.config)
     }
-
     constructor(props: any | IRuntimeArguments) {
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
         }
+        if (props._) {
+            const commandPassed =
+                props._[0] === `delete` ? this.delete = props._[0] && (props._[1] || DeleteType.Help) :
+                props._[0] === `list` ? this.list = true :
+                props._[0] === `load` ? this.load = true :
+                props._[0] === `serve` ? this.serve = true :
+                props._[0] === `fetch` ? this.fetch = props._[0] && (props._[1] || FetchType.Help) :
+                false;
+            if (commandPassed && false) {
+                this.log(`commandPassed=${props._[0]}`);
+            }
+        }
     }
 
     public client: MendixSdkClient | undefined;
     getClient(): MendixSdkClient {
-        const username = this.username + "";
-        const apiKey = this.apiKey + "";
+        const username = this.username || "unspecified";
+        const apiKey = this.apiKey || "unspecified";
 
         this.client = new MendixSdkClient(username, apiKey);
         return this.client;
@@ -175,7 +183,6 @@ export class RuntimeArguments implements IRuntimeArguments {
         * Set server defaults
         * */
         this.json = true;
-        this.verbose = false;
         this.serve = false;
         this.shutdownOnValidation = false;
         if (p !== void 0) {
@@ -193,7 +200,6 @@ export class RuntimeArguments implements IRuntimeArguments {
     entity: string | undefined;
     fetch: FetchType | undefined;
     module: string | undefined;
-    verbose: boolean | undefined;
     apiKey: string | undefined;
     appId: string | undefined;
     appName: string | undefined;
@@ -209,6 +215,7 @@ export class RuntimeArguments implements IRuntimeArguments {
     delete: DeleteType | undefined;
     workingCopyId: string | undefined;
     shutdownOnValidation: boolean | undefined;
+    callback: ICallbackUriOptions | undefined;
 
     safeReturnOrError(result: any) {
         if (!result) {
@@ -242,4 +249,5 @@ export class RuntimeArguments implements IRuntimeArguments {
             return result;
         }
     }
+
 }

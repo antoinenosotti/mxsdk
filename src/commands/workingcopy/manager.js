@@ -117,7 +117,6 @@ class Manager {
     static listRevisions(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             const client = runtime.getClient();
-            runtime.verbose = true;
             try {
                 const result = [];
                 const workingCopies = yield client.model().getMyWorkingCopies();

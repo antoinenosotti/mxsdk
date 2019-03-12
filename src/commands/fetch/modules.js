@@ -38,7 +38,6 @@ class Modules {
                 }
                 else {
                     modules.forEach((module) => {
-                        // @ts-ignore
                         const mxObject = tools_1.grabSDKObject(module, runtime);
                         // @ts-ignore
                         result.revision.modules.push(mxObject);

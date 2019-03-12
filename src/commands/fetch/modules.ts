@@ -28,7 +28,6 @@ export class Modules {
                 return result;
             } else {
                 modules.forEach((module) => {
-                    // @ts-ignore
                     const mxObject = grabSDKObject(module, runtime);
                     // @ts-ignore
                     result.revision.modules.push(mxObject);

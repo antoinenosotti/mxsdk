@@ -22,7 +22,6 @@ describe(`Commands`, () => {
                 branchName: "",
                 revision: 11,
                 load: false,
-                verbose: true,
                 username: "herman.geldenhuys@bdc.ca",
                 list: true,
                 fetch: undefined,

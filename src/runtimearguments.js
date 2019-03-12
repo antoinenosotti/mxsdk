@@ -5,13 +5,15 @@ const emoji = require("node-emoji");
 const stopwatch = emoji.get(`stopwatch`);
 var FetchType;
 (function (FetchType) {
+    FetchType["Help"] = "help";
     FetchType["Modules"] = "modules";
     FetchType["Entities"] = "entities";
     FetchType["Attributes"] = "attributes";
 })(FetchType = exports.FetchType || (exports.FetchType = {}));
 var DeleteType;
 (function (DeleteType) {
-    DeleteType["WorkingCopy"] = "workingCopy";
+    DeleteType["Help"] = "help";
+    DeleteType["WorkingCopy"] = "working_copy";
     DeleteType["Revision"] = "revision";
 })(DeleteType = exports.DeleteType || (exports.DeleteType = {}));
 var ConsoleColorType;
@@ -34,31 +36,42 @@ class RuntimeArguments {
             // @ts-ignore
             this[propName] = props[propName];
         }
+        if (props._) {
+            const commandPassed = props._[0] === `delete` ? this.delete = props._[0] && (props._[1] || DeleteType.Help) :
+                props._[0] === `list` ? this.list = true :
+                    props._[0] === `load` ? this.load = true :
+                        props._[0] === `serve` ? this.serve = true :
+                            props._[0] === `fetch` ? this.fetch = props._[0] && (props._[1] || FetchType.Help) :
+                                false;
+            if (commandPassed && false) {
+                this.log(`commandPassed=${props._[0]}`);
+            }
+        }
     }
     time(timer) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.time(`${stopwatch} ${timer}`);
         }
     }
     timeEnd(timer) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.timeEnd(`${stopwatch} ${timer}`);
         }
     }
     table(obj, color = ConsoleColorType.White) {
         console.log(color);
-        if (this.verbose) {
+        if (!this.json) {
             console.table(obj);
         }
         console.log(ConsoleColorType.White);
     }
     timeStamp(label) {
-        if (this.verbose && !this.json) {
+        if (!this.json) {
             console.timeStamp(label);
         }
     }
     dir(obj) {
-        if (this.verbose) {
+        if (!this.json) {
             console.dir(obj, {
                 colors: true,
                 getters: false,
@@ -68,7 +81,7 @@ class RuntimeArguments {
         }
     }
     log(...args) {
-        if (this.verbose) {
+        if (!this.json) {
             console.log(args.join(``));
         }
     }
@@ -94,7 +107,7 @@ class RuntimeArguments {
     }
     error(message) {
         if (!this.json) {
-            console.error(`Error: ${message}`);
+            this.red(`Error: ${message}`);
         }
         if (this.runtimeError.details) {
             if (message.error || message.message) {
@@ -113,23 +126,17 @@ class RuntimeArguments {
         }
     }
     about() {
-        this.log(`
-\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
+        this.log(`\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
 \x1b[31m | ___ \\  _  \\/  __ \\          \x1b[34m|  \\/  |    /  ___|  _  \\ | / /     
 \x1b[31m | |_/ / | | || /  \\/  \x1b[0m______  \x1b[34m| .  . |_  _\\ \`--.| | | | |/ /    \x1b[0mMendix SDK Helper
 \x1b[31m | ___ \\ | | || |     \x1b[0m|______| \x1b[34m| |\\/| \\ \\/ /\`--. \\ | | |    \\    \x1b[0mwritten by Herman Geldenhuys
 \x1b[31m | |_/ / |/ / | \\__/\\          \x1b[34m| |  | |>  </\\__/ / |/ /| |\\  \\   \x1b[0mCopyright BDC 2019
-\x1b[31m \\____/|___/   \\____/          \x1b[34m\\_|  |_/_/\\_\\____/|___/ \\_| \\_/\x1b[0m   ${(new Date()).toISOString()}
-         
-`);
-        this.log(`Runtime Arguments:`);
+\x1b[31m \\____/|___/   \\____/          \x1b[34m\\_|  |_/_/\\_\\____/|___/ \\_| \\_/\x1b[0m   ${(new Date()).toISOString()}`);
         this.table(this);
-        // this.log(`\n\nWorking Copy Registry:`);
-        // this.table(WorkingCopyManager.config)
     }
     getClient() {
-        const username = this.username + "";
-        const apiKey = this.apiKey + "";
+        const username = this.username || "unspecified";
+        const apiKey = this.apiKey || "unspecified";
         this.client = new mendixplatformsdk_1.MendixSdkClient(username, apiKey);
         return this.client;
     }
@@ -143,7 +150,6 @@ class RuntimeArguments {
         * Set server defaults
         * */
         this.json = true;
-        this.verbose = false;
         this.serve = false;
         this.shutdownOnValidation = false;
         if (p !== void 0) {
