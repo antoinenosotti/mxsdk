@@ -1,8 +1,8 @@
-import { RuntimeArguments } from "../../runtimearguments";
+import { Runtime } from "../../runtime";
 import { Manager } from "../workingcopy/manager";
 
 export class Load {
-    public static async loadRevision(runtime: RuntimeArguments) {
+    public static async loadRevision(runtime: Runtime) {
         const revision = await Manager.getRevision(runtime);
         if (revision !== void 0) {
             return {

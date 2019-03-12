@@ -141,26 +141,20 @@ class Manager {
                 }));
                 if (!runtime.json) {
                     runtime.blue(`Available revisions:`);
-                    runtime.table(result);
-                    runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
                     return result;
                 }
                 else {
-                    const response = {
+                    return {
                         revisions: result
                     };
-                    console.log(JSON.stringify(response));
-                    return response;
                 }
             }
             catch (error) {
-                const response = {
+                return {
                     error: {
                         message: error.message
                     }
                 };
-                console.error(JSON.stringify(response));
-                return response;
             }
         });
     }
@@ -179,10 +173,10 @@ class Manager {
             else {
                 runtime.error(`No working copy found for id ${runtime.workingCopyId}`);
             }
-            return runtime.safeReturnOrError({
+            return {
                 deleted: true,
                 workingCopyId: runtime.workingCopyId
-            });
+            };
         });
     }
     static deleteRevision(runtime) {
@@ -216,11 +210,11 @@ class Manager {
                 runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
             }
             delete self.config.applications[appId].revisions[revision];
-            return runtime.safeReturnOrError({
+            return {
                 deleted: true,
                 workingCopyId: runtime.workingCopyId,
                 revision: runtime.revision
-            });
+            };
         });
     }
 }

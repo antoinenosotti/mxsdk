@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mxsdk_1 = require("../mxsdk");
-const runtimearguments_1 = require("../runtimearguments");
+const runtime_1 = require("../runtime");
 const chai_1 = require("chai");
 require("mocha");
 describe(`Commands`, () => {
@@ -32,11 +32,12 @@ describe(`Commands`, () => {
                 serve: false,
                 entity: void 0,
                 workingCopyId: void 0,
-                delete: runtimearguments_1.DeleteType.WorkingCopy,
-                shutdownOnValidation: void 0
+                delete: runtime_1.DeleteType.WorkingCopy,
+                shutdownOnValidation: void 0,
+                callback: void 0
             };
             const run = () => __awaiter(this, void 0, void 0, function* () {
-                const runtime = new runtimearguments_1.RuntimeArguments({ props: args });
+                const runtime = new runtime_1.Runtime({ props: args });
                 runtime.time(`\x1b[32mTook\x1b[0m`);
                 runtime.about();
                 const main = new mxsdk_1.MxSDK();

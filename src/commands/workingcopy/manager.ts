@@ -1,4 +1,4 @@
-import { RuntimeArguments } from "../../runtimearguments";
+import { Runtime } from "../../runtime";
 import { Branch, Project, Revision } from "mendixplatformsdk";
 import { IModel } from "mendixmodelsdk";
 
@@ -79,7 +79,7 @@ export class Manager {
     /*
     * Revision Helper methods, list, has and get. ToDo: Delete
     * */
-    static hasRevision(runtime: RuntimeArguments) {
+    static hasRevision(runtime: Runtime) {
         if (runtime.appId !== void 0) {
             const revision = runtime.revision || -1;
             return !!self.config.applications[runtime.appId].revisions[revision];
@@ -87,7 +87,7 @@ export class Manager {
             return void 0;
         }
     }
-    static async getRevision(runtime: RuntimeArguments): Promise<IModel | void> {
+    static async getRevision(runtime: Runtime): Promise<IModel | void> {
         // @ts-ignore
         if (!self.config.applications[runtime.appId]) {
             // @ts-ignore
@@ -129,7 +129,7 @@ export class Manager {
             return workingCopy.model();
         }
     }
-    public static async listRevisions(runtime: RuntimeArguments) {
+    public static async listRevisions(runtime: Runtime) {
         const client = runtime.getClient();
         try {
             const result: any[] = [];
@@ -154,28 +154,22 @@ export class Manager {
             });
             if (!runtime.json) {
                 runtime.blue(`Available revisions:`);
-                runtime.table(result);
-                runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
                 return result;
             } else {
-                const response = {
+                return {
                     revisions: result
                 };
-                console.log(JSON.stringify(response));
-                return response;
             }
         } catch (error) {
-            const response = {
+            return {
                 error: {
                     message: error.message
                 }
             };
-            console.error(JSON.stringify(response));
-            return response;
         }
     }
 
-    static async deleteWorkingCopy(runtime: RuntimeArguments) {
+    static async deleteWorkingCopy(runtime: Runtime) {
         if (runtime.workingCopyId !== void 0) {
             monkeyPatchConsole(!runtime.json);
             await runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
@@ -188,13 +182,13 @@ export class Manager {
         } else {
             runtime.error(`No working copy found for id ${runtime.workingCopyId}`);
         }
-        return runtime.safeReturnOrError({
+        return {
             deleted: true,
             workingCopyId: runtime.workingCopyId
-        });
+        };
     }
 
-    static async deleteRevision(runtime: RuntimeArguments) {
+    static async deleteRevision(runtime: Runtime) {
         const appId = runtime.appId || "unspecified";
         if (!self.config.applications[appId]) {
             runtime.error(`Application of id ${runtime.appId} not known`);
@@ -223,11 +217,11 @@ export class Manager {
             runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
         }
         delete self.config.applications[appId].revisions[revision];
-        return runtime.safeReturnOrError({
+        return {
             deleted: true,
             workingCopyId: runtime.workingCopyId,
             revision: runtime.revision
-        });
+        };
     }
 }
 

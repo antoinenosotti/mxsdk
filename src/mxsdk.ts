@@ -1,4 +1,4 @@
-import { DeleteType, FetchType, RuntimeArguments } from "./runtimearguments";
+import { DeleteType, FetchType, Runtime } from "./runtime";
 import { Modules } from "./commands/fetch/modules";
 import { Manager } from "./commands/workingcopy/manager";
 import { Load } from "./commands/fetch/load";
@@ -22,7 +22,8 @@ const
     ];
 
 export class MxSDK {
-    public async execute(runtime: RuntimeArguments) {
+    public async execute(runtime: Runtime) {
+        let executeResult: any = {};
         if (!MxSDK.validate(runtime)) {
             if (runtime.shutdownOnValidation !== false) {
                 console.error(`There were some errors. Exiting`);
@@ -84,6 +85,13 @@ export class MxSDK {
                     await this.handleRequest(request, response, path);
                 }
             });
+            /*
+            * Startup the OPTION API
+            * */
+            app.options(["/api/shutdown"], async (request: any, response: any) => {
+                const path = request.url.split("/").slice(2);
+                await this.handleRequest(request, response, path);
+            });
 
             app.listen(runtime.port, runtime.host, (err: any) => {
                 if (err) {
@@ -93,7 +101,7 @@ export class MxSDK {
                     runtime.green(emoji.emojify(`Now serving to the world :earth_africa: at ${runtime.host}:${runtime.port}!`));
                 }
             });
-            return {
+            executeResult = {
                 status: "API Rest Service Started"
             };
         }
@@ -102,20 +110,20 @@ export class MxSDK {
         * List all Revisions
         * */
         else if (runtime.list) {
-            return await Manager.listRevisions(runtime);
+            executeResult = Manager.listRevisions(runtime);
         }
 
         /*
         * Fetch Help
         * */
         else if (runtime.fetch === FetchType.Help) {
-            return MxSDK.renderHelp(FetchType, `fetch expects one following options:`, runtime);
+            executeResult = MxSDK.renderHelp(FetchType, `fetch expects one following options:`, runtime);
         }
         /*
         * Fetch Modules
         * */
         else if (runtime.fetch === FetchType.Modules) {
-            return await Modules.fetchModules(runtime);
+            executeResult = Modules.fetchModules(runtime);
         }
 
         /*
@@ -123,7 +131,7 @@ export class MxSDK {
         * */
         else if (runtime.load) {
             runtime.log(`Loading revision ${runtime.revision}`);
-            return await Load.loadRevision(runtime);
+            executeResult = Load.loadRevision(runtime);
         }
 
         /*
@@ -131,20 +139,27 @@ export class MxSDK {
         * */
         else if (runtime.delete === DeleteType.WorkingCopy) {
             runtime.log(`Deleting working copy ${runtime.workingCopyId} ${runtime.revision}`);
-            return await Manager.deleteWorkingCopy(runtime);
+            executeResult = Manager.deleteWorkingCopy(runtime);
         }
         /*
         * Delete a Working Copy
         * */
         else if (runtime.delete === DeleteType.Revision) {
             runtime.log(`Deleting revision ${runtime.revision}`);
-            return await Manager.deleteRevision(runtime);
+            executeResult = Manager.deleteRevision(runtime);
         }
         /*
         * Delete Help
         * */
         else if (runtime.delete === DeleteType.Help) {
-            return MxSDK.renderHelp(DeleteType, `delete expects one following options:`, runtime);
+            executeResult = MxSDK.renderHelp(DeleteType, `delete expects one following options:`, runtime);
+        }
+        /*
+        * Shutdown
+        * */
+        else if (runtime.shutdown) {
+            console.log(`Shutdown command received.`);
+            process.kill(process.pid);
         } else {
             const result = {
                 error: {
@@ -156,13 +171,14 @@ export class MxSDK {
             } else {
                 runtime.error(`No command specified!`);
             }
-            return result;
+            executeResult = result;
         }
+        return executeResult;
     }
 
     private async handleRequest(request: any, response: any, path?: any) {
         request.body._ = path;
-        const runtime = new RuntimeArguments(request.body);
+        const runtime = new Runtime(request.body);
         runtime.setServerDefaults();
         let result = {};
         const callbackUrl = new CallbackUrl();
@@ -192,10 +208,11 @@ export class MxSDK {
         if (runtime.hasErrors()) {
             response.status(runtime.runtimeError.statusCode || 500);
         }
-        response.json(runtime.safeReturnOrError(result));
+        result = await result;
+        response.json(await runtime.safeReturnOrError(result));
     }
 
-    private static validate(runtime: RuntimeArguments) {
+    private static validate(runtime: Runtime) {
         /*
         * Assert Call Parameters
         * */
@@ -225,7 +242,7 @@ export class MxSDK {
         return !runtime.hasErrors();
     }
 
-    private static renderHelp(options: any, message: string, runtime: RuntimeArguments) {
+    private static renderHelp(options: any, message: string, runtime: Runtime) {
         if (runtime.json) {
             console.log({
                 instructions: message,
@@ -243,11 +260,11 @@ export class MxSDK {
 }
 
 if (argv._.length > 0) {
-    const runtime = new RuntimeArguments(argv);
+    const runtime = new Runtime(argv);
     runtime.time(`\x1b[32mTook\x1b[0m`);
     runtime.about();
     const main = new MxSDK();
-    main.execute(runtime);
+    runtime.safeReturnOrError(main.execute(runtime));
 } else {
     console.error(`No command passed ${JSON.stringify(argv)}`);
     console.log(`Usage:

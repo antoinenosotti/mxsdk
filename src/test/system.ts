@@ -1,5 +1,5 @@
 import { MxSDK } from "../mxsdk";
-import { DeleteType, IRuntimeArguments, RuntimeArguments } from "../runtimearguments";
+import { DeleteType, IRuntimeArguments, Runtime } from "../runtime";
 import { expect } from "chai";
 import "mocha";
 
@@ -26,11 +26,12 @@ describe(`Commands`, () => {
                 entity: void 0,
                 workingCopyId: void 0,
                 delete: DeleteType.WorkingCopy,
-                shutdownOnValidation: void 0
+                shutdownOnValidation: void 0,
+                callback: void 0
             };
 
             const run = async () => {
-                const runtime = new RuntimeArguments({props: args});
+                const runtime = new Runtime({props: args});
                 runtime.time(`\x1b[32mTook\x1b[0m`);
                 runtime.about();
                 const main = new MxSDK();

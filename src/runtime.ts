@@ -1,8 +1,6 @@
 import { MendixSdkClient } from "mendixplatformsdk";
 import { ICallbackUriOptions } from "./callbackurl";
-
-const emoji = require("node-emoji");
-const stopwatch = emoji.get(`stopwatch`);
+import { ConsoleColorType, IRuntimeArgumentsBase, RuntimeBase } from "./runtimebase";
 
 export enum FetchType {
     Help = "help",
@@ -16,12 +14,7 @@ export enum DeleteType {
     Revision = "revision"
 }
 
-export enum ConsoleColorType {
-    Red = "\x1b[31m",
-    White = "\x1b[0m"
-}
-
-export interface IRuntimeArguments {
+export interface IRuntimeArguments extends IRuntimeArgumentsBase {
     fetch: FetchType | undefined;
     module: string | undefined;
     entity: string | undefined;
@@ -32,7 +25,6 @@ export interface IRuntimeArguments {
     branchName: string;
     revision: number | undefined;
     list: boolean | undefined;
-    json: boolean | undefined;
     load: boolean | undefined;
     serve: boolean | undefined;
     host: string | undefined;
@@ -41,101 +33,10 @@ export interface IRuntimeArguments {
     workingCopyId: string | undefined;
     shutdownOnValidation: boolean | undefined;
     callback: ICallbackUriOptions | undefined;
+    shutdown: boolean | undefined;
 }
 
-export interface IRuntimeError {
-    name: string | undefined;
-    message: string | undefined;
-    code: string | number | undefined;
-    statusCode: string | number | undefined;
-    details: string[] | undefined;
-}
-
-export class RuntimeError implements IRuntimeError {
-    code: string | number | undefined;
-    details: string[] | undefined = [];
-    message: string | undefined;
-    name: string | undefined;
-    statusCode: string | number | undefined;
-}
-
-export class RuntimeArguments implements IRuntimeArguments {
-    time(timer: any) {
-        if (!this.json) {
-            console.time(`${stopwatch} ${timer}`);
-        }
-    }
-    timeEnd(timer: any) {
-        if (!this.json) {
-            console.timeEnd(`${stopwatch} ${timer}`);
-        }
-    }
-    table(obj: any, color: ConsoleColorType = ConsoleColorType.White) {
-        console.log(color);
-        if (!this.json) {
-            console.table(obj);
-        }
-        console.log(ConsoleColorType.White);
-    }
-    timeStamp(label?: string) {
-        if (!this.json) {
-            console.timeStamp(label);
-        }
-    }
-    dir(obj: any) {
-        if (!this.json) {
-            console.dir(obj, {
-                colors: true,
-                getters: false,
-                showHidden: false,
-                breakLength: 3
-            });
-        }
-    }
-    log(...args: any[]) {
-        if (!this.json) {
-            console.log(args.join(``));
-        }
-    }
-    green(...args: any[]) {
-        args.unshift("\x1b[32m");
-        args.push("\x1b[0m");
-        this.log(args.join(""));
-    }
-    yellow(...args: any[]) {
-        args.unshift("\x1b[33m");
-        args.push("\x1b[0m");
-        this.log(args.join(""));
-    }
-    red(...args: any[]) {
-        args.unshift("\x1b[31m");
-        args.push("\x1b[0m");
-        this.log(args.join(""));
-    }
-    blue(...args: any[]) {
-        args.unshift("\x1b[34m");
-        args.push("\x1b[0m");
-        this.log(args.join(""));
-    }
-    error(message: any) {
-        if (!this.json) {
-            this.red(`Error: ${message}`);
-        }
-        if (this.runtimeError.details) {
-            if (message.error || message.message) {
-                this.runtimeError.message = message.message || message.error;
-                this.runtimeError.name = message.name;
-                this.runtimeError.code = message.code;
-            } else {
-                this.runtimeError.details.push(message + "");
-            }
-        }
-    }
-    warn(message: any) {
-        if (!this.json) {
-            console.warn(`Error: ${message}`);
-        }
-    }
+export class Runtime extends RuntimeBase implements IRuntimeArguments {
     about() {
         this.log(`\x1b[31m ____________  _____           \x1b[34m___  ___     ___________ _   __
 \x1b[31m | ___ \\  _  \\/  __ \\          \x1b[34m|  \\/  |    /  ___|  _  \\ | / /     
@@ -146,6 +47,7 @@ export class RuntimeArguments implements IRuntimeArguments {
         this.table(this);
     }
     constructor(props: any | IRuntimeArguments) {
+        super(props);
         for (const propName in props) {
             // @ts-ignore
             this[propName] = props[propName];
@@ -156,6 +58,7 @@ export class RuntimeArguments implements IRuntimeArguments {
                 props._[0] === `list` ? this.list = true :
                 props._[0] === `load` ? this.load = true :
                 props._[0] === `serve` ? this.serve = true :
+                props._[0] === `shutdown` ? this.shutdown = true :
                 props._[0] === `fetch` ? this.fetch = props._[0] && (props._[1] || FetchType.Help) :
                 false;
             if (commandPassed && false) {
@@ -190,13 +93,6 @@ export class RuntimeArguments implements IRuntimeArguments {
         }
     }
 
-    runtimeError: RuntimeError = new RuntimeError();
-    startTime = Date.now();
-    hasErrors() {
-        // @ts-ignore
-        return !!this.runtimeError.message || !!this.runtimeError.details.length;
-    }
-
     entity: string | undefined;
     fetch: FetchType | undefined;
     module: string | undefined;
@@ -207,7 +103,6 @@ export class RuntimeArguments implements IRuntimeArguments {
     revision: number | undefined;
     username: string | undefined;
     list: boolean | undefined;
-    json: boolean | undefined;
     load: boolean | undefined;
     host: string | undefined;
     port: number | undefined;
@@ -216,15 +111,17 @@ export class RuntimeArguments implements IRuntimeArguments {
     workingCopyId: string | undefined;
     shutdownOnValidation: boolean | undefined;
     callback: ICallbackUriOptions | undefined;
+    shutdown: boolean | undefined;
 
-    safeReturnOrError(result: any) {
+    async safeReturnOrError(result: any) {
+        result = await result;
         if (!result) {
             throw new Error(`Safe return object cannot be empty`);
         }
         if (this.hasErrors()) {
             if (!this.json) {
                 this.red(`An error occurred:`);
-                this.table(this.runtimeError, ConsoleColorType.Red);
+                this.table(this.runtimeError, ConsoleColorType.FGRed);
             } else {
                 console.log(JSON.stringify({
                     error: this.runtimeError,

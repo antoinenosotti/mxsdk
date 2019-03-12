@@ -7,7 +7,7 @@ class CallbackUrl {
         this.callbackId = uuidv4();
     }
     callback(callbackUriOptions, requestBody, failed = false) {
-        console.log(`Sending back ${JSON.stringify(requestBody)}`);
+        console.debug(`Sending back ${JSON.stringify(requestBody)}`);
         return new Promise((resolve, reject) => {
             if (callbackUriOptions) {
                 const uri = !failed ? callbackUriOptions.successUri : callbackUriOptions.failUri;
@@ -27,7 +27,7 @@ class CallbackUrl {
                         reject(error);
                     }
                     else {
-                        console.error(`CB: ${JSON.stringify(responseBody)}`);
+                        console.debug(`CB: ${JSON.stringify(responseBody)}`);
                         if (responseBody instanceof Object) {
                             responseBody.callbackId = this.callbackId;
                         }
@@ -39,14 +39,6 @@ class CallbackUrl {
                 console.warn(`Skipping callback for ${this.callbackId}`);
             }
         });
-        // http.request(options, (response) => {
-        //     console.log("CALLBACK STATUS: " + response.statusCode);
-        //     console.log("CALLBACK HEADERS: " + JSON.stringify(response.headers));
-        //     response.setEncoding("utf8");
-        //     response.on("CALLBACK data", (chunk) => {
-        //         console.log("BODY: " + chunk);
-        //     });
-        // }).end();
     }
 }
 exports.CallbackUrl = CallbackUrl;

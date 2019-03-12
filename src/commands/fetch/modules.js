@@ -29,12 +29,8 @@ class Modules {
                         // @ts-ignore
                         result.revision.modules.push(`${module.name}`);
                     });
-                    runtime.blue(`Summary: `);
-                    runtime.table(result);
-                    runtime.blue(`Modules: `);
-                    runtime.table(result.revision.modules);
-                    runtime.timeEnd(`\x1b[32mTook\x1b[0m`);
-                    return result;
+                    runtime.log(`Modules: `);
+                    return result.revision.modules;
                 }
                 else {
                     modules.forEach((module) => {
@@ -42,7 +38,6 @@ class Modules {
                         // @ts-ignore
                         result.revision.modules.push(mxObject);
                     });
-                    console.log(JSON.stringify(result));
                 }
                 return result;
             }
