@@ -5,10 +5,17 @@ import { ConsoleColorType, IRuntimeArgumentsBase, RuntimeBase } from "./runtimeb
 export enum FetchType {
     Help = "help",
     Modules = "modules",
+    Microflows = "microflows",
     Entities = "entities",
     Attributes = "attributes"
 }
 export enum DeleteType {
+    Help = "help",
+    WorkingCopy = "working_copy",
+    Revision = "revision"
+}
+
+export enum ListType {
     Help = "help",
     WorkingCopy = "working_copy",
     Revision = "revision"
@@ -24,7 +31,7 @@ export interface IRuntimeArguments extends IRuntimeArgumentsBase {
     appName: string | undefined;
     branchName: string;
     revision: number | undefined;
-    list: boolean | undefined;
+    list: ListType | undefined;
     load: boolean | undefined;
     serve: boolean | undefined;
     host: string | undefined;
@@ -55,7 +62,7 @@ export class Runtime extends RuntimeBase implements IRuntimeArguments {
         if (props._) {
             const commandPassed =
                 props._[0] === `delete` ? this.delete = props._[0] && (props._[1] || DeleteType.Help) :
-                props._[0] === `list` ? this.list = true :
+                props._[0] === `list` ? this.list = (props._[1] || ListType.Help) :
                 props._[0] === `load` ? this.load = true :
                 props._[0] === `serve` ? this.serve = true :
                 props._[0] === `shutdown` ? this.shutdown = true :
@@ -81,7 +88,7 @@ export class Runtime extends RuntimeBase implements IRuntimeArguments {
         }
     }
 
-    setServerDefaults(p?: { list?: boolean }) {
+    setServerDefaults(p?: { list?: ListType }) {
         /*
         * Set server defaults
         * */
@@ -102,7 +109,7 @@ export class Runtime extends RuntimeBase implements IRuntimeArguments {
     branchName = "";
     revision: number | undefined;
     username: string | undefined;
-    list: boolean | undefined;
+    list: ListType | undefined;
     load: boolean | undefined;
     host: string | undefined;
     port: number | undefined;

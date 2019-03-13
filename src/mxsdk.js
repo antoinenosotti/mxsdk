@@ -13,16 +13,19 @@ const modules_1 = require("./commands/fetch/modules");
 const manager_1 = require("./commands/workingcopy/manager");
 const load_1 = require("./commands/fetch/load");
 const callbackurl_1 = require("./callbackurl");
+const microflows_1 = require("./commands/fetch/microflows");
 exports.argv = require("minimist")(process.argv.slice(2));
 const emoji = require("node-emoji");
 const express = require("express");
-// const cliProgress = require("cli-progress");
 const postApi = [
     "/api",
     "/api/list",
+    "/api/list/working_copy",
+    "/api/list/revision",
     "/api/load",
     "/api/fetch",
     "/api/fetch/modules",
+    "/api/fetch/microflows",
     "/api/delete"
 ], deleteApi = [
     "/api/revision",
@@ -109,10 +112,22 @@ class MxSDK {
                 };
             }
             /*
+            * List all Working Copies
+            * */
+            else if (runtime.list === runtime_1.ListType.WorkingCopy) {
+                executeResult = manager_1.Manager.listWorkingCopies(runtime);
+            }
+            /*
             * List all Revisions
             * */
-            else if (runtime.list) {
+            else if (runtime.list === runtime_1.ListType.Revision) {
                 executeResult = manager_1.Manager.listRevisions(runtime);
+            }
+            /*
+            * List all Revisions
+            * */
+            else if (runtime.list === runtime_1.ListType.Help) {
+                executeResult = MxSDK.renderHelp(runtime_1.ListType, `Here are the options for list:`, runtime);
             }
             /*
             * Fetch Help
@@ -125,6 +140,12 @@ class MxSDK {
             * */
             else if (runtime.fetch === runtime_1.FetchType.Modules) {
                 executeResult = modules_1.Modules.fetchModules(runtime);
+            }
+            /*
+            * Fetch Microflows
+            * */
+            else if (runtime.fetch === runtime_1.FetchType.Microflows) {
+                executeResult = microflows_1.Microflows.fetchMicroflows(runtime);
             }
             /*
             * Load a Revision
@@ -228,6 +249,9 @@ class MxSDK {
             runtime.assert(!!runtime.appName, `appName is missing`, true);
             runtime.assert(!!runtime.revision, `revision is missing`, true);
         }
+        if ((runtime.fetch === runtime_1.FetchType.Microflows)) {
+            runtime.assert(!!runtime.module, `module is missing`, true);
+        }
         if (runtime.list
             || (runtime.fetch && runtime.fetch !== runtime_1.FetchType.Help)
             || (runtime.delete && (runtime.delete !== runtime_1.DeleteType.Help))) {
@@ -243,6 +267,10 @@ class MxSDK {
         }
         if (runtime.delete === runtime_1.DeleteType.Revision) {
             runtime.assert(!!runtime.revision, `revision is missing`, true);
+        }
+        if (runtime.list === runtime_1.ListType.Revision) {
+            runtime.assert(!!runtime.appId, `appId is missing`, true);
+            runtime.assert(!!runtime.appName, `appName is missing`, true);
         }
         return !runtime.hasErrors();
     }

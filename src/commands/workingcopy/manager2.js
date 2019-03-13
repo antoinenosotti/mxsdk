@@ -32,13 +32,6 @@ class Config {
     getApp(appId) {
         return this.applications.find((app) => { return app.appId === appId; });
     }
-    addApp(appId, appName) {
-        this.applications.push({
-            revisions: [],
-            appId,
-            appName
-        });
-    }
     hasRevision(appId, revisionNumber) {
         return this.getRevision(appId, revisionNumber) !== void 0;
     }
@@ -48,17 +41,6 @@ class Config {
             return app.revisions.find((revision) => { return revision.revision === revisionNumber; });
         }
         return void 0;
-    }
-    addRevision(runtime, revision) {
-        if (!this.hasApp(runtime.appId)) {
-            this.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
-        }
-        const app = this.getApp(runtime.appId || "unspecified");
-        if (app) {
-            if (!this.hasRevision(runtime.appId || "unspecified", runtime.revision || -1)) {
-                app.revisions.push(revision);
-            }
-        }
     }
     deleteRevision(appId, revisionNumber) {
         const app = this.getApp(appId);
@@ -128,16 +110,20 @@ class Manager {
             return void 0;
         }
     }
-    static getWorkingCopyForRevision(runtime) {
+    static getRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             // @ts-ignore
-            if (!self.config.hasApp(runtime.appId)) {
+            if (!self.config.applications[runtime.appId]) {
                 // @ts-ignore
-                self.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                self.config.applications[runtime.appId] = {
+                    revisions: {},
+                    appName: runtime.appName,
+                    appId: runtime.appId
+                };
             }
             if (this.hasRevision(runtime)) {
                 // @ts-ignore
-                const workingCopyId = self.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
+                const workingCopyId = self.config.applications[runtime.appId].revisions[runtime.revision].workingCopyId;
                 runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
                 monkeyPatchConsole(!runtime.json);
                 const iModel = yield runtime.getClient().model().openWorkingCopy(workingCopyId)
@@ -158,12 +144,9 @@ class Manager {
                 const workingCopy = yield runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
                 monkeyPatchConsole(true);
                 // @ts-ignore
-                self.config.addRevision(runtime, {
+                self.config.applications[runtime.appId].revisions[runtime.revision] = {
                     workingCopyId: workingCopy.id(),
-                    revision: revisionNumber,
-                    branchName: runtime.branchName,
-                    mendixVersion: workingCopy.model().metaModelVersion.toString()
-                });
+                };
                 return workingCopy.model();
             }
         });
@@ -176,7 +159,7 @@ class Manager {
                 const workingCopies = yield client.model().getMyWorkingCopies();
                 workingCopies.forEach((workingCopy) => __awaiter(this, void 0, void 0, function* () {
                     // @ts-ignore
-                    const app = self.config.getApp(workingCopy.metaData.projectId);
+                    const app = self.config.applications[workingCopy.metaData.projectId];
                     if (app) {
                         // @ts-ignore
                         result.push({
@@ -215,15 +198,18 @@ class Manager {
     static listRevisions(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                if (!Manager.config.hasApp(runtime.appId)) {
-                    Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                if (Manager.config.hasApp(runtime.appId)) {
+                    runtime.blue(`Available revisions:`);
+                    const appId = runtime.appId + "", app = Manager.config.getApp(appId);
+                    if (app !== undefined) {
+                        return {
+                            revisions: app.revisions
+                        };
+                    }
                 }
-                runtime.blue(`Available revisions:`);
-                const appId = runtime.appId + "", app = Manager.config.getApp(appId);
-                if (app !== undefined) {
-                    return {
-                        revisions: app.revisions
-                    };
+                else {
+                    runtime.runtimeError.message = `Application of id ${runtime.appId} is unknown`;
+                    throw new Error(runtime.runtimeError.message);
                 }
             }
             catch (error) {
@@ -270,9 +256,9 @@ class Manager {
                 return runtime.runtimeError;
             }
             runtime.workingCopyId = revision.workingCopyId;
-            if (revision !== void 0) {
-                // monkeyPatchConsole(!runtime.json);
-                yield runtime.getClient().model().deleteWorkingCopy(revision.workingCopyId)
+            if (runtime.workingCopyId !== void 0) {
+                monkeyPatchConsole(!runtime.json);
+                yield runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
                     .catch((error) => {
                     if (error.name === ErrorCodes.NotFoundError) {
                         runtime.runtimeError.statusCode = error.statusCode;
@@ -280,7 +266,7 @@ class Manager {
                         runtime.runtimeError.message = error.error.message;
                     }
                 });
-                // monkeyPatchConsole(true);
+                monkeyPatchConsole(true);
             }
             else {
                 runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
@@ -311,4 +297,4 @@ Manager.readConfig().then(() => {
         yield Manager.saveConfig();
     }));
 });
-//# sourceMappingURL=manager.js.map
+//# sourceMappingURL=manager2.js.map

@@ -14,6 +14,7 @@ var FetchType;
 (function (FetchType) {
     FetchType["Help"] = "help";
     FetchType["Modules"] = "modules";
+    FetchType["Microflows"] = "microflows";
     FetchType["Entities"] = "entities";
     FetchType["Attributes"] = "attributes";
 })(FetchType = exports.FetchType || (exports.FetchType = {}));
@@ -23,6 +24,12 @@ var DeleteType;
     DeleteType["WorkingCopy"] = "working_copy";
     DeleteType["Revision"] = "revision";
 })(DeleteType = exports.DeleteType || (exports.DeleteType = {}));
+var ListType;
+(function (ListType) {
+    ListType["Help"] = "help";
+    ListType["WorkingCopy"] = "working_copy";
+    ListType["Revision"] = "revision";
+})(ListType = exports.ListType || (exports.ListType = {}));
 class Runtime extends runtimebase_1.RuntimeBase {
     constructor(props) {
         super(props);
@@ -33,7 +40,7 @@ class Runtime extends runtimebase_1.RuntimeBase {
         }
         if (props._) {
             const commandPassed = props._[0] === `delete` ? this.delete = props._[0] && (props._[1] || DeleteType.Help) :
-                props._[0] === `list` ? this.list = true :
+                props._[0] === `list` ? this.list = (props._[1] || ListType.Help) :
                     props._[0] === `load` ? this.load = true :
                         props._[0] === `serve` ? this.serve = true :
                             props._[0] === `shutdown` ? this.shutdown = true :

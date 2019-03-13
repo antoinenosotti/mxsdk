@@ -11,7 +11,6 @@ export function grabSDKObject(model: any, runtime: any, skip: string[] = ["_prop
         if (!(model[propName] instanceof Object)) {
             // @ts-ignore
             result[propName] = model[propName];
-            //runtime.red(JSON.stringify(module, censor(module), 2));
         } else if (model[propName] instanceof Array) {
             // @ts-ignore
             const array = model[propName] as Array;

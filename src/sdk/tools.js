@@ -13,7 +13,6 @@ function grabSDKObject(model, runtime, skip = ["_properties"]) {
             if (!(model[propName] instanceof Object)) {
                 // @ts-ignore
                 result[propName] = model[propName];
-                //runtime.red(JSON.stringify(module, censor(module), 2));
             }
             else if (model[propName] instanceof Array) {
                 // @ts-ignore

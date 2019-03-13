@@ -1,20 +1,24 @@
-import { DeleteType, FetchType, Runtime } from "./runtime";
+import { DeleteType, FetchType, ListType, Runtime } from "./runtime";
 import { Modules } from "./commands/fetch/modules";
 import { Manager } from "./commands/workingcopy/manager";
 import { Load } from "./commands/fetch/load";
 import { CallbackUrl } from "./callbackurl";
+import { Microflows } from "./commands/fetch/microflows";
 
 export const argv = require("minimist")(process.argv.slice(2));
 const emoji = require("node-emoji");
 const express = require("express");
-// const cliProgress = require("cli-progress");
+
 const
     postApi = [
         "/api",
         "/api/list",
+        "/api/list/working_copy",
+        "/api/list/revision",
         "/api/load",
         "/api/fetch",
         "/api/fetch/modules",
+        "/api/fetch/microflows",
         "/api/delete"],
     deleteApi = [
         "/api/revision",
@@ -107,10 +111,22 @@ export class MxSDK {
         }
 
         /*
+        * List all Working Copies
+        * */
+        else if (runtime.list === ListType.WorkingCopy) {
+            executeResult = Manager.listWorkingCopies(runtime);
+        }
+        /*
         * List all Revisions
         * */
-        else if (runtime.list) {
+        else if (runtime.list === ListType.Revision) {
             executeResult = Manager.listRevisions(runtime);
+        }
+        /*
+        * List all Revisions
+        * */
+        else if (runtime.list === ListType.Help) {
+            executeResult = MxSDK.renderHelp(ListType, `Here are the options for list:`, runtime);
         }
 
         /*
@@ -124,6 +140,12 @@ export class MxSDK {
         * */
         else if (runtime.fetch === FetchType.Modules) {
             executeResult = Modules.fetchModules(runtime);
+        }
+        /*
+        * Fetch Microflows
+        * */
+        else if (runtime.fetch === FetchType.Microflows) {
+            executeResult = Microflows.fetchMicroflows(runtime);
         }
 
         /*
@@ -223,6 +245,9 @@ export class MxSDK {
             runtime.assert(!!runtime.appName, `appName is missing`, true);
             runtime.assert(!!runtime.revision, `revision is missing`, true);
         }
+        if ((runtime.fetch === FetchType.Microflows)) {
+            runtime.assert(!!runtime.module, `module is missing`, true);
+        }
         if (runtime.list
             || (runtime.fetch && runtime.fetch !== FetchType.Help)
             || (runtime.delete && (runtime.delete !== DeleteType.Help))) {
@@ -238,6 +263,10 @@ export class MxSDK {
         }
         if (runtime.delete === DeleteType.Revision) {
             runtime.assert(!!runtime.revision, `revision is missing`, true);
+        }
+        if (runtime.list === ListType.Revision) {
+            runtime.assert(!!runtime.appId, `appId is missing`, true);
+            runtime.assert(!!runtime.appName, `appName is missing`, true);
         }
         return !runtime.hasErrors();
     }

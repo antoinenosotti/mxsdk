@@ -4,7 +4,7 @@ import { Manager } from "../workingcopy/manager";
 
 export class Modules {
     public static async fetchModules(runtime: Runtime) {
-        const workingCopy = await Manager.getRevision(runtime);
+        const workingCopy = await Manager.getWorkingCopyForRevision(runtime);
         if (workingCopy !== void 0) {
             const modules = await workingCopy.allModules();
             const result = {

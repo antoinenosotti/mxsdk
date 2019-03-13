@@ -3,10 +3,10 @@ import { Manager } from "../workingcopy/manager";
 
 export class Load {
     public static async loadRevision(runtime: Runtime) {
-        const revision = await Manager.getRevision(runtime);
+        const revision = await Manager.getWorkingCopyForRevision(runtime);
         if (revision !== void 0) {
             return {
-                workingCopyId: revision.root.id,
+                workingCopyId: revision.workingCopy.id,
                 revision: revision.workingCopy.metaData.teamServerBaseRevision,
                 branchName: runtime.branchName,
                 mendixVersion: revision.metaModelVersion

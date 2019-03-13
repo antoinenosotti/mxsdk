@@ -1,4 +1,4 @@
-import { IRuntimeArguments, Runtime } from "../../runtime";
+import { Runtime } from "../../runtime";
 import { Branch, Project, Revision } from "mendixplatformsdk";
 import { IModel } from "mendixmodelsdk";
 import { IRuntimeArgumentsBase } from "../../runtimebase";
@@ -43,34 +43,17 @@ class Config {
     getApp(appId: string | undefined) {
         return this.applications.find((app) => { return app.appId === appId; });
     }
-    addApp(appId: string, appName: string) {
-        this.applications.push({
-            revisions: [],
-            appId,
-            appName
-        });
-    }
     hasRevision(appId: string, revisionNumber: number) {
         return this.getRevision(appId, revisionNumber) !== void 0;
     }
-    getRevision(appId: string, revisionNumber: number): IRevision | undefined {
+    getRevision(appId: string, revisionNumber: number) {
         const app = this.getApp(appId);
         if (app) {
             return app.revisions.find((revision) => { return revision.revision === revisionNumber; });
         }
         return void 0;
     }
-    addRevision(runtime: IRuntimeArguments, revision: IRevision) {
-        if (!this.hasApp(runtime.appId)) {
-            this.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
-        }
-        const app = this.getApp(runtime.appId || "unspecified");
-        if (app) {
-            if (!this.hasRevision(runtime.appId  || "unspecified", runtime.revision || -1)) {
-                app.revisions.push(revision);
-            }
-        }
-    }
+
     deleteRevision(appId: string, revisionNumber: number) {
         const app = this.getApp(appId);
         if (app) {
@@ -138,16 +121,20 @@ export class Manager {
             return void 0;
         }
     }
-    static async getWorkingCopyForRevision(runtime: Runtime): Promise<IModel | void> {
+    static async getRevision(runtime: Runtime): Promise<IModel | void> {
         // @ts-ignore
-        if (!self.config.hasApp(runtime.appId)) {
+        if (!self.config.applications[runtime.appId]) {
             // @ts-ignore
-            self.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+            self.config.applications[runtime.appId] = {
+                revisions: {},
+                appName: runtime.appName,
+                appId: runtime.appId
+            };
         }
 
         if (this.hasRevision(runtime)) {
             // @ts-ignore
-            const workingCopyId = self.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
+            const workingCopyId = self.config.applications[runtime.appId].revisions[runtime.revision].workingCopyId;
             runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
             monkeyPatchConsole(!runtime.json);
             const iModel = await runtime.getClient().model().openWorkingCopy(workingCopyId)
@@ -171,12 +158,9 @@ export class Manager {
             const workingCopy = await runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
             monkeyPatchConsole(true);
             // @ts-ignore
-            self.config.addRevision(runtime, {
+            self.config.applications[runtime.appId].revisions[runtime.revision] = {
                 workingCopyId: workingCopy.id(),
-                revision: revisionNumber,
-                branchName: runtime.branchName,
-                mendixVersion: workingCopy.model().metaModelVersion.toString()
-            });
+            };
             return workingCopy.model();
         }
     }
@@ -187,7 +171,7 @@ export class Manager {
             const workingCopies = await client.model().getMyWorkingCopies();
             workingCopies.forEach(async (workingCopy) => {
                 // @ts-ignore
-                const app = self.config.getApp(workingCopy.metaData.projectId);
+                const app = self.config.applications[workingCopy.metaData.projectId];
                 if (app) {
                     // @ts-ignore
                     result.push({
@@ -222,18 +206,21 @@ export class Manager {
 
     public static async listRevisions(runtime: Runtime) {
         try {
-            if (!Manager.config.hasApp(runtime.appId)) {
-                Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+            if (Manager.config.hasApp(runtime.appId)) {
+                runtime.blue(`Available revisions:`);
+                const
+                    appId = runtime.appId + "",
+                    app = Manager.config.getApp(appId);
+                if (app !== undefined) {
+                    return {
+                        revisions: app.revisions
+                    };
+                }
+            } else {
+                runtime.runtimeError.message = `Application of id ${runtime.appId} is unknown`;
+                throw new Error(runtime.runtimeError.message);
             }
-            runtime.blue(`Available revisions:`);
-            const
-                appId = runtime.appId + "",
-                app = Manager.config.getApp(appId);
-            if (app !== undefined) {
-                return {
-                    revisions: app.revisions
-                };
-            }
+
         } catch (error) {
             return {
                 error: {
@@ -279,9 +266,9 @@ export class Manager {
             return runtime.runtimeError;
         }
         runtime.workingCopyId = revision.workingCopyId;
-        if (revision !== void 0) {
-            // monkeyPatchConsole(!runtime.json);
-            await runtime.getClient().model().deleteWorkingCopy(revision.workingCopyId)
+        if (runtime.workingCopyId !== void 0) {
+            monkeyPatchConsole(!runtime.json);
+            await runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
                 .catch((error) => {
                     if (error.name === ErrorCodes.NotFoundError) {
                         runtime.runtimeError.statusCode = error.statusCode;
@@ -289,7 +276,7 @@ export class Manager {
                         runtime.runtimeError.message = error.error.message;
                     }
                 });
-            // monkeyPatchConsole(true);
+            monkeyPatchConsole(true);
         } else {
             runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
         }
