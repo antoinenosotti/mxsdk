@@ -82,6 +82,9 @@ class Config {
         }
         return false;
     }
+    flush() {
+        this.applications = [];
+    }
 }
 
 /*
@@ -201,6 +204,24 @@ export class Manager {
                     });
                 } else {
                     runtime.warn(`I don't know working copy ${workingCopy.id}`);
+                    self.config.addApp(workingCopy.metaData.projectId, workingCopy.metaData.name);
+                    const newRuntime = {
+                            appId: workingCopy.metaData.projectId,
+                            appName: workingCopy.metaData.name,
+                            revision: workingCopy.metaData.teamServerBaseRevision && workingCopy.metaData.teamServerBaseRevision.valueOf()
+                        },
+                        revision = {
+                            appName: workingCopy.metaData.name,
+                            projectId: workingCopy.metaData.projectId,
+                            mendixVersion: workingCopy.metaData.metaModelVersion,
+                            // @ts-ignore
+                            revision: workingCopy.metaData.teamServerBaseRevision.valueOf(),
+                            branch: workingCopy.metaData.teamServerBaseBranch,
+                            workingCopyId: workingCopy.id
+                        };
+                    // @ts-ignore
+                    self.config.addRevision(newRuntime, revision);
+                    result.push(revision);
                 }
             });
             if (!runtime.json) {
@@ -230,9 +251,13 @@ export class Manager {
                 appId = runtime.appId + "",
                 app = Manager.config.getApp(appId);
             if (app !== undefined) {
-                return {
-                    revisions: app.revisions
-                };
+                if (runtime.json) {
+                    return {
+                        revisions: app.revisions
+                    };
+                } else {
+                    return app.revisions;
+                }
             }
         } catch (error) {
             return {
@@ -244,7 +269,21 @@ export class Manager {
     }
 
     static async deleteWorkingCopy(runtime: Runtime) {
-        if (runtime.workingCopyId !== void 0) {
+        if (runtime.workingCopyId === "*") {
+            monkeyPatchConsole(!runtime.json);
+            const workingCopies = await runtime.getClient().model().getMyWorkingCopies();
+            workingCopies.forEach(async (wc) => {
+                await runtime.getClient().model().deleteWorkingCopy(wc.id)
+                    .catch((error) => {
+                        runtime.runtimeError.statusCode = error.statusCode;
+                        runtime.runtimeError.name = error.error.name;
+                        runtime.runtimeError.message = error.error.message;
+                    });
+            });
+            self.config.flush();
+            this.saveConfig();
+            monkeyPatchConsole(true);
+        } else if (runtime.workingCopyId !== void 0) {
             monkeyPatchConsole(!runtime.json);
             await runtime.getClient().model().deleteWorkingCopy(runtime.workingCopyId)
                 .catch((error) => {

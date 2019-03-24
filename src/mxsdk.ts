@@ -1,9 +1,9 @@
 import { DeleteType, FetchType, ListType, Runtime } from "./runtime";
-import { Modules } from "./commands/fetch/modules";
 import { Manager } from "./commands/workingcopy/manager";
 import { Load } from "./commands/fetch/load";
 import { CallbackUrl } from "./callbackurl";
-import { Microflows } from "./commands/fetch/microflows";
+import { Entities } from "./commands/fetch/entities";
+import { FetchFactory } from "./commands/fetch/fetchregistry";
 
 export const argv = require("minimist")(process.argv.slice(2));
 const emoji = require("node-emoji");
@@ -19,6 +19,7 @@ const
         "/api/fetch",
         "/api/fetch/modules",
         "/api/fetch/microflows",
+        "/api/fetch/entities",
         "/api/delete"],
     deleteApi = [
         "/api/revision",
@@ -136,16 +137,12 @@ export class MxSDK {
             executeResult = MxSDK.renderHelp(FetchType, `fetch expects one following options:`, runtime);
         }
         /*
-        * Fetch Modules
+        * Fetch
         * */
-        else if (runtime.fetch === FetchType.Modules) {
-            executeResult = Modules.fetchModules(runtime);
-        }
-        /*
-        * Fetch Microflows
-        * */
-        else if (runtime.fetch === FetchType.Microflows) {
-            executeResult = Microflows.fetchMicroflows(runtime);
+        else if (
+            (runtime.fetch && ([FetchType.Modules, FetchType.Microflows, FetchType.Entities].indexOf(runtime.fetch) > -1))
+        ) {
+            executeResult = FetchFactory.fetch(runtime.fetch, runtime);
         }
 
         /*
@@ -245,7 +242,8 @@ export class MxSDK {
             runtime.assert(!!runtime.appName, `appName is missing`, true);
             runtime.assert(!!runtime.revision, `revision is missing`, true);
         }
-        if ((runtime.fetch === FetchType.Microflows)) {
+        if ((runtime.fetch === FetchType.Microflows) ||
+            (runtime.fetch === FetchType.Entities)) {
             runtime.assert(!!runtime.module, `module is missing`, true);
         }
         if (runtime.list

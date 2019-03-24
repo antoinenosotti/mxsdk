@@ -1,52 +1,120 @@
-import { Runtime } from "../../runtime";
-import { grabSDKObject } from "../../sdk/tools";
-import { Manager } from "../workingcopy/manager";
-import { microflows } from "mendixmodelsdk";
+import { FetchType, Runtime } from "../../runtime";
+import { loadAsPromise } from "mendixplatformsdk";
+import { Fetch } from "./fetch";
+import { datatypes, IModel } from "mendixmodelsdk";
+import EntityType = datatypes.EntityType;
+import ListType = datatypes.ListType;
 
-export class Microflows {
-    public static async fetchMicroflows(runtime: Runtime) {
-        const workingCopy = await Manager.getWorkingCopyForRevision(runtime);
-        if (workingCopy !== void 0) {
-            const microflows = await Promise.all(workingCopy.allMicroflows().map(async (microflow) => {
-                const promise = await (new Promise<microflows.Microflow>((resolve, reject) => {
-                    microflow.load((mf) => {
-                        resolve(mf);
-                        // @ts-ignore
-                        mf.moduleName = mf.qualifiedName.split(".")[0];
-                        // @ts-ignore
-                        mf.fullPath = mf.qualifiedName;
-                        mf.
-                    });
-                }));
-                return await microflow;
-            }));
-            const result = {
-                branchName: runtime.branchName,
-                latestRevisionNumber: runtime.revision,
-                revision: {
-                    microflows: [],
-                    number: runtime.revision
-                }
+interface IRevision {
+    branchName: string;
+    latestRevisionNumber: number | undefined;
+    revision: { number: number | undefined; microflows: any[]; moduleName: string | undefined };
+}
+
+interface IFlow {
+}
+
+interface IObjectCollection {
+}
+
+interface IMircroflowResult {
+    name: string;
+    id: string;
+    microflowReturnType: {
+        type: string,
+        id: string
+    };
+    qualifiedName: string | null;
+    applyEntityAccess: boolean;
+    documentation: string;
+    excluded: boolean;
+    markAsUsed: boolean;
+    flows: IFlow[];
+    objectCollection: IObjectCollection[];
+}
+
+export class Microflows extends Fetch {
+    fetchType = FetchType.Microflows;
+
+    async getResults(workingCopy: IModel, runtime: Runtime): Promise<any> {
+        const result: IRevision = {
+            branchName: runtime.branchName,
+            latestRevisionNumber: runtime.revision,
+            revision: {
+                moduleName: runtime.module,
+                microflows: [],
+                number: runtime.revision
+            }
+        };
+        const microflows = workingCopy.allServerSideMicroflows().filter((microflow) => {
+            if (microflow.qualifiedName !== null) {
+                return (microflow.qualifiedName.indexOf(runtime.module + "") === 0) || (runtime.module === "*");
+            }
+            return false;
+        });
+
+        result.revision.microflows = await Promise.all(microflows.map(async (microflow) => {
+            const mxMicroFlow = await loadAsPromise(microflow);
+            // mxMicroFlow.objectCollection
+            // mxMicroFlow.allowedModuleRolesQualifiedNames,
+            const dataType = await loadAsPromise(mxMicroFlow.microflowReturnType);
+            const microflowReturnType = {
+                type: dataType.constructor.name.replace("Type", "").toLowerCase(),
+                id: dataType.id
+            };
+            if ((dataType instanceof EntityType) || (dataType instanceof ListType)) {
+                const entityType = dataType as EntityType;
+                // @ts-ignore
+                microflowReturnType.entity = {
+                    id: entityType.entity.id,
+                    name: entityType.entity.name,
+                    qualifiedName: entityType.entity.qualifiedName,
+                    list: dataType instanceof ListType
+                };
+            }
+            const result: IMircroflowResult = {
+                name: mxMicroFlow.name,
+                id: mxMicroFlow.id,
+                microflowReturnType,
+                qualifiedName: mxMicroFlow.qualifiedName,
+                applyEntityAccess: mxMicroFlow.applyEntityAccess,
+                documentation: mxMicroFlow.documentation,
+                excluded: mxMicroFlow.excluded,
+                markAsUsed: mxMicroFlow.markAsUsed,
+                flows: mxMicroFlow.flows.map((flow) => {
+                    return {
+                        id: flow.id,
+                        destination: {
+                            id: flow.destination.id
+                        },
+                        origin: {
+                            id: flow.origin.id
+                        }
+                    };
+                }),
+                objectCollection: mxMicroFlow.objectCollection.objects.map((object) => {
+                    return {
+                        id: object.id,
+                        type: object.constructor.name
+                    };
+                })
             };
             if (!runtime.json) {
-                await microflows.forEach(async (module) => {
+                delete result.flows;
+                delete result.objectCollection;
+                if (result.microflowReturnType.type === "object") {
                     // @ts-ignore
-                    result.revision.microflows.push(`${module.name}`);
-                });
-                runtime.log(`Modules: `);
-                return result.revision.microflows;
-            } else {
-                await microflows.forEach(async (module) => {
-                    await module.asLoaded();
-                    const mxObject = grabSDKObject(module, runtime);
+                    result.microflowReturnType = result.microflowReturnType.entity.qualifiedName;
+                } else if (result.microflowReturnType.type === "list") {
                     // @ts-ignore
-                    result.revision.microflows.push(mxObject);
-                });
+                    result.microflowReturnType = `${result.microflowReturnType.entity.qualifiedName}[]`;
+                } else {
+                    // @ts-ignore
+                    result.microflowReturnType = result.microflowReturnType.type;
+                }
             }
             return result;
-        } else {
-            runtime.error(`Could not load revision ${runtime.revision} for app ${runtime.appName}`);
-            return runtime.runtimeError;
-        }
+        }));
+        return runtime.json ? result : result.revision.microflows;
     }
 }

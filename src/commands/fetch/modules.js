@@ -8,43 +8,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../../sdk/tools");
-const manager_1 = require("../workingcopy/manager");
-class Modules {
-    static fetchModules(runtime) {
+const fetch_1 = require("./fetch");
+class Modules extends fetch_1.Fetch {
+    constructor() {
+        super(...arguments);
+        this.fetchType = "Modules";
+    }
+    getResults(workingCopy, runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workingCopy = yield manager_1.Manager.getWorkingCopyForRevision(runtime);
-            if (workingCopy !== void 0) {
-                const modules = yield workingCopy.allModules();
-                const result = {
-                    branchName: runtime.branchName,
-                    latestRevisionNumber: runtime.revision,
-                    revision: {
-                        modules: [],
-                        number: runtime.revision
-                    }
-                };
-                if (!runtime.json) {
-                    modules.forEach((module) => {
-                        // @ts-ignore
-                        result.revision.modules.push(`${module.name}`);
-                    });
-                    runtime.log(`Modules: `);
-                    return result.revision.modules;
+            const modules = yield workingCopy.allModules();
+            const result = {
+                branchName: runtime.branchName,
+                latestRevisionNumber: runtime.revision || -1,
+                revision: {
+                    modules: [],
+                    number: runtime.revision || -1
                 }
-                else {
-                    modules.forEach((module) => {
-                        const mxObject = tools_1.grabSDKObject(module, runtime);
-                        // @ts-ignore
-                        result.revision.modules.push(mxObject);
-                    });
-                }
-                return result;
-            }
-            else {
-                runtime.error(`Could not load revision ${runtime.revision} for app ${runtime.appName}`);
-                return runtime.runtimeError;
-            }
+            };
+            modules.forEach((module) => {
+                // @ts-ignore
+                result.revision.modules.push({
+                    name: module.name,
+                    appStoreGuid: module.appStoreGuid,
+                    appStoreVersion: module.appStoreVersion,
+                    appStoreVersionGuid: module.appStoreVersionGuid,
+                    fromAppStore: module.fromAppStore,
+                    sortIndex: module.sortIndex,
+                    id: module.id
+                });
+            });
+            return runtime.json ? result : result.revision.modules;
         });
     }
 }

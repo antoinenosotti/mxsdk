@@ -9,11 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const runtime_1 = require("./runtime");
-const modules_1 = require("./commands/fetch/modules");
 const manager_1 = require("./commands/workingcopy/manager");
 const load_1 = require("./commands/fetch/load");
 const callbackurl_1 = require("./callbackurl");
-const microflows_1 = require("./commands/fetch/microflows");
+const fetchregistry_1 = require("./commands/fetch/fetchregistry");
 exports.argv = require("minimist")(process.argv.slice(2));
 const emoji = require("node-emoji");
 const express = require("express");
@@ -26,6 +25,7 @@ const postApi = [
     "/api/fetch",
     "/api/fetch/modules",
     "/api/fetch/microflows",
+    "/api/fetch/entities",
     "/api/delete"
 ], deleteApi = [
     "/api/revision",
@@ -136,16 +136,10 @@ class MxSDK {
                 executeResult = MxSDK.renderHelp(runtime_1.FetchType, `fetch expects one following options:`, runtime);
             }
             /*
-            * Fetch Modules
+            * Fetch
             * */
-            else if (runtime.fetch === runtime_1.FetchType.Modules) {
-                executeResult = modules_1.Modules.fetchModules(runtime);
-            }
-            /*
-            * Fetch Microflows
-            * */
-            else if (runtime.fetch === runtime_1.FetchType.Microflows) {
-                executeResult = microflows_1.Microflows.fetchMicroflows(runtime);
+            else if ((runtime.fetch && ([runtime_1.FetchType.Modules, runtime_1.FetchType.Microflows, runtime_1.FetchType.Entities].indexOf(runtime.fetch) > -1))) {
+                executeResult = fetchregistry_1.FetchFactory.fetch(runtime.fetch, runtime);
             }
             /*
             * Load a Revision
@@ -249,7 +243,8 @@ class MxSDK {
             runtime.assert(!!runtime.appName, `appName is missing`, true);
             runtime.assert(!!runtime.revision, `revision is missing`, true);
         }
-        if ((runtime.fetch === runtime_1.FetchType.Microflows)) {
+        if ((runtime.fetch === runtime_1.FetchType.Microflows) ||
+            (runtime.fetch === runtime_1.FetchType.Entities)) {
             runtime.assert(!!runtime.module, `module is missing`, true);
         }
         if (runtime.list

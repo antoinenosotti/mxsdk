@@ -8,55 +8,99 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const tools_1 = require("../../sdk/tools");
-const manager_1 = require("../workingcopy/manager");
-class Microflows {
-    static fetchMicroflows(runtime) {
+const runtime_1 = require("../../runtime");
+const mendixplatformsdk_1 = require("mendixplatformsdk");
+const fetch_1 = require("./fetch");
+const mendixmodelsdk_1 = require("mendixmodelsdk");
+var EntityType = mendixmodelsdk_1.datatypes.EntityType;
+var ListType = mendixmodelsdk_1.datatypes.ListType;
+class Microflows extends fetch_1.Fetch {
+    constructor() {
+        super(...arguments);
+        this.fetchType = runtime_1.FetchType.Microflows;
+    }
+    getResults(workingCopy, runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const workingCopy = yield manager_1.Manager.getWorkingCopyForRevision(runtime);
-            if (workingCopy !== void 0) {
-                const microflows = yield Promise.all(workingCopy.allMicroflows().map((microflow) => __awaiter(this, void 0, void 0, function* () {
-                    const promise = yield (new Promise((resolve, reject) => {
-                        microflow.load((mf) => {
-                            resolve(mf);
-                            // @ts-ignore
-                            mf.moduleName = mf.qualifiedName.split(".")[0];
-                            // @ts-ignore
-                            mf.fullPath = mf.qualifiedName;
-                        });
-                    }));
-                    return yield microflow;
-                })));
+            const result = {
+                branchName: runtime.branchName,
+                latestRevisionNumber: runtime.revision,
+                revision: {
+                    moduleName: runtime.module,
+                    microflows: [],
+                    number: runtime.revision
+                }
+            };
+            const microflows = workingCopy.allServerSideMicroflows().filter((microflow) => {
+                if (microflow.qualifiedName !== null) {
+                    return (microflow.qualifiedName.indexOf(runtime.module + "") === 0) || (runtime.module === "*");
+                }
+                return false;
+            });
+            result.revision.microflows = yield Promise.all(microflows.map((microflow) => __awaiter(this, void 0, void 0, function* () {
+                const mxMicroFlow = yield mendixplatformsdk_1.loadAsPromise(microflow);
+                // mxMicroFlow.objectCollection
+                // mxMicroFlow.allowedModuleRolesQualifiedNames,
+                const dataType = yield mendixplatformsdk_1.loadAsPromise(mxMicroFlow.microflowReturnType);
+                const microflowReturnType = {
+                    type: dataType.constructor.name.replace("Type", "").toLowerCase(),
+                    id: dataType.id
+                };
+                if ((dataType instanceof EntityType) || (dataType instanceof ListType)) {
+                    const entityType = dataType;
+                    // @ts-ignore
+                    microflowReturnType.entity = {
+                        id: entityType.entity.id,
+                        name: entityType.entity.name,
+                        qualifiedName: entityType.entity.qualifiedName,
+                        list: dataType instanceof ListType
+                    };
+                }
                 const result = {
-                    branchName: runtime.branchName,
-                    latestRevisionNumber: runtime.revision,
-                    revision: {
-                        microflows: [],
-                        number: runtime.revision
-                    }
+                    name: mxMicroFlow.name,
+                    id: mxMicroFlow.id,
+                    microflowReturnType,
+                    qualifiedName: mxMicroFlow.qualifiedName,
+                    applyEntityAccess: mxMicroFlow.applyEntityAccess,
+                    documentation: mxMicroFlow.documentation,
+                    excluded: mxMicroFlow.excluded,
+                    markAsUsed: mxMicroFlow.markAsUsed,
+                    flows: mxMicroFlow.flows.map((flow) => {
+                        return {
+                            id: flow.id,
+                            destination: {
+                                id: flow.destination.id
+                            },
+                            origin: {
+                                id: flow.origin.id
+                            }
+                        };
+                    }),
+                    objectCollection: mxMicroFlow.objectCollection.objects.map((object) => {
+                        return {
+                            id: object.id,
+                            type: object.constructor.name
+                        };
+                    })
                 };
                 if (!runtime.json) {
-                    yield microflows.forEach((module) => __awaiter(this, void 0, void 0, function* () {
+                    delete result.flows;
+                    delete result.objectCollection;
+                    if (result.microflowReturnType.type === "object") {
                         // @ts-ignore
-                        result.revision.microflows.push(`${module.name}`);
-                    }));
-                    runtime.log(`Modules: `);
-                    return result.revision.microflows;
-                }
-                else {
-                    yield microflows.forEach((module) => __awaiter(this, void 0, void 0, function* () {
-                        yield module.asLoaded();
-                        const mxObject = tools_1.grabSDKObject(module, runtime);
+                        result.microflowReturnType = result.microflowReturnType.entity.qualifiedName;
+                    }
+                    else if (result.microflowReturnType.type === "list") {
                         // @ts-ignore
-                        result.revision.microflows.push(mxObject);
-                    }));
+                        result.microflowReturnType = `${result.microflowReturnType.entity.qualifiedName}[]`;
+                    }
+                    else {
+                        // @ts-ignore
+                        result.microflowReturnType = result.microflowReturnType.type;
+                    }
                 }
                 return result;
-            }
-            else {
-                runtime.error(`Could not load revision ${runtime.revision} for app ${runtime.appName}`);
-                return runtime.runtimeError;
-            }
+            })));
+            return runtime.json ? result : result.revision.microflows;
         });
     }
 }
