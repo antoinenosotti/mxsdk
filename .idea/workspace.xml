@@ -1,34 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts" line="110" />
-    <bookmark url="file://$PROJECT_DIR$/src/mxsdk.ts" line="74" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="2395460e-e06e-42e8-971d-d511aadbf4ec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/commands/fetch/microflows.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager2.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/geldhe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/geldhe.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/tslint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scratch.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/load.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/load.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/load.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/load.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/load.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/modules.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/modules.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/modules.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/modules.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mxsdk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/mxsdk.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mxsdk.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/mxsdk.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mxsdk.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/mxsdk.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/runtime.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/runtime.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/runtime.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/runtime.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/runtime.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/runtime.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sdk/tools.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sdk/tools.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sdk/tools.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sdk/tools.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/fetch/microflows.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/microflows.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,109 +24,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/fetch/modules.ts">
+        <entry file="file://$PROJECT_DIR$/tslint.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="68" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="68" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/fetch/microflows.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="422">
+              <caret line="120" selection-start-line="120" selection-end-line="120" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/sdk/tools.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mxsdk.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="248" column="72" selection-start-line="248" selection-start-column="72" selection-end-line="248" selection-end-column="72" />
-              <folding>
-                <element signature="e#0#69#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-371">
+              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/commands/fetch/microflows.js">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="148">
-              <caret line="15" column="81" selection-start-line="15" selection-start-column="81" selection-end-line="15" selection-end-column="81" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/runtime.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-212">
-              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#52#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/runtimebase.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2220">
-              <caret line="148" column="1" selection-start-line="148" selection-start-column="1" selection-end-line="148" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="293" column="44" selection-start-line="293" selection-start-column="44" selection-end-line="293" selection-end-column="44" />
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager2.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="13" column="1" lean-forward="true" selection-end-line="304" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#49#0" expanded="true" />
-              </folding>
+              <caret line="24" column="59" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -157,44 +54,25 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fetc</find>
-      <find>Took</find>
-      <find>safeReturnOrError</find>
-      <find>Summary:</find>
-      <find>console.</find>
-      <find>loadR</find>
-      <find>safe</find>
-      <find>shutdo</find>
-      <find>ListType</find>
-      <find>list</find>
-      <find>revisions</find>
-      <find>IApplication</find>
-      <find>IConfig</find>
-      <find>config</find>
-      <find>api</find>
-      <find>revision</find>
-      <find>applications</find>
-      <find>props</find>
-      <find>revisionId</find>
-      <find>self.config.getRevision</find>
-      <find>r</find>
-      <find>this.applications</find>
-      <find>Application of id</find>
-      <find>addAp</find>
-      <find>load</find>
-      <find>listRe</find>
-      <find>addRev</find>
-      <find>self.config.applications</find>
-      <find>deleteR</find>
-      <find>fet</find>
+      <find>buf.toString()</find>
+      <find>sourceMap</find>
+      <find>assert</find>
+      <find>hasE</find>
+      <find>json</find>
+      <find>module</find>
+      <find>yello</find>
+      <find>runtime.blue(JSON.stringify</find>
+      <find>yell</find>
+      <find>Modules:</find>
+      <find>Successfully created new online working</find>
+      <find>Main</find>
+      <find>mxsdk</find>
+      <find>$PROJECT_DIR$</find>
+      <find>.AuthorizationDate</find>
     </findStrings>
-    <replaceStrings>
-      <replace>revisionNumber</replace>
-    </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
       <dir>$PROJECT_DIR$/node_modules</dir>
-      <dir>$PROJECT_DIR$/src</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -206,33 +84,19 @@
         <option value="$PROJECT_DIR$/programarguments.ts" />
         <option value="$PROJECT_DIR$/script.ts" />
         <option value="$PROJECT_DIR$/runtimearguments.js" />
-        <option value="$PROJECT_DIR$/sdk/tools.ts" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/fetch/load.ts" />
-        <option value="$PROJECT_DIR$/fetch/modules.ts" />
-        <option value="$PROJECT_DIR$/src/fetch/load.ts" />
-        <option value="$PROJECT_DIR$/src/fetch/modules.ts" />
-        <option value="$PROJECT_DIR$/workingcopymanager.ts" />
-        <option value="$PROJECT_DIR$/src/commands/workingcopy/workingcopymanager.ts" />
-        <option value="$PROJECT_DIR$/runtimearguments.ts" />
-        <option value="$PROJECT_DIR$/mxsdk.ts" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
-        <option value="$PROJECT_DIR$/src/swagger.json" />
-        <option value="$PROJECT_DIR$/src/commands/workingcopy/manager.js" />
+        <option value="$PROJECT_DIR$/sdk/tools.ts" />
+        <option value="$PROJECT_DIR$/runtimearguments.ts" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/workingcopymanager.ts" />
+        <option value="$PROJECT_DIR$/fetch/load.ts" />
+        <option value="$PROJECT_DIR$/mxsdk.ts" />
+        <option value="$PROJECT_DIR$/fetch/modules.ts" />
         <option value="$PROJECT_DIR$/tslint.json" />
-        <option value="$PROJECT_DIR$/src/mxsdk.js" />
-        <option value="$PROJECT_DIR$/src/runtimearguments.ts" />
-        <option value="$PROJECT_DIR$/src/test/system.ts" />
-        <option value="$PROJECT_DIR$/src/runtimebase.ts" />
-        <option value="$PROJECT_DIR$/src/callbackurl.ts" />
-        <option value="$PROJECT_DIR$/src/runtime.ts" />
-        <option value="$PROJECT_DIR$/src/commands/fetch/modules.ts" />
-        <option value="$PROJECT_DIR$/src/commands/fetch/load.ts" />
-        <option value="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" />
-        <option value="$PROJECT_DIR$/src/sdk/tools.ts" />
-        <option value="$PROJECT_DIR$/src/mxsdk.ts" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.ts" />
+        <option value="$PROJECT_DIR$/src/scratch.ts" />
+        <option value="$PROJECT_DIR$/src/commands/fetch/microflows.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/commands/fetch/microflows.ts" />
       </list>
     </option>
   </component>
@@ -248,7 +112,7 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="23" />
+    <option name="y" value="173" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
   </component>
@@ -258,54 +122,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-              <item name="fetch" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-              <item name="workingcopy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="sdk" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
           <expand>
@@ -326,11 +142,28 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptWeakerCompletionTypeGuess" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript" />
     <property name="javascript.nodejs.core.library.configured.version" value="11.6.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -339,22 +172,14 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/commands/workingcopy" />
-      <recent name="$PROJECT_DIR$/src/commands" />
-    </key>
     <key name="es6.move.members.recent.items">
       <recent name="$PROJECT_DIR$/sdk/tools.ts" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/commands/workingcopy" />
-      <recent name="$PROJECT_DIR$/src/commands/fetch" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -370,32 +195,34 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.Serve Local">
-    <configuration name="Delete:Human" type="NodeJSConfigurationType" folderName="Delete" application-parameters="--delete workingCopy --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 5a96daa0-2221-463b-b412-aa783c24b6fe" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
+  <component name="RunManager">
+    <configuration name="List" type="NodeJSConfigurationType" application-parameters="--list --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
-    <configuration name="Delete:Json" type="NodeJSConfigurationType" folderName="Delete" application-parameters="--delete workingCopy --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 5a96daa0-2221-463b-b412-aa783c24b6fe" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
+    <configuration name="Modules" type="NodeJSConfigurationType" application-parameters="--fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
-    <configuration name="List" type="NodeJSConfigurationType" application-parameters="list revision --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --appName Octo" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
+    <configuration name="mxsdk" type="NodeJSConfigurationType" application-parameters="--fetch modules --module MyFirstModule --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="mxsdk.js" working-dir="$PROJECT_DIR$">
       <method v="2" />
     </configuration>
-    <configuration name="Modules" type="NodeJSConfigurationType" application-parameters="fetch modules --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --verbose  --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
+    <configuration name="Fetch Microflows Json RE" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="Fetch Microflows Json RE" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Multi-Delete:Json" type="NodeJSConfigurationType" folderName="Delete" application-parameters="--delete workingCopy --json --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --workingCopyId 5a96daa0-2221-463b-b412-aa783c24b6fe" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
-      <method v="2" />
-    </configuration>
-    <configuration name="Serve 10.187.97.174" type="NodeJSConfigurationType" application-parameters="serve --host 10.187.97.174 --port 8004 --verbose" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
-      <method v="2" />
-    </configuration>
-    <configuration name="Serve Local" type="NodeJSConfigurationType" application-parameters="serve --host localhost --port 8004 --verbose" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
-      <method v="2" />
-    </configuration>
-    <configuration name="Test" type="NodeJSConfigurationType" path-to-js-file="./src/test/system.js" working-dir="$PROJECT_DIR$">
-      <method v="2" />
-    </configuration>
-    <configuration name="mxsdk" type="NodeJSConfigurationType" application-parameters="fetch modules --module MyFirstModule --verbose --apiKey 49dd389b-5c1c-4151-b536-ecba46c73c96 --username herman.geldenhuys@bdc.ca --appId 2055bb3f-8a67-4ad3-8765-3e31432bac4f --revision 11 --appName Octo" path-to-js-file="src/mxsdk.js" working-dir="$PROJECT_DIR$">
+    <configuration name="Fetch Microflows Verbose RE" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="Fetch Microflows Verbose RE" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <configuration name="Fetch Microflows Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -408,69 +235,43 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="List Revisions Json" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="Fetch Modules Verbose RE" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="List Revisions Json" />
+        <script value="Fetch Modules Verbose RE" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="List Revisions Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="Start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="List Revisions Verbose" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="List WC Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="List WC Verbose" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
-      <method v="2" />
-    </configuration>
-    <configuration name="Load Revision 11 Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="Load Revision 11 Verbose" />
+        <script value="Start" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Node.js.Delete:Human" />
-      <item itemvalue="Node.js.Delete:Json" />
-      <item itemvalue="Node.js.Multi-Delete:Json" />
-      <item itemvalue="Node.js.Test" />
       <item itemvalue="Node.js.List" />
-      <item itemvalue="Node.js.Serve Local" />
-      <item itemvalue="Node.js.Serve 10.187.97.174" />
       <item itemvalue="Node.js.Modules" />
       <item itemvalue="Node.js.mxsdk" />
-      <item itemvalue="npm.List WC Verbose" />
-      <item itemvalue="npm.List Revisions Verbose" />
-      <item itemvalue="npm.List Revisions Json" />
-      <item itemvalue="npm.Load Revision 11 Verbose" />
+      <item itemvalue="npm.Fetch Microflows Json RE" />
+      <item itemvalue="npm.Fetch Microflows Verbose RE" />
+      <item itemvalue="npm.Fetch Modules Verbose RE" />
       <item itemvalue="npm.Fetch Microflows Verbose" />
+      <item itemvalue="npm.Start" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.Start" />
+        <item itemvalue="npm.Fetch Microflows Verbose RE" />
         <item itemvalue="npm.Fetch Microflows Verbose" />
-        <item itemvalue="npm.List Revisions Verbose" />
-        <item itemvalue="npm.List WC Verbose" />
-        <item itemvalue="npm.Load Revision 11 Verbose" />
-        <item itemvalue="npm.List Revisions Json" />
+        <item itemvalue="npm.Fetch Modules Verbose RE" />
+        <item itemvalue="npm.Fetch Microflows Json RE" />
       </list>
     </recent_temporary>
   </component>
@@ -488,35 +289,36 @@
       <workItem from="1552147518334" duration="29919000" />
       <workItem from="1552189952702" duration="127000" />
       <workItem from="1552190095967" duration="2525000" />
-      <workItem from="1552193014086" duration="7351000" />
-      <workItem from="1552239899563" duration="10130000" />
-      <workItem from="1552311166773" duration="52355000" />
+      <workItem from="1552193014086" duration="2224000" />
+      <workItem from="1552770520216" duration="96000" />
+      <workItem from="1552770648081" duration="3500000" />
+      <workItem from="1553019563388" duration="2825000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105330000" />
+    <option name="totallyTimeSpent" value="44139000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.52016985" visible="true" weight="0.25679544" />
-      <window_info id="Structure" order="1" sideWeight="0.67490494" side_tool="true" weight="0.25679544" />
-      <window_info id="npm" order="2" sideWeight="0.47983015" side_tool="true" visible="true" weight="0.25679544" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5204991" visible="true" weight="0.25679544" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" id="npm" order="2" sideWeight="0.4795009" side_tool="true" visible="true" weight="0.25679544" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3299363" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3732484" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.28535032" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="TypeScript" order="9" weight="0.3299363" />
+      <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.42675158" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3299363" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -527,16 +329,8 @@
     <option name="version" value="1" />
     <option name="exactExcludedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/system.js.map" />
-        <option value="$PROJECT_DIR$/src/test/system.js" />
-        <option value="$PROJECT_DIR$/src/callbackurl.js.map" />
-        <option value="$PROJECT_DIR$/src/callbackurl.js" />
-        <option value="$PROJECT_DIR$/src/runtimebase.js.map" />
-        <option value="$PROJECT_DIR$/src/runtimebase.js" />
-        <option value="$PROJECT_DIR$/src/commands/fetch/microflows.js" />
-        <option value="$PROJECT_DIR$/src/commands/fetch/microflows.js.map" />
-        <option value="$PROJECT_DIR$/src/commands/workingcopy/manager2.js" />
-        <option value="$PROJECT_DIR$/src/commands/workingcopy/manager2.js.map" />
+        <option value="$PROJECT_DIR$/src/scratch.js.map" />
+        <option value="$PROJECT_DIR$/src/scratch.js" />
       </list>
     </option>
   </component>
@@ -544,82 +338,25 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/test/system.ts</url>
-          <option name="timeStamp" value="37" />
+          <url>file://$PROJECT_DIR$/workingcopymanager.ts</url>
+          <line>79</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/mxsdk.ts</url>
-          <line>141</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="98" />
+          <url>file://$PROJECT_DIR$/runtimearguments.ts</url>
+          <line>75</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
-          <line>280</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="121" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
-          <line>266</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/mxsdk.ts</url>
-          <line>170</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="123" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
-          <line>285</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="124" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
-          <line>295</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="125" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts</url>
-          <line>293</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="126" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/commands/fetch/microflows.ts</url>
-          <line>9</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="138" />
+          <url>file://$PROJECT_DIR$/mxsdk.ts</url>
+          <line>42</line>
+          <option name="timeStamp" value="35" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
-      <expression>
-        <expression-string>path</expression-string>
-        <language-id>TypeScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>request.body instanceof Array</expression-string>
-        <language-id>TypeScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>props</expression-string>
-        <language-id>TypeScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>propName in props</expression-string>
-        <language-id>TypeScript</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
       <expression>
         <expression-string>model[propName] instanceof Array</expression-string>
         <language-id>TypeScript</language-id>
@@ -648,6 +385,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/runtimearguments.js" />
     <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.webworker.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
@@ -663,6 +401,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mxsdk.js" />
+    <entry file="file://$PROJECT_DIR$/workingcopymanager.js" />
+    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/model-sdk-client.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="99" column="4" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mendixplatformsdk/dist/mendix-platform-sdk.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="130" column="21" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@types/node/globals.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -670,6 +424,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sdk/tools.ts" />
     <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/base-model.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -691,6 +446,10 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mxsdk.ts" />
+    <entry file="file://$PROJECT_DIR$/fetch/load.ts" />
+    <entry file="file://$PROJECT_DIR$/workingcopymanager.ts" />
+    <entry file="file://$PROJECT_DIR$/runtimearguments.ts" />
     <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/compiler.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
@@ -707,265 +466,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/model-sdk-client.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/test-results/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="53" selection-start-line="1" selection-start-column="53" selection-end-line="1" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="20" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
+        <state relative-caret-position="165">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/mocha/index.d.ts">
+    <entry file="file://$PROJECT_DIR$/fetch/modules.js" />
+    <entry file="file://$PROJECT_DIR$/fetch/modules.ts" />
+    <entry file="file://$PROJECT_DIR$/src/scratch.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="2634" column="17" selection-start-line="2634" selection-start-column="17" selection-end-line="2634" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="977" column="10" selection-start-line="977" selection-start-column="10" selection-end-line="977" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/swagger.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        <state relative-caret-position="421">
+          <caret line="2088" column="135" selection-start-line="2088" selection-start-column="135" selection-end-line="2088" selection-end-column="135" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tslint.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="118" column="28" selection-start-line="118" selection-start-column="28" selection-end-line="118" selection-end-column="28" />
+        <state relative-caret-position="422">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/test-results/assets/app.js">
+    <entry file="file://$PROJECT_DIR$/src/commands/fetch/microflows.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret column="73098" lean-forward="true" selection-start-column="73098" selection-end-column="73098" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/express-serve-static-core/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="470" column="17" selection-start-line="470" selection-start-column="17" selection-end-line="470" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/express/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="88" column="47" lean-forward="true" selection-start-line="88" selection-start-column="47" selection-end-line="88" selection-end-column="47" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/fetch/modules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/services.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/@types/request/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="185" column="69" selection-start-line="185" selection-start-column="28" selection-end-line="185" selection-end-column="69" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mxsdk.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/system.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/callbackurl.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/runtime.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="42" selection-start-line="3" selection-start-column="42" selection-end-line="3" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/runtimebase.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2220">
-          <caret line="148" column="1" selection-start-line="148" selection-start-column="1" selection-end-line="148" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/runtime.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-212">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/projects.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="161" column="14" selection-start-line="161" selection-start-column="14" selection-end-line="161" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/mendix-model.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager2.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="13" column="1" lean-forward="true" selection-end-line="304" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixplatformsdk/dist/mendix-platform-sdk.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-46">
-          <caret line="130" column="21" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="139" column="66" selection-start-line="139" selection-start-column="38" selection-end-line="139" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mxsdk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="248" column="72" selection-start-line="248" selection-start-column="72" selection-end-line="248" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="293" column="44" selection-start-line="293" selection-start-column="44" selection-end-line="293" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/fetch/load.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/fetch/modules.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="68" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="148">
+          <caret line="24" column="59" selection-start-line="24" selection-start-column="59" selection-end-line="24" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="15" column="81" selection-start-line="15" selection-start-column="81" selection-end-line="15" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/fetch/microflows.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sdk/tools.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+        <state relative-caret-position="-371">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
         </state>
       </provider>
     </entry>

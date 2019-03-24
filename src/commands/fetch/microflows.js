@@ -23,8 +23,6 @@ class Microflows {
                             mf.moduleName = mf.qualifiedName.split(".")[0];
                             // @ts-ignore
                             mf.fullPath = mf.qualifiedName;
-                            mf.
-                            ;
                         });
                     }));
                     return yield microflow;
