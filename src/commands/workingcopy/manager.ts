@@ -2,9 +2,8 @@ import { IRuntimeArguments, Runtime } from "../../runtime";
 import { Branch, Project, Revision } from "mendixplatformsdk";
 import { IModel } from "mendixmodelsdk";
 import { IRuntimeArgumentsBase } from "../../runtimebase";
-
-const fs = require("fs");
-const exitHook = require("exit-hook");
+import { Connection, ConnectionOptions, createConnection, QueryFailedError, Repository, Table } from "typeorm";
+import { WorkingConfig } from "./config";
 
 /*
 * Shared Error Codes
@@ -105,9 +104,7 @@ export function monkeyPatchConsole(monkeyGood = false) {
 * This Helper class will give us our basic working copy helper methods to TeamServer/Mendix.
 * */
 export class Manager {
-    static homeFolder = `${require("os").homedir()}/.mxsdk`;
-    static registryFilePath = `${Manager.homeFolder}/working-copies.registry`;
-    public static config: Config = new Config({});
+    public static config: Config;
     /*
     * State management for our config registry. What we've loaded etc
     * */
@@ -115,20 +112,25 @@ export class Manager {
         /*
         * Take care of creating all the folders and writing the file if it's empty
         * */
-        const self = Manager;
-        if (!fs.existsSync(self.homeFolder)) {
-            fs.mkdirSync(self.homeFolder);
-        }
-        if (!fs.existsSync(self.registryFilePath)) {
-            this.saveConfig();
+        const workingConfig = await Manager.messageRepository.findOne();
+
+        if (workingConfig && workingConfig.config !== undefined) {
+            Manager.config = new Config(JSON.parse(workingConfig.config));
         } else {
-            this.config = new Config(JSON.parse(fs.readFileSync(self.registryFilePath).toString()));
+            Manager.config = new Config({});
         }
     }
-    public static saveConfig() {
-        const self = Manager;
-        const configData = JSON.stringify(self.config);
-        fs.writeFileSync(self.registryFilePath, configData);
+    public static async saveConfig() {
+        try {
+            const workingConfig = await Manager.messageRepository.findOne();
+            if (workingConfig && workingConfig.config !== undefined) {
+                workingConfig.config = JSON.stringify(this.config);
+                await Manager.connection.manager.save(workingConfig);
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
     }
     /*
     * Revision Helper methods, list, has and get. ToDo: Delete
@@ -136,25 +138,30 @@ export class Manager {
     static hasRevision(runtime: Runtime) {
         if (runtime.appId !== void 0) {
             const revision = runtime.revision || -1;
-            return self.config.getRevision(runtime.appId, revision);
+            return Manager.config.getRevision(runtime.appId, revision);
         } else {
             return void 0;
         }
     }
     static async getWorkingCopyForRevision(runtime: Runtime): Promise<IModel | void> {
+        if (!Manager.config) {
+            await init();
+            await Manager.readConfig();
+        }
         // @ts-ignore
-        if (!self.config.hasApp(runtime.appId)) {
+        if (!Manager.config.hasApp(runtime.appId)) {
             // @ts-ignore
-            self.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+            Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+            await Manager.saveConfig();
         }
 
         if (this.hasRevision(runtime)) {
             // @ts-ignore
-            const workingCopyId = self.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
+            const workingCopyId = Manager.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
             runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
             monkeyPatchConsole(!runtime.json);
             const iModel = await runtime.getClient().model().openWorkingCopy(workingCopyId)
-                .then((model) => {
+                .then(async (model) => {
                     return model;
                 })
                 .catch((error) => {
@@ -162,6 +169,7 @@ export class Manager {
                     runtime.runtimeError.name = error.error.name;
                     runtime.runtimeError.message = error.error.message;
                 });
+            await Manager.saveConfig();
             monkeyPatchConsole(true);
             return iModel;
         } else {
@@ -174,12 +182,13 @@ export class Manager {
             const workingCopy = await runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
             monkeyPatchConsole(true);
             // @ts-ignore
-            self.config.addRevision(runtime, {
+            Manager.config.addRevision(runtime, {
                 workingCopyId: workingCopy.id(),
                 revision: revisionNumber,
                 branchName: runtime.branchName,
                 mendixVersion: workingCopy.model().metaModelVersion.toString()
             });
+            await Manager.saveConfig();
             return workingCopy.model();
         }
     }
@@ -190,7 +199,7 @@ export class Manager {
             const workingCopies = await client.model().getMyWorkingCopies();
             workingCopies.forEach(async (workingCopy) => {
                 // @ts-ignore
-                const app = self.config.getApp(workingCopy.metaData.projectId);
+                const app = Manager.config.getApp(workingCopy.metaData.projectId);
                 if (app) {
                     // @ts-ignore
                     result.push({
@@ -204,7 +213,8 @@ export class Manager {
                     });
                 } else {
                     runtime.warn(`I don't know working copy ${workingCopy.id}`);
-                    self.config.addApp(workingCopy.metaData.projectId, workingCopy.metaData.name);
+                    Manager.config.addApp(workingCopy.metaData.projectId, workingCopy.metaData.name);
+                    await Manager.saveConfig();
                     const newRuntime = {
                             appId: workingCopy.metaData.projectId,
                             appName: workingCopy.metaData.name,
@@ -220,8 +230,9 @@ export class Manager {
                             workingCopyId: workingCopy.id
                         };
                     // @ts-ignore
-                    self.config.addRevision(newRuntime, revision);
+                    Manager.config.addRevision(newRuntime, revision);
                     result.push(revision);
+                    await Manager.saveConfig();
                 }
             });
             if (!runtime.json) {
@@ -245,6 +256,7 @@ export class Manager {
         try {
             if (!Manager.config.hasApp(runtime.appId)) {
                 Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                await Manager.saveConfig();
             }
             runtime.blue(`Available revisions:`);
             const
@@ -280,8 +292,8 @@ export class Manager {
                         runtime.runtimeError.message = error.error.message;
                     });
             });
-            self.config.flush();
-            this.saveConfig();
+            Manager.config.flush();
+            await Manager.saveConfig();
             monkeyPatchConsole(true);
         } else if (runtime.workingCopyId !== void 0) {
             monkeyPatchConsole(!runtime.json);
@@ -304,9 +316,9 @@ export class Manager {
     static async deleteRevision(runtime: Runtime) {
         const
             appId = runtime.appId || "unspecified",
-            app = self.config.getApp(appId),
+            app = Manager.config.getApp(appId),
             revisionNumber = runtime.revision || -1,
-            revision = self.config.getRevision(appId, revisionNumber);
+            revision = Manager.config.getRevision(appId, revisionNumber);
         if (app === void 0) {
             runtime.error(`Application of id ${runtime.appId} not known`);
             return runtime.runtimeError;
@@ -332,25 +344,60 @@ export class Manager {
         } else {
             runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
         }
-        self.config.deleteRevision(appId, revisionNumber);
+        Manager.config.deleteRevision(appId, revisionNumber);
+        await Manager.saveConfig();
         return {
             deleted: true,
             workingCopyId: runtime.workingCopyId,
             revision: runtime.revision
         };
     }
+    public static homeFolder = `${require("os").homedir()}/.mxsdk`;
+    public static registryFilePath = `${Manager.homeFolder}/working-copies.registry.sqlite`;
+    public static options: ConnectionOptions = {
+        type: "sqlite",
+        database: Manager.registryFilePath,
+        entities: [WorkingConfig],
+        logging: true
+    };
+    public static connection: Connection;
+    public static messageRepository: Repository<WorkingConfig>;
 }
 
-/*
-* Short-hand for the Class, since most methods will be and use static methods
-* Static methods were created to take advantage of async/await
-* */
-const self = Manager;
-/*
-* Let's read the config and make sure we write it when we exit.
-* */
-Manager.readConfig().then(() => {
+async function init() {
+    Manager.connection = await createConnection(Manager.options);
+    Manager.messageRepository = Manager.connection.getRepository(WorkingConfig);
+
+    try {
+        const count = Manager.messageRepository.count();
+        console.log(`messageRepository.count()=${await count}`);
+    } catch (e) {
+        if (e instanceof QueryFailedError) {
+            const metadata = Manager.connection.getMetadata(WorkingConfig);
+            const newTable = Table.create(metadata, Manager.connection.driver);
+            const queryRunner = Manager.connection.createQueryRunner();
+            await queryRunner.createTable(newTable);
+            await queryRunner.getTable(WorkingConfig.name);
+            const workingConfig: WorkingConfig = new WorkingConfig();
+            workingConfig.config = JSON.stringify(Manager.config);
+            workingConfig.id = 123;
+            await Manager.connection.manager.save(workingConfig);
+            console.log("workingConfig has been saved. Photo id is", workingConfig.id);
+        } else {
+            throw e;
+        }
+    }
+    const exitHook = require("exit-hook");
+    /*
+    * Let's read the config and make sure we write it when we exit.
+    * */
     exitHook(async () => {
-        await Manager.saveConfig();
+        await Manager.connection.close();
     });
-});
+    Manager.readConfig();
+    console.log(JSON.stringify(Manager.config));
+}
+//
+// (async () => {
+//     await init().catch(console.error);
+// })();

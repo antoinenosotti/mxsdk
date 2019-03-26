@@ -28,4 +28,4 @@ class Fetch {
     }
 }
 exports.Fetch = Fetch;
-//# sourceMappingURL=Fetch.js.map
+//# sourceMappingURL=fetch.js.map

@@ -14,6 +14,8 @@ const mendixmodelsdk_1 = require("mendixmodelsdk");
 var StoredValue = mendixmodelsdk_1.domainmodels.StoredValue;
 var EnumerationAttributeType = mendixmodelsdk_1.domainmodels.EnumerationAttributeType;
 const fetch_1 = require("./fetch");
+var RequiredRuleInfo = mendixmodelsdk_1.domainmodels.RequiredRuleInfo;
+var Generalization = mendixmodelsdk_1.domainmodels.Generalization;
 class Entities extends fetch_1.Fetch {
     constructor() {
         super(...arguments);
@@ -25,6 +27,7 @@ class Entities extends fetch_1.Fetch {
                 return domain.containerAsModule.name === runtime.module;
             });
             if (domain !== void 0) {
+                const loadedEntities = {};
                 const result = {
                     branchName: runtime.branchName,
                     latestRevisionNumber: runtime.revision,
@@ -32,6 +35,39 @@ class Entities extends fetch_1.Fetch {
                         moduleName: runtime.module,
                         entities: yield Promise.all(domain.entities.map((entity) => __awaiter(this, void 0, void 0, function* () {
                             const mxEntity = yield mendixplatformsdk_1.loadAsPromise(entity);
+                            let attributes = mxEntity.attributes.map(attribute => attribute);
+                            const generalizationBase = entity.generalization && (yield mendixplatformsdk_1.loadAsPromise(entity.generalization));
+                            let generalization;
+                            if (generalizationBase instanceof Generalization) {
+                                generalization = generalizationBase;
+                            }
+                            const getAttributes = (entity, generalization) => __awaiter(this, void 0, void 0, function* () {
+                                if (!loadedEntities[entity.qualifiedName + ""]) {
+                                    loadedEntities[entity.qualifiedName + ""] = entity;
+                                }
+                                let result = [];
+                                if (generalization) {
+                                    const gEntity = yield mendixplatformsdk_1.loadAsPromise(generalization.generalization);
+                                    if (!loadedEntities[gEntity.qualifiedName + ""]) {
+                                        loadedEntities[gEntity.qualifiedName + ""] = gEntity;
+                                    }
+                                    result = gEntity.attributes.map(attribute => attribute);
+                                    const generalizationBase = gEntity.generalization && (yield mendixplatformsdk_1.loadAsPromise(gEntity.generalization));
+                                    if (generalizationBase instanceof Generalization) {
+                                        generalization = generalizationBase;
+                                        result = result.concat(yield getAttributes(gEntity, generalization));
+                                    }
+                                }
+                                return yield Promise.all(result);
+                            });
+                            attributes = attributes.concat(yield getAttributes(mxEntity, generalization));
+                            if (generalization) {
+                                generalization = {
+                                    id: generalization.id,
+                                    qualifiedName: generalization.generalizationQualifiedName,
+                                    type: generalization.constructor.name.toLowerCase()
+                                };
+                            }
                             const result = {
                                 id: mxEntity.id,
                                 qualifiedName: mxEntity.qualifiedName,
@@ -39,11 +75,12 @@ class Entities extends fetch_1.Fetch {
                                 documentation: mxEntity.documentation,
                                 dataStorageGuid: mxEntity.dataStorageGuid,
                                 remoteSource: mxEntity.remoteSource,
-                                attributes: mxEntity.attributes.map((attribute) => {
+                                attributes: attributes.map((attribute) => {
                                     let defaultValue;
                                     if (attribute.value instanceof StoredValue) {
                                         defaultValue = attribute.value.defaultValue;
                                     }
+                                    const required = mxEntity.validationRules.find((rule, index) => (rule.attributeQualifiedName === attribute.qualifiedName) && (rule.ruleInfo instanceof RequiredRuleInfo));
                                     return {
                                         id: attribute.id,
                                         dataStorageGuid: attribute.dataStorageGuid,
@@ -71,9 +108,21 @@ class Entities extends fetch_1.Fetch {
                                                 };
                                             }
                                             return void 0;
-                                        })()
+                                        })(),
+                                        required: !!required,
+                                        requiredMessage: required && {
+                                            translations: required.errorMessage.translations.map((translation) => {
+                                                return {
+                                                    id: translation.id,
+                                                    type: translation.constructor.name.toLowerCase(),
+                                                    languageCode: translation.languageCode,
+                                                    text: translation.text
+                                                };
+                                            })
+                                        }
                                     };
-                                })
+                                }),
+                                generalization
                             };
                             return result;
                         }))),

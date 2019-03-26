@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mendixplatformsdk_1 = require("mendixplatformsdk");
-const fs = require("fs");
-const exitHook = require("exit-hook");
+const typeorm_1 = require("typeorm");
+const config_1 = require("./config");
 /*
 * Shared Error Codes
 * */
@@ -102,22 +102,28 @@ class Manager {
             /*
             * Take care of creating all the folders and writing the file if it's empty
             * */
-            const self = Manager;
-            if (!fs.existsSync(self.homeFolder)) {
-                fs.mkdirSync(self.homeFolder);
-            }
-            if (!fs.existsSync(self.registryFilePath)) {
-                this.saveConfig();
+            const workingConfig = yield Manager.messageRepository.findOne();
+            if (workingConfig && workingConfig.config !== undefined) {
+                Manager.config = new Config(JSON.parse(workingConfig.config));
             }
             else {
-                this.config = new Config(JSON.parse(fs.readFileSync(self.registryFilePath).toString()));
+                Manager.config = new Config({});
             }
         });
     }
     static saveConfig() {
-        const self = Manager;
-        const configData = JSON.stringify(self.config);
-        fs.writeFileSync(self.registryFilePath, configData);
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const workingConfig = yield Manager.messageRepository.findOne();
+                if (workingConfig && workingConfig.config !== undefined) {
+                    workingConfig.config = JSON.stringify(this.config);
+                    yield Manager.connection.manager.save(workingConfig);
+                }
+            }
+            catch (e) {
+                console.error(e);
+            }
+        });
     }
     /*
     * Revision Helper methods, list, has and get. ToDo: Delete
@@ -125,7 +131,7 @@ class Manager {
     static hasRevision(runtime) {
         if (runtime.appId !== void 0) {
             const revision = runtime.revision || -1;
-            return self.config.getRevision(runtime.appId, revision);
+            return Manager.config.getRevision(runtime.appId, revision);
         }
         else {
             return void 0;
@@ -133,25 +139,31 @@ class Manager {
     }
     static getWorkingCopyForRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
+            if (!Manager.config) {
+                yield init();
+                yield Manager.readConfig();
+            }
             // @ts-ignore
-            if (!self.config.hasApp(runtime.appId)) {
+            if (!Manager.config.hasApp(runtime.appId)) {
                 // @ts-ignore
-                self.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                yield Manager.saveConfig();
             }
             if (this.hasRevision(runtime)) {
                 // @ts-ignore
-                const workingCopyId = self.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
+                const workingCopyId = Manager.config.getRevision(runtime.appId, runtime.revision).workingCopyId;
                 runtime.log(`Opening working copy ${workingCopyId} for revision ${runtime.revision} of ${runtime.appName}`);
                 monkeyPatchConsole(!runtime.json);
                 const iModel = yield runtime.getClient().model().openWorkingCopy(workingCopyId)
-                    .then((model) => {
+                    .then((model) => __awaiter(this, void 0, void 0, function* () {
                     return model;
-                })
+                }))
                     .catch((error) => {
                     runtime.runtimeError.statusCode = error.statusCode;
                     runtime.runtimeError.name = error.error.name;
                     runtime.runtimeError.message = error.error.message;
                 });
+                yield Manager.saveConfig();
                 monkeyPatchConsole(true);
                 return iModel;
             }
@@ -161,12 +173,13 @@ class Manager {
                 const workingCopy = yield runtime.getClient().platform().createOnlineWorkingCopy(project, revision);
                 monkeyPatchConsole(true);
                 // @ts-ignore
-                self.config.addRevision(runtime, {
+                Manager.config.addRevision(runtime, {
                     workingCopyId: workingCopy.id(),
                     revision: revisionNumber,
                     branchName: runtime.branchName,
                     mendixVersion: workingCopy.model().metaModelVersion.toString()
                 });
+                yield Manager.saveConfig();
                 return workingCopy.model();
             }
         });
@@ -179,7 +192,7 @@ class Manager {
                 const workingCopies = yield client.model().getMyWorkingCopies();
                 workingCopies.forEach((workingCopy) => __awaiter(this, void 0, void 0, function* () {
                     // @ts-ignore
-                    const app = self.config.getApp(workingCopy.metaData.projectId);
+                    const app = Manager.config.getApp(workingCopy.metaData.projectId);
                     if (app) {
                         // @ts-ignore
                         result.push({
@@ -194,7 +207,8 @@ class Manager {
                     }
                     else {
                         runtime.warn(`I don't know working copy ${workingCopy.id}`);
-                        self.config.addApp(workingCopy.metaData.projectId, workingCopy.metaData.name);
+                        Manager.config.addApp(workingCopy.metaData.projectId, workingCopy.metaData.name);
+                        yield Manager.saveConfig();
                         const newRuntime = {
                             appId: workingCopy.metaData.projectId,
                             appName: workingCopy.metaData.name,
@@ -209,8 +223,9 @@ class Manager {
                             workingCopyId: workingCopy.id
                         };
                         // @ts-ignore
-                        self.config.addRevision(newRuntime, revision);
+                        Manager.config.addRevision(newRuntime, revision);
                         result.push(revision);
+                        yield Manager.saveConfig();
                     }
                 }));
                 if (!runtime.json) {
@@ -237,6 +252,7 @@ class Manager {
             try {
                 if (!Manager.config.hasApp(runtime.appId)) {
                     Manager.config.addApp(runtime.appId || "unspecified", runtime.appName || "unspecified");
+                    yield Manager.saveConfig();
                 }
                 runtime.blue(`Available revisions:`);
                 const appId = runtime.appId + "", app = Manager.config.getApp(appId);
@@ -273,8 +289,8 @@ class Manager {
                         runtime.runtimeError.message = error.error.message;
                     });
                 }));
-                self.config.flush();
-                this.saveConfig();
+                Manager.config.flush();
+                yield Manager.saveConfig();
                 monkeyPatchConsole(true);
             }
             else if (runtime.workingCopyId !== void 0) {
@@ -298,7 +314,7 @@ class Manager {
     }
     static deleteRevision(runtime) {
         return __awaiter(this, void 0, void 0, function* () {
-            const appId = runtime.appId || "unspecified", app = self.config.getApp(appId), revisionNumber = runtime.revision || -1, revision = self.config.getRevision(appId, revisionNumber);
+            const appId = runtime.appId || "unspecified", app = Manager.config.getApp(appId), revisionNumber = runtime.revision || -1, revision = Manager.config.getRevision(appId, revisionNumber);
             if (app === void 0) {
                 runtime.error(`Application of id ${runtime.appId} not known`);
                 return runtime.runtimeError;
@@ -325,7 +341,8 @@ class Manager {
             else {
                 runtime.error(`No working copy found for revision ${runtime.revision} using workingCopyId ${runtime.workingCopyId}`);
             }
-            self.config.deleteRevision(appId, revisionNumber);
+            Manager.config.deleteRevision(appId, revisionNumber);
+            yield Manager.saveConfig();
             return {
                 deleted: true,
                 workingCopyId: runtime.workingCopyId,
@@ -335,20 +352,52 @@ class Manager {
     }
 }
 Manager.homeFolder = `${require("os").homedir()}/.mxsdk`;
-Manager.registryFilePath = `${Manager.homeFolder}/working-copies.registry`;
-Manager.config = new Config({});
+Manager.registryFilePath = `${Manager.homeFolder}/working-copies.registry.sqlite`;
+Manager.options = {
+    type: "sqlite",
+    database: Manager.registryFilePath,
+    entities: [config_1.WorkingConfig],
+    logging: true
+};
 exports.Manager = Manager;
-/*
-* Short-hand for the Class, since most methods will be and use static methods
-* Static methods were created to take advantage of async/await
-* */
-const self = Manager;
-/*
-* Let's read the config and make sure we write it when we exit.
-* */
-Manager.readConfig().then(() => {
-    exitHook(() => __awaiter(this, void 0, void 0, function* () {
-        yield Manager.saveConfig();
-    }));
-});
+function init() {
+    return __awaiter(this, void 0, void 0, function* () {
+        Manager.connection = yield typeorm_1.createConnection(Manager.options);
+        Manager.messageRepository = Manager.connection.getRepository(config_1.WorkingConfig);
+        try {
+            const count = Manager.messageRepository.count();
+            console.log(`messageRepository.count()=${yield count}`);
+        }
+        catch (e) {
+            if (e instanceof typeorm_1.QueryFailedError) {
+                const metadata = Manager.connection.getMetadata(config_1.WorkingConfig);
+                const newTable = typeorm_1.Table.create(metadata, Manager.connection.driver);
+                const queryRunner = Manager.connection.createQueryRunner();
+                yield queryRunner.createTable(newTable);
+                yield queryRunner.getTable(config_1.WorkingConfig.name);
+                const workingConfig = new config_1.WorkingConfig();
+                workingConfig.config = JSON.stringify(Manager.config);
+                workingConfig.id = 123;
+                yield Manager.connection.manager.save(workingConfig);
+                console.log("workingConfig has been saved. Photo id is", workingConfig.id);
+            }
+            else {
+                throw e;
+            }
+        }
+        const exitHook = require("exit-hook");
+        /*
+        * Let's read the config and make sure we write it when we exit.
+        * */
+        exitHook(() => __awaiter(this, void 0, void 0, function* () {
+            yield Manager.connection.close();
+        }));
+        Manager.readConfig();
+        console.log(JSON.stringify(Manager.config));
+    });
+}
+//
+// (async () => {
+//     await init().catch(console.error);
+// })();
 //# sourceMappingURL=manager.js.map
