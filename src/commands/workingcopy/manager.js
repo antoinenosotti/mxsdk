@@ -396,8 +396,7 @@ function init() {
         console.log(JSON.stringify(Manager.config));
     });
 }
-//
-// (async () => {
-//     await init().catch(console.error);
-// })();
+(() => __awaiter(this, void 0, void 0, function* () {
+    yield init().catch(console.error);
+}))();
 //# sourceMappingURL=manager.js.map

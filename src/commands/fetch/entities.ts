@@ -11,11 +11,25 @@ import Generalization = domainmodels.Generalization;
 import Attribute = domainmodels.Attribute;
 import Entity = domainmodels.Entity;
 import GeneralizationBase = domainmodels.GeneralizationBase;
+import AssociationOwner = domainmodels.AssociationOwner;
+import IEntity = domainmodels.IEntity;
 
 interface IRevision {
     branchName: string;
     latestRevisionNumber: number | undefined;
     revision: { number: number | undefined; entities: any[]; moduleName: string | undefined };
+}
+
+function isPersistable(entity: domainmodels.IEntity): boolean {
+    if (!entity || !entity.generalization) {
+        return true;
+    } // Default if somehow no info available, this happens when inheriting from entities in the System module which is currently not available in the sdk
+    else if (entity.generalization instanceof domainmodels.NoGeneralization) {
+        return (<domainmodels.INoGeneralization>entity.generalization).persistable;
+ }
+    else {
+        return isPersistable((<domainmodels.IGeneralization>entity.generalization).generalization);
+ }
 }
 
 export class Entities extends Fetch {
@@ -27,8 +41,9 @@ export class Entities extends Fetch {
         });
         if (domain !== void 0) {
             const loadedEntities: {
-                [name: string]: Entity;
-            } = {};
+                    [name: string]: Entity;
+                } = {},
+                associations = await Promise.all(domain.associations.map((association) => loadAsPromise(association)));
             const result: IRevision = {
                 branchName: runtime.branchName,
                 latestRevisionNumber: runtime.revision,
@@ -63,6 +78,7 @@ export class Entities extends Fetch {
                             }
                             return await Promise.all(result);
                         };
+                        // Add generalizations to attributes list
                         attributes = attributes.concat(await getAttributes(mxEntity, generalization));
                         if (generalization) {
                             generalization = {
@@ -71,6 +87,7 @@ export class Entities extends Fetch {
                                 type: generalization.constructor.name.toLowerCase()
                             };
                         }
+                        // Associations
                         const result: any = {
                             id: mxEntity.id,
                             qualifiedName: mxEntity.qualifiedName,
@@ -126,7 +143,30 @@ export class Entities extends Fetch {
                                     }
                                 };
                             }),
-                            generalization
+                            persisted: isPersistable(mxEntity),
+                            generalization,
+                            associations: associations
+                                .filter(association => (association.parent.qualifiedName === mxEntity.qualifiedName)
+                                                              || ((association.child.qualifiedName === mxEntity.qualifiedName)
+                                                               && (association.owner === AssociationOwner.Both)))
+                                .map(association => ({
+                                    id: association.id,
+                                    name: association.name,
+                                    qualifiedName: association.qualifiedName,
+                                    documentation: association.documentation,
+                                    dataStorageGuid: association.dataStorageGuid,
+                                    type: association.type.name,
+                                    owner: association.owner.name,
+                                    entity: association.parent.qualifiedName === mxEntity.qualifiedName ? {
+                                        id: association.child.id,
+                                        qualifiedName: association.child.qualifiedName
+                                    } : {
+                                        id: association.parent.id,
+                                        qualifiedName: association.parent.qualifiedName
+                                    },
+                                    parent: association.parent.qualifiedName === entity.qualifiedName,
+                                    child: association.parent.qualifiedName !== entity.qualifiedName
+                                }))
                         };
                         return result;
                     })),

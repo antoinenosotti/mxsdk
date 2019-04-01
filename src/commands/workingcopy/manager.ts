@@ -397,7 +397,7 @@ async function init() {
     Manager.readConfig();
     console.log(JSON.stringify(Manager.config));
 }
-//
-// (async () => {
-//     await init().catch(console.error);
-// })();
+
+(async () => {
+    await init().catch(console.error);
+})();
