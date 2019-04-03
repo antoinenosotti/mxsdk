@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2395460e-e06e-42e8-971d-d511aadbf4ec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/entities.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/entities.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/entities.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/entities.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/fetch/entities.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/fetch/entities.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema-generators/avro-generator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema-generators/avro-generator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema-generators/avro-generator.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema-generators/avro-generator.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/schema-generators/avro-generator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema-generators/avro-generator.ts" afterDir="false" />
@@ -31,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commands/fetch/entities.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="145" column="37" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="37" />
+            <state relative-caret-position="558">
+              <caret line="172" column="39" lean-forward="true" selection-start-line="172" selection-start-column="39" selection-end-line="172" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -40,7 +34,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/domainmodels.d.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
+            <state relative-caret-position="22380">
               <caret line="1495" column="23" selection-start-line="1495" selection-start-column="17" selection-end-line="1495" selection-end-column="23" />
             </state>
           </provider>
@@ -49,8 +43,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/schema-generators/avro-generator.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="1346" column="6" lean-forward="true" selection-start-line="1346" selection-start-column="6" selection-end-line="1346" selection-end-column="6" />
+            <state relative-caret-position="285">
+              <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -58,7 +52,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
+            <state relative-caret-position="570">
               <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
             </state>
           </provider>
@@ -88,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
+            <state relative-caret-position="5430">
               <caret line="367" column="4" selection-start-line="367" selection-start-column="4" selection-end-line="367" selection-end-column="4" />
               <folding>
                 <element signature="e#0#59#0" expanded="true" />
@@ -109,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mxsdk.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1588">
+            <state relative-caret-position="2070">
               <caret line="143" column="11" selection-start-line="143" selection-start-column="11" selection-end-line="143" selection-end-column="11" />
               <folding>
                 <element signature="e#0#69#0" expanded="true" />
@@ -129,8 +123,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>List</find>
-      <find>filter</find>
       <find>Branch</find>
       <find>Failed to create online working copy</find>
       <find>Failed to create</find>
@@ -159,6 +151,8 @@
       <find>hasApp</find>
       <find>transi</find>
       <find>preci</find>
+      <find>@aggregate=Jobs</find>
+      <find>Queue</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -200,6 +194,7 @@
         <option value="$PROJECT_DIR$/src/commands/workingcopy/manager.ts" />
         <option value="$PROJECT_DIR$/src/commands/fetch/entities.ts" />
         <option value="$PROJECT_DIR$/src/schema-generators/avro-generator.ts" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.css" />
       </list>
     </option>
   </component>
@@ -254,14 +249,12 @@
             </path>
             <path>
               <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
             </path>
             <path>
               <item name="mxsdk" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mxsdk" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
@@ -271,12 +264,16 @@
   </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptWeakerCompletionTypeGuess" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="CSS&#10;TypeScript" />
     <property name="javascript.nodejs.core.library.configured.version" value="11.6.0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="$PROJECT_DIR$/node_modules/tslint" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -363,11 +360,11 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Fetch Microflows Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+    <configuration name="List WC Verbose" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
-        <script value="Fetch Microflows Verbose" />
+        <script value="List WC Verbose" />
       </scripts>
       <node-interpreter value="project" />
       <envs />
@@ -384,27 +381,27 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Node.js.Entities J" />
-      <item itemvalue="Node.js.Entities TW" />
-      <item itemvalue="Node.js.Manager" />
-      <item itemvalue="Node.js.Microflows" />
-      <item itemvalue="Node.js.Modules" />
       <item itemvalue="Node.js.Start" />
+      <item itemvalue="Node.js.Modules" />
+      <item itemvalue="Node.js.Microflows" />
+      <item itemvalue="Node.js.Entities TW" />
+      <item itemvalue="Node.js.Entities J" />
+      <item itemvalue="Node.js.Manager" />
       <item itemvalue="Node.js.avro-generator" />
       <item itemvalue="Node.js.mxsdk" />
-      <item itemvalue="npm.Fetch Entities Json" />
       <item itemvalue="npm.Fetch Entities Verbose" />
-      <item itemvalue="npm.Fetch Microflows Json" />
-      <item itemvalue="npm.Fetch Microflows Verbose" />
+      <item itemvalue="npm.Fetch Entities Json" />
       <item itemvalue="npm.Start" />
+      <item itemvalue="npm.Fetch Microflows Json" />
+      <item itemvalue="npm.List WC Verbose" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="npm.Start" />
+        <item itemvalue="npm.List WC Verbose" />
         <item itemvalue="npm.Fetch Entities Json" />
         <item itemvalue="npm.Fetch Entities Verbose" />
         <item itemvalue="npm.Fetch Microflows Json" />
-        <item itemvalue="npm.Fetch Microflows Verbose" />
       </list>
     </recent_temporary>
   </component>
@@ -428,23 +425,24 @@
       <workItem from="1553019563388" duration="2825000" />
       <workItem from="1553486988003" duration="19803000" />
       <workItem from="1553821785979" duration="8252000" />
+      <workItem from="1554158232656" duration="2304000" />
+      <workItem from="1554261670449" duration="1989000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102391000" />
+    <option name="totallyTimeSpent" value="106684000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.51380366" visible="true" weight="0.2567812" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5111492" visible="true" weight="0.2567812" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="npm" order="2" sideWeight="0.4861963" side_tool="true" visible="true" weight="0.2567812" />
+      <window_info id="npm" order="2" sideWeight="0.48885077" side_tool="true" visible="true" weight="0.2567812" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32941177" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3026738" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3764706" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27807486" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -497,20 +495,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/schema-generators/avro-generator.ts</url>
-          <line>1446</line>
-          <properties lambdaOrdinal="-1" />
+          <line>1668</line>
           <option name="timeStamp" value="179" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/schema-generators/avro-generator.ts</url>
-          <line>1453</line>
-          <properties lambdaOrdinal="-1" />
+          <line>1676</line>
           <option name="timeStamp" value="181" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/commands/fetch/entities.ts</url>
           <line>90</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="182" />
         </line-breakpoint>
       </breakpoints>
@@ -566,7 +561,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/compiler.xml" />
     <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -782,6 +776,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/domainmodels.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22380">
+          <caret line="1495" column="23" selection-start-line="1495" selection-start-column="17" selection-end-line="1495" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tslint.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -799,40 +807,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/config.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mxsdk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1588">
-          <caret line="143" column="11" selection-start-line="143" selection-start-column="11" selection-end-line="143" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mendixmodelsdk/dist/gen/domainmodels.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="1495" column="23" selection-start-line="1495" selection-start-column="17" selection-end-line="1495" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/manager.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
+        <state relative-caret-position="5430">
           <caret line="367" column="4" selection-start-line="367" selection-start-column="4" selection-end-line="367" selection-end-column="4" />
           <folding>
             <element signature="e#0#59#0" expanded="true" />
@@ -840,17 +817,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/commands/workingcopy/config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mxsdk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2070">
+          <caret line="143" column="11" selection-start-line="143" selection-start-column="11" selection-end-line="143" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/commands/fetch/entities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="145" column="37" selection-start-line="145" selection-start-column="37" selection-end-line="145" selection-end-column="37" />
+        <state relative-caret-position="558">
+          <caret line="172" column="39" lean-forward="true" selection-start-line="172" selection-start-column="39" selection-end-line="172" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/schema-generators/avro-generator.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="1346" column="6" lean-forward="true" selection-start-line="1346" selection-start-column="6" selection-end-line="1346" selection-end-column="6" />
+        <state relative-caret-position="285">
+          <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
         </state>
       </provider>
     </entry>

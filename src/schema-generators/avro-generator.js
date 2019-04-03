@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const sampleDomain = {
     branchName: "Edubond",
-    latestRevisionNumber: 13,
+    latestRevisionNumber: 15,
     revision: {
         moduleName: "TeamWorks",
         entities: [
@@ -15,20 +15,6 @@ const sampleDomain = {
                 dataStorageGuid: "71122f39-3071-4c6a-8a45-f640e75a1957",
                 remoteSource: "",
                 attributes: [
-                    {
-                        id: "3458d67e-2a56-4109-a750-a170a377cda0",
-                        dataStorageGuid: "40f3383d-7a84-4496-b413-9a8c0d94abc5",
-                        documentation: "",
-                        name: "Name",
-                        qualifiedName: "TeamWorks.Brand.Name",
-                        value: {
-                            id: "87851f93-769f-4d94-8748-3bff4fb9e45b",
-                            type: "stored",
-                            defaultValue: ""
-                        },
-                        type: "string",
-                        required: false
-                    },
                     {
                         id: "5069f26e-4810-47eb-a9d1-0c39564e6c1c",
                         dataStorageGuid: "86894760-ecf8-4a5e-b50e-a515a2c4e2f1",
@@ -44,21 +30,166 @@ const sampleDomain = {
                         required: false
                     },
                     {
-                        id: "80bac1dc-6ad4-4364-aa8a-6eb1087d6687",
-                        dataStorageGuid: "8357ee83-cf5f-4253-998d-95a7646f1adf",
+                        id: "568926cd-4a2c-4da9-8054-d3d4ac01cc59",
+                        dataStorageGuid: "86087d0d-8aa6-4353-aa14-6dc48b747c7c",
                         documentation: "",
-                        name: "BrandId",
-                        qualifiedName: "TeamWorks.Brand.BrandId",
+                        name: "Name",
+                        qualifiedName: "TaskManager.WorkTemplate.Name",
                         value: {
-                            id: "6d9363d0-04e0-459d-a4d7-3a3b43e61d84",
+                            id: "6642d94a-d901-47b7-b4d6-706c30c7354d",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "64fe313e-3103-447c-ae7b-4bcd67d99cae",
+                        dataStorageGuid: "e3a6e073-c5ee-470e-844b-775bd6bb0d61",
+                        documentation: "",
+                        name: "ExpiryMinutes",
+                        qualifiedName: "TaskManager.WorkTemplate.ExpiryMinutes",
+                        value: {
+                            id: "842a4b37-ff32-4a67-b774-40d5c4a486e7",
                             type: "stored",
                             defaultValue: "0"
                         },
                         type: "integer",
                         required: false
+                    },
+                    {
+                        id: "d6c8a474-72ae-4e97-aa05-9fcefa2bf21c",
+                        dataStorageGuid: "338f27d4-b30e-4576-bdc3-efda5921da45",
+                        documentation: "",
+                        name: "ListGuid",
+                        qualifiedName: "TaskManager.WorkTemplate.ListGuid",
+                        value: {
+                            id: "60bc8c85-f3ef-43e0-bed4-365585502c3d",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "07ce1505-c7ae-4e7e-b66c-430f7d2d8198",
+                        dataStorageGuid: "9518f3d9-b1a7-48fd-89ea-d1298db02ef4",
+                        documentation: "",
+                        name: "HasSubTasks",
+                        qualifiedName: "TaskManager.WorkTemplate.HasSubTasks",
+                        value: {
+                            id: "fcf4cf64-4ab3-4443-8e5c-5cf0f2ed410b",
+                            type: "stored",
+                            defaultValue: "false"
+                        },
+                        type: "boolean",
+                        required: false
+                    },
+                    {
+                        id: "bbe372b5-e90a-42d3-be9d-d9bb96e26bf8",
+                        dataStorageGuid: "47571587-4f24-40e4-9d90-fa983c18fe44",
+                        documentation: "",
+                        name: "Documentation",
+                        qualifiedName: "TaskManager.WorkTemplate.Documentation",
+                        value: {
+                            id: "f4a832ca-fa2c-43da-8899-ffef1b833001",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "1f2c8103-23df-4974-b268-f11bcbad23d2",
+                        dataStorageGuid: "cbe6b7da-c217-4dbd-bd35-b05fa0f2d6e2",
+                        documentation: "",
+                        name: "QueueName",
+                        qualifiedName: "TaskManager.WorkTemplate.QueueName",
+                        value: {
+                            id: "7519e49e-400c-441b-a8bd-31f0c495ab48",
+                            type: "stored",
+                            defaultValue: "TaskManager"
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "dca1ec2d-cce1-40a1-baa6-8b0bd4a009c7",
+                        dataStorageGuid: "295a508e-4035-496b-a9af-dee65605cfb7",
+                        documentation: "",
+                        name: "Index",
+                        qualifiedName: "TaskManager.Movable.Index",
+                        value: {
+                            id: "8f908479-ff40-4648-9220-a9a230d62557",
+                            type: "stored",
+                            defaultValue: "0"
+                        },
+                        type: "integer",
+                        required: false
+                    },
+                    {
+                        id: "65b41ff8-6609-40ae-9b85-da134bbb3904",
+                        dataStorageGuid: "405fbb98-fc08-4680-84c0-c55255598089",
+                        documentation: "",
+                        name: "ParentGuid",
+                        qualifiedName: "TaskManager.Movable.ParentGuid",
+                        value: {
+                            id: "7879cd11-5e0a-41b4-9493-241776076ecf",
+                            type: "stored",
+                            defaultValue: "0"
+                        },
+                        type: "long",
+                        required: false
+                    },
+                    {
+                        id: "4103a37f-3f07-4494-a17d-b8c97eecb100",
+                        dataStorageGuid: "577d47fb-d045-4ea0-8729-b98c572718f1",
+                        documentation: "",
+                        name: "ObjectType",
+                        qualifiedName: "TaskManager.Movable.ObjectType",
+                        value: {
+                            id: "bf9f5440-d8c9-4e25-b5b3-e53de477d287",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "35303fce-846d-4655-8ecd-d15ca558a3b6",
+                        dataStorageGuid: "187cecfb-6e5e-4a47-af3b-056af8b610a0",
+                        documentation: "",
+                        name: "LastItem",
+                        qualifiedName: "TaskManager.Movable.LastItem",
+                        value: {
+                            id: "bf79be69-af5b-4b34-9134-aec9902d6095",
+                            type: "stored",
+                            defaultValue: "false"
+                        },
+                        type: "boolean",
+                        required: false
+                    },
+                    {
+                        id: "8c34bce0-c8e6-43f4-9147-58cd3e1f0aca",
+                        dataStorageGuid: "e8f06ca2-37a4-41d6-a62f-7ec7f47e3918",
+                        documentation: "",
+                        name: "UUID",
+                        qualifiedName: "TaskManager.Movable.UUID",
+                        value: {
+                            id: "c40b08b9-ffb8-4f2d-8f1c-d240570f2dab",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
                     }
                 ],
                 persisted: true,
+                generalization: {
+                    id: "bf0cf582-ad3d-4018-8551-414bf3b4eb3c",
+                    qualifiedName: "TaskManager.WorkTemplate",
+                    type: "generalization"
+                },
                 associations: [
                     {
                         id: "f7004591-cb87-4dd3-b901-8b84edc255c1",
@@ -771,7 +902,7 @@ const sampleDomain = {
                 id: "d4a1e1d2-a63e-4c0e-84c5-3795719346e4",
                 qualifiedName: "TeamWorks.IBrand",
                 name: "IBrand",
-                documentation: "",
+                documentation: "@aggregate=Jobs",
                 dataStorageGuid: "ad924b76-b59a-42b5-856b-cab1ea783def",
                 remoteSource: "",
                 attributes: [
@@ -801,20 +932,6 @@ const sampleDomain = {
                             defaultValue: ""
                         },
                         type: "string",
-                        required: false
-                    },
-                    {
-                        id: "ef7bcc7e-b45c-4352-9709-3dc23906e8b7",
-                        dataStorageGuid: "ef1168df-9947-443a-bb6f-d3fa9e28fab1",
-                        documentation: "",
-                        name: "BrandId",
-                        qualifiedName: "TeamWorks.IBrand.BrandId",
-                        value: {
-                            id: "321ad18d-418c-4496-bd33-b712c63c076e",
-                            type: "stored",
-                            defaultValue: "0"
-                        },
-                        type: "integer",
                         required: false
                     }
                 ],
@@ -856,7 +973,7 @@ const sampleDomain = {
                 id: "2801de0a-59ca-4825-9db8-64e41df9a5ed",
                 qualifiedName: "TeamWorks.IJob",
                 name: "IJob",
-                documentation: "This is the main task item an agent will be working on",
+                documentation: "This is the main task item an agent will be working on\r\n\r\n@aggregate=Jobs",
                 dataStorageGuid: "1f0c391f-8db1-4f49-be06-01da3f55857b",
                 remoteSource: "",
                 attributes: [
@@ -1031,7 +1148,7 @@ const sampleDomain = {
                         id: "ec5d574f-cfa5-4887-b0fc-ee0bb2d4ab07",
                         name: "IJob_IBrand",
                         qualifiedName: "TeamWorks.IJob_IBrand",
-                        documentation: "",
+                        documentation: "@aggregate=Jobs",
                         dataStorageGuid: "ec21ddbb-f90c-40b8-a5ac-5407e9311b9c",
                         type: "Reference",
                         owner: "Both",
@@ -1046,7 +1163,7 @@ const sampleDomain = {
                         id: "f5daf741-6276-4941-9fc7-837220afa48c",
                         name: "IJob_ILead",
                         qualifiedName: "TeamWorks.IJob_ILead",
-                        documentation: "",
+                        documentation: "@aggregate=Jobs",
                         dataStorageGuid: "f59444b4-87bb-4f58-a14a-b94d6b309228",
                         type: "Reference",
                         owner: "Both",
@@ -1061,7 +1178,7 @@ const sampleDomain = {
                         id: "67fd3c28-f08d-43a0-ae7c-6167659fa16b",
                         name: "IBrand_IJob",
                         qualifiedName: "TeamWorks.IBrand_IJob",
-                        documentation: "",
+                        documentation: "@aggregate=Jobs",
                         dataStorageGuid: "3d6f1e21-3534-4822-b0b5-4b6f34897f81",
                         type: "ReferenceSet",
                         owner: "Both",
@@ -1078,7 +1195,7 @@ const sampleDomain = {
                 id: "895351c8-a7fa-4c22-afa8-50e54977aa9f",
                 qualifiedName: "TeamWorks.ILead",
                 name: "ILead",
-                documentation: "",
+                documentation: "@aggregate=Jobs",
                 dataStorageGuid: "b1979eb7-c05e-4080-9021-0812414e82f4",
                 remoteSource: "",
                 attributes: [
@@ -1205,7 +1322,7 @@ const sampleDomain = {
                         id: "f5daf741-6276-4941-9fc7-837220afa48c",
                         name: "IJob_ILead",
                         qualifiedName: "TeamWorks.IJob_ILead",
-                        documentation: "",
+                        documentation: "@aggregate=Jobs",
                         dataStorageGuid: "f59444b4-87bb-4f58-a14a-b94d6b309228",
                         type: "Reference",
                         owner: "Both",
@@ -1290,7 +1407,7 @@ const sampleDomain = {
                 id: "5209e399-986f-4a2f-8b65-1f05f943fbe5",
                 qualifiedName: "TeamWorks.QueueItem",
                 name: "QueueItem",
-                documentation: "",
+                documentation: "@aggregate=Jobs",
                 dataStorageGuid: "d4867a93-3039-438d-ad16-0142cc8292ad",
                 remoteSource: "",
                 attributes: [
@@ -1327,16 +1444,119 @@ const sampleDomain = {
                         child: false
                     }
                 ]
+            },
+            {
+                id: "93152a97-9d39-4e06-a2ef-bcb691ab5195",
+                qualifiedName: "TeamWorks.CompanyPriority",
+                name: "CompanyPriority",
+                documentation: "",
+                dataStorageGuid: "25fb3a7b-2e20-45dd-a228-c1a0e2eff7b0",
+                remoteSource: "",
+                attributes: [
+                    {
+                        id: "dca1ec2d-cce1-40a1-baa6-8b0bd4a009c7",
+                        dataStorageGuid: "295a508e-4035-496b-a9af-dee65605cfb7",
+                        documentation: "",
+                        name: "Index",
+                        qualifiedName: "TaskManager.Movable.Index",
+                        value: {
+                            id: "8f908479-ff40-4648-9220-a9a230d62557",
+                            type: "stored",
+                            defaultValue: "0"
+                        },
+                        type: "integer",
+                        required: false
+                    },
+                    {
+                        id: "65b41ff8-6609-40ae-9b85-da134bbb3904",
+                        dataStorageGuid: "405fbb98-fc08-4680-84c0-c55255598089",
+                        documentation: "",
+                        name: "ParentGuid",
+                        qualifiedName: "TaskManager.Movable.ParentGuid",
+                        value: {
+                            id: "7879cd11-5e0a-41b4-9493-241776076ecf",
+                            type: "stored",
+                            defaultValue: "0"
+                        },
+                        type: "long",
+                        required: false
+                    },
+                    {
+                        id: "4103a37f-3f07-4494-a17d-b8c97eecb100",
+                        dataStorageGuid: "577d47fb-d045-4ea0-8729-b98c572718f1",
+                        documentation: "",
+                        name: "ObjectType",
+                        qualifiedName: "TaskManager.Movable.ObjectType",
+                        value: {
+                            id: "bf9f5440-d8c9-4e25-b5b3-e53de477d287",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    },
+                    {
+                        id: "35303fce-846d-4655-8ecd-d15ca558a3b6",
+                        dataStorageGuid: "187cecfb-6e5e-4a47-af3b-056af8b610a0",
+                        documentation: "",
+                        name: "LastItem",
+                        qualifiedName: "TaskManager.Movable.LastItem",
+                        value: {
+                            id: "bf79be69-af5b-4b34-9134-aec9902d6095",
+                            type: "stored",
+                            defaultValue: "false"
+                        },
+                        type: "boolean",
+                        required: false
+                    },
+                    {
+                        id: "8c34bce0-c8e6-43f4-9147-58cd3e1f0aca",
+                        dataStorageGuid: "e8f06ca2-37a4-41d6-a62f-7ec7f47e3918",
+                        documentation: "",
+                        name: "UUID",
+                        qualifiedName: "TaskManager.Movable.UUID",
+                        value: {
+                            id: "c40b08b9-ffb8-4f2d-8f1c-d240570f2dab",
+                            type: "stored",
+                            defaultValue: ""
+                        },
+                        type: "string",
+                        required: false
+                    }
+                ],
+                persisted: true,
+                generalization: {
+                    id: "f7114ffe-6e8e-429e-b394-58e300779320",
+                    qualifiedName: "TaskManager.Movable",
+                    type: "generalization"
+                },
+                associations: [
+                    {
+                        id: "8e28c43b-d3b5-44e8-b4ed-80b3577ca503",
+                        name: "CompanyPriority_Company",
+                        qualifiedName: "TeamWorks.CompanyPriority_Company",
+                        documentation: "",
+                        dataStorageGuid: "c93ab44c-3e7b-40da-98da-3a86a56d8b3a",
+                        type: "Reference",
+                        owner: "Default",
+                        entity: {
+                            id: "2a0b8734-d3c4-411c-892b-d8f40710b331",
+                            qualifiedName: "TeamWorks.Company"
+                        },
+                        parent: true,
+                        child: false
+                    }
+                ]
             }
         ],
-        number: 13
+        number: 15
     },
-    timeStamp: 1554157184399,
-    took: 4160
+    timeStamp: 1554262198764,
+    took: 52054
 };
 function main() {
-    const reverseDomain = `ca.bdc`;
-    const appName = `cls`;
+    const reverseDomain = `za.co.agileworks`;
+    const appName = `teamworks`;
     let DataTypeMapping;
     (function (DataTypeMapping) {
         DataTypeMapping["DomainModels$StringAttributeType"] = "string";
@@ -1394,8 +1614,9 @@ function main() {
     if (!fs.existsSync(`${basePath}/${sampleDomain.revision.moduleName}`)) {
         fs.mkdirSync(`${basePath}/${sampleDomain.revision.moduleName}`);
     }
-    sampleDomain.revision.entities.filter(entity => !entity.persisted).forEach((entity) => {
-        let fields = entity.attributes.map((attribute) => {
+    const aggregate = "@aggregate=Jobs";
+    sampleDomain.revision.entities.filter(entity => entity.documentation.indexOf(aggregate) > -1).forEach((entity) => {
+        let fields = entity.attributes.filter((attribute) => attribute.documentation.indexOf("@aggregate-ignore") === -1).map((attribute) => {
             const moduleName = attribute.qualifiedName.split(".")[0], enumName = attribute.enumeration ? attribute.enumeration.qualifiedName.split(".")[1] : "?";
             const field = {
                 name: `${attribute.name}`,
@@ -1423,13 +1644,14 @@ function main() {
             }
             return field;
         });
-        fields = fields.concat(entity.associations.filter((association) => association.parent).map((association) => {
+        fields = fields.concat(entity.associations.filter((association) => (association.parent && (association.documentation.indexOf(aggregate) > -1))).map((association) => {
             return {
                 name: association.name,
                 type: [
                     "null",
                     `${reverseDomain.toLowerCase()}.${appName.toLowerCase()}.${association.entity.qualifiedName}`
                 ],
+                doc: association.documentation
             };
         }));
         const avroTemplate = {
